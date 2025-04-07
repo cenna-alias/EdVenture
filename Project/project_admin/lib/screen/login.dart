@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_admin/main.dart';
 import 'package:project_admin/screen/dashboard.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -14,25 +15,55 @@ class _AdminLoginState extends State<AdminLogin> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
 
+  Future<void> _loginUser() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    try {
+      final res = await supabase.auth.signInWithPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      final user = await supabase
+          .from('tbl_admin')
+          .select()
+          .eq('id', res.user!.id);
+
+      if (user.isNotEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AdminHome()),
+        );
+      } else {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('User not found')));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image:
-                AssetImage('assets/baba.jpg'), // Replace with your image path
+            image: AssetImage('assets/baba.jpg'),
             fit: BoxFit.cover,
-            filterQuality: FilterQuality.high, // Ensures high-quality rendering
+            filterQuality: FilterQuality.high,
           ),
         ),
         child: Center(
           child: Container(
             width: 450,
-            height: 520,
+            height: 480,
             padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-              color: Colors.white, // Slightly transparent
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12.0),
               boxShadow: [
                 BoxShadow(
@@ -47,18 +78,11 @@ class _AdminLoginState extends State<AdminLogin> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 20),
-                  Image.asset(
-                    'assets/org.webp', // Replace with your logo image path
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 60),
                   Text(
-                    'Edventure',
+                    'Welcome Back, Admin!',
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -74,6 +98,12 @@ class _AdminLoginState extends State<AdminLogin> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter email';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -96,14 +126,18 @@ class _AdminLoginState extends State<AdminLogin> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter password';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 30),
                   Align(
                     alignment: Alignment.center,
                     child: TextButton(
-                      onPressed: () {
-                        // Handle forgot password logic
-                      },
+                      onPressed: () {},
                       child: const Text(
                         'Forgot password?',
                         style: TextStyle(
@@ -123,34 +157,17 @@ class _AdminLoginState extends State<AdminLogin> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AdminHome()),
-                        );
+                        _loginUser();
                       }
                     },
                     child: const Text(
                       'Login',
                       style: TextStyle(
                         fontSize: 18,
-                        // fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  // const SizedBox(height: 22),
-                  // TextButton(
-                  //   onPressed: () {
-                  //     // Navigate to sign-up screen
-                  //   },
-                  //   child: const Text(
-                  //     'Don’t have an account? Sign Up',
-                  //     style: TextStyle(
-                  //         color: Color.fromARGB(255, 117, 62, 213),
-                  //         fontSize: 15),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

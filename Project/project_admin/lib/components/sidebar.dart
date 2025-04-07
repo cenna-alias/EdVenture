@@ -1,88 +1,104 @@
 import 'package:flutter/material.dart';
-import 'package:project_admin/screen/dashboard.dart';
 
 class SideBar extends StatefulWidget {
   final Function(int) onItemSelected;
-  const SideBar({super.key, required this.onItemSelected});
+  final int selectedIndex;
+
+  const SideBar({
+    super.key,
+    required this.onItemSelected,
+    required this.selectedIndex, // Receive selected index from parent
+  });
+
+  static const List<String> pages = [
+    "HOME",
+    // "ACTIVITY",
+    "LEVEL",
+    "SUBJECT",
+    "MCQ QUESTIONS",
+    "T/F QUESTIONS",
+    "FILL QUESTIONS",
+    "USER",
+    // "REPORT",
+    "REVIEW",
+    "VIEW COMPLAINT",
+  ];
+
+  static const List<IconData> icons = [
+    Icons.home,
+    // Icons.sports_esports,
+    Icons.stacked_bar_chart,
+    Icons.menu_book,
+    Icons.radio_button_checked,
+    Icons.check_box,
+    Icons.edit,
+    Icons.person,
+    // Icons.insert_chart,
+    Icons.rate_review,
+    Icons.feedback,
+  ];
 
   @override
   State<SideBar> createState() => _SideBarState();
 }
 
 class _SideBarState extends State<SideBar> {
-  final List<String> pages = [
-    "ACTIVITY",
-    "CATEGORY",
-    "LEVEL",
-    "USER",
-    "REPORT",
-    "REVIEW",
-  ];
-  final List<IconData> icons = [
-    Icons.sports_esports,
-    Icons.category,
-    Icons.stacked_bar_chart,
-    Icons.person,
-    Icons.insert_chart,
-    Icons.rate_review,
-  ];
+  Widget _buildMenuItem(int index) {
+    final isSelected = widget.selectedIndex == index;
+
+    return InkWell(
+      onTap: () {
+        widget.onItemSelected(index); // Notify parent widget
+      },
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? Colors.yellowAccent.withOpacity(0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+          border: isSelected
+              ? Border.all(color: Colors.yellowAccent.shade700, width: 1)
+              : null,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              SideBar.icons[index],
+              color: isSelected ? Colors.yellowAccent.shade700 : Colors.white,
+              size: 24,
+            ),
+            const SizedBox(width: 16),
+            Text(
+              SideBar.pages[index],
+              style: TextStyle(
+                color: isSelected ? Colors.yellowAccent.shade700 : Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 1000),
+      width: 250,
+      color: Colors.black,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Adding image at the top
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 8, bottom: 10),
-                child: Image.asset(
-                  'assets/org.webp', // Replace with your image path
-                  width: 110,
-                  height: 110,
-                ),
-              ),
-              ListView.builder(
-                  padding: const EdgeInsets.only(top: 10, left: 5),
-                  shrinkWrap: true,
-                  itemCount: pages.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      onTap: () {
-                        widget.onItemSelected(index);
-                      },
-                      leading: Icon(icons[index], color: Colors.black),
-                      title: Text(pages[index],
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold)),
-                    );
-                  }),
-            ],
-          ),
-          // Logout link styled consistently
-          ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AdminHome()),
-              );
-            },
-            leading: Icon(Icons.logout, size: 30, color: Colors.black),
-            // title: Text(
-            //   "LOGOUT",
-            //   style: TextStyle(
-            //       color: Colors.black,
-            //       fontSize: 15,
-            //       fontWeight: FontWeight.bold),
-            // ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.only(top: 8),
+              itemCount: SideBar.pages.length,
+              itemBuilder: (context, index) => _buildMenuItem(index),
+            ),
           ),
         ],
       ),
