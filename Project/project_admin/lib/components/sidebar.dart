@@ -29,7 +29,7 @@ class SideBar extends StatefulWidget {
     Icons.radio_button_checked,
     Icons.check_box,
     Icons.edit,
-    Icons.person,
+    Icons.people_alt_rounded,
     Icons.rate_review,
     Icons.feedback,
   ];
@@ -48,29 +48,29 @@ class _SideBarState extends State<SideBar> {
       },
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        margin: const EdgeInsets.symmetric(vertical: 13, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16),
         decoration: BoxDecoration(
           color: isSelected
               ? const Color(0xFF8A4AF0).withOpacity(0.2)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
           border: isSelected
-              ? Border.all(color: const Color(0xFF8A4AF0), width: 1)
+              ? Border.all(color: Colors.deepPurpleAccent, width: 1)
               : null,
         ),
         child: Row(
           children: [
             Icon(
               SideBar.icons[index],
-              color: isSelected ? const Color(0xFF8A4AF0) : Colors.white,
+              color: isSelected ? Colors.deepPurpleAccent : Colors.white,
               size: 24,
             ),
             const SizedBox(width: 16),
             Text(
               SideBar.pages[index],
               style: TextStyle(
-                color: isSelected ? const Color(0xFF8A4AF0) : Colors.white,
+                color: isSelected ? Colors.deepPurpleAccent : Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),

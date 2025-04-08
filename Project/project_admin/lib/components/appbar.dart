@@ -15,42 +15,108 @@ class Appbar1 extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFF1A1A1A),
+          backgroundColor: Colors.transparent, // Transparent for custom styling
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius:
+                BorderRadius.circular(12), // Sharp, professional corners
           ),
-          title: Text(
-            'Logout',
-            style: TextStyle(
-              color: const Color(0xFF8A4AF0),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: Text(
-            'Are you sure you want to logout?',
-            style: TextStyle(color: Colors.white70),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: Colors.grey),
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            width: 320, // Slightly wider for a balanced look
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1A1A1A), // Black background
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: const Color(0xFF8A4AF0)
+                    .withOpacity(0.3), // Subtle purple border
+                width: 1,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushReplacementNamed('/login');
-              },
-              child: Text(
-                'Logout',
-                style: TextStyle(color: const Color(0xFFF06292)),
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Confirm Logout',
+                  style: TextStyle(
+                    color: const Color(0xFF8A4AF0), // Purple for title
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Are you sure you want to logout?',
+                  style: TextStyle(
+                    color: Colors.white70, // Light grayish-white for contrast
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          color: Colors.white70, // Light grayish-white
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        backgroundColor:
+                            const Color(0xFF2A2A2A), // Darker black/gray
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushReplacementNamed('/login');
+                      },
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: const Color(0xFFFFFFFF), // White text
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        backgroundColor:
+                            const Color(0xFF8A4AF0), // Purple accent
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
+          ),
+          actionsAlignment: MainAxisAlignment.center,
         );
       },
     );

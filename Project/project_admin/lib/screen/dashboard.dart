@@ -22,12 +22,54 @@ class _AdminHomeState extends State<AdminHome> {
   bool _isSidebarVisible = true;
 
   final List<Widget> _pages = [
-    Center(
-      child: Image.asset(
-        'assets/bg.jpg',
-        width: 500,
-        height: 500,
-      ),
+    Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            image: DecorationImage(
+              image: AssetImage('assets/squ.png'),
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 40,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Welcome Back !",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
+                      shadows: [
+                        Shadow(
+                          color: Colors.white.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                  ),
+                  TextSpan(
+                    text: "🏠",
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     ),
     Level(),
     Subject(),
@@ -88,7 +130,10 @@ class _AdminHomeState extends State<AdminHome> {
                           ),
                         ],
                       ),
-                      child: _pages[_selectedIndex],
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: _pages[_selectedIndex],
+                      ),
                     ),
                   ),
                 ),
