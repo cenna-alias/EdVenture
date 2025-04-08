@@ -237,7 +237,7 @@ class _AddQuestionState extends State<AddQuestion> {
     try {
       final response = await supabase
           .from('tbl_question')
-          .select("*,tbl_category(*),tbl_level(*),tbl_subject(*)");
+          .select("*,tbl_level(*),tbl_subject(*)");
       setState(() {
         _questionList = List<Map<String, dynamic>>.from(response ?? []);
         _questionList.sort((a, b) => a['id'].compareTo(b['id']));

@@ -64,7 +64,7 @@ class _AdminComplaintsState extends State<AdminComplaints> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Admin - Complaints",
+          "Complaints",
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                                         ),
                                       ),
                                       child: Text(
-                                        isReplied ? "Replied" : "Pending",
+                                        isReplied ? "REPLIED" : "PENDING",
                                         style: TextStyle(
                                           color: isReplied
                                               ? Colors.green

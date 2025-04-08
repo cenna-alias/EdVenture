@@ -79,7 +79,7 @@ class _UserState extends State<User> {
             ),
             const SizedBox(width: 8),
             Text(
-              'User Management',
+              'Activities',
               style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

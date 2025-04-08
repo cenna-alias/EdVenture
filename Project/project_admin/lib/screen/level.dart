@@ -143,7 +143,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -156,7 +156,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                   Row(
                     children: [
                       Icon(Icons.stairs,
-                          color: const Color(0xFF8A4AF0), size: 32),
+                          color: Colors.deepPurpleAccent, size: 32),
                       const SizedBox(width: 12),
                       Text(
                         'Levels',
@@ -171,7 +171,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF8A4AF0),
+                      backgroundColor: Colors.deepPurpleAccent,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 14),
@@ -196,11 +196,12 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                     ? Container(
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF2A2A2A),
+                          color: Colors.black,
                           borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.deepPurpleAccent),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
+                              color: Colors.deepPurple.withOpacity(0.3),
                               blurRadius: 20,
                               offset: const Offset(0, 4),
                             ),
@@ -224,26 +225,27 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                                 labelText: 'Level Name',
                                 labelStyle: TextStyle(color: Colors.white70),
                                 filled: true,
-                                fillColor: const Color(0xFF2A2A2A),
+                                fillColor: Colors.black,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
-                                      color: Colors.grey[800]!, width: 1),
+                                      color: Colors.deepPurpleAccent, width: 1),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
-                                      color: Colors.grey[800]!, width: 1),
+                                      color: Colors.deepPurpleAccent, width: 1),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
-                                      color: Color(0xFF8A4AF0), width: 1.5),
+                                      color: Colors.deepPurpleAccent,
+                                      width: 1.5),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 14),
                                 prefixIcon: Icon(Icons.stairs,
-                                    color: const Color(0xFF8A4AF0)),
+                                    color: Colors.deepPurpleAccent),
                               ),
                               style: const TextStyle(color: Colors.white),
                             ),
@@ -252,29 +254,30 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               controller: _timeController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                labelText: 'Time (in minutes)',
+                                labelText: 'Time (in seconds)',
                                 labelStyle: TextStyle(color: Colors.white70),
                                 filled: true,
-                                fillColor: const Color(0xFF2A2A2A),
+                                fillColor: Colors.black,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
-                                      color: Colors.grey[800]!, width: 1),
+                                      color: Colors.deepPurpleAccent, width: 1),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
-                                      color: Colors.grey[800]!, width: 1),
+                                      color: Colors.deepPurpleAccent, width: 1),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
-                                      color: Color(0xFF8A4AF0), width: 1.5),
+                                      color: Colors.deepPurpleAccent,
+                                      width: 1.5),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 14),
                                 prefixIcon: Icon(Icons.timer,
-                                    color: const Color(0xFF8A4AF0)),
+                                    color: Colors.deepPurpleAccent),
                               ),
                               style: const TextStyle(color: Colors.white),
                             ),
@@ -284,7 +287,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               child: ElevatedButton(
                                 onPressed: submit,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF8A4AF0),
+                                  backgroundColor: Colors.deepPurpleAccent,
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 32, vertical: 14),
@@ -308,11 +311,12 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
               const SizedBox(height: 32),
               Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A),
+                  color: Colors.black,
                   borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.deepPurpleAccent),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.deepPurple.withOpacity(0.3),
                       blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
@@ -328,7 +332,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               "No levels yet",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white70,
+                                color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -339,92 +343,145 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                           dataRowHeight: 64,
                           headingRowHeight: 56,
                           headingRowColor:
-                              WidgetStateProperty.all(const Color(0xFF2A2A2A)),
+                              WidgetStateProperty.all(Colors.black),
                           border: TableBorder(
-                            horizontalInside:
-                                BorderSide(color: Colors.grey[800]!, width: 1),
-                            top: BorderSide(color: Colors.grey[800]!, width: 1),
-                            bottom:
-                                BorderSide(color: Colors.grey[800]!, width: 1),
-                            left:
-                                BorderSide(color: Colors.grey[800]!, width: 1),
-                            right:
-                                BorderSide(color: Colors.grey[800]!, width: 1),
+                            horizontalInside: BorderSide(
+                                color: Colors.deepPurpleAccent, width: 1),
+                            top: BorderSide(
+                                color: Colors.deepPurpleAccent, width: 1),
+                            bottom: BorderSide(
+                                color: Colors.deepPurpleAccent, width: 1),
                           ),
-                          columns: const [
+                          columns: [
                             DataColumn(
-                                label: Text("No.",
+                              label: SizedBox(
+                                width: 50, // Fixed width for No. column
+                                child: Center(
+                                  child: Text(
+                                    "No.",
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white))),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                             DataColumn(
-                                label: Text("Level",
+                              label: SizedBox(
+                                width: 200, // Matches the data cell width
+                                child: Center(
+                                  child: Text(
+                                    "Level",
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white))),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                             DataColumn(
-                                label: Text("Time",
+                              label: SizedBox(
+                                width: 150, // Matches the data cell width
+                                child: Center(
+                                  child: Text(
+                                    "Time",
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white))),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                             DataColumn(
-                                label: Text("Actions",
+                              label: SizedBox(
+                                width: 150, // Fixed width for Actions column
+                                child: Center(
+                                  child: Text(
+                                    "Actions",
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white))),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                           rows: _levelList.asMap().entries.map((entry) {
                             return DataRow(
                               cells: [
-                                DataCell(Text((entry.key + 1).toString(),
-                                    style: const TextStyle(
-                                        fontSize: 16, color: Colors.white))),
                                 DataCell(
-                                  Container(
+                                  SizedBox(
+                                    width: 50,
+                                    child: Center(
+                                      child: Text(
+                                        (entry.key + 1).toString(),
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  SizedBox(
                                     width: 200,
-                                    child: Text(
-                                      entry.value['level_name']?.toString() ??
-                                          'N/A',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          fontSize: 16, color: Colors.white),
+                                    child: Center(
+                                      child: Text(
+                                        entry.value['level_name']?.toString() ??
+                                            'N/A',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 DataCell(
-                                  Container(
+                                  SizedBox(
                                     width: 150,
-                                    child: Text(
-                                      "${entry.value['level_time']?.toString() ?? '0'} min",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          fontSize: 16, color: Colors.white),
+                                    child: Center(
+                                      child: Text(
+                                        "${entry.value['level_time']?.toString() ?? '0'} secs",
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 DataCell(
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.edit,
-                                            color: Color(0xFF8A4AF0)),
-                                        onPressed: () => editLevel(entry.value),
-                                        hoverColor: const Color(0xFF8A4AF0)
-                                            .withOpacity(0.1),
+                                  SizedBox(
+                                    width: 150,
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          IconButton(
+                                            icon: Icon(Icons.edit,
+                                                color: Colors.greenAccent),
+                                            onPressed: () =>
+                                                editLevel(entry.value),
+                                            hoverColor: Colors.greenAccent
+                                                .withOpacity(0.1),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.delete,
+                                                color: Colors.redAccent),
+                                            onPressed: () =>
+                                                delete(entry.value['id']),
+                                            hoverColor: Colors.redAccent
+                                                .withOpacity(0.1),
+                                          ),
+                                        ],
                                       ),
-                                      IconButton(
-                                        icon: const Icon(Icons.delete,
-                                            color: Color(0xFFF06292)),
-                                        onPressed: () =>
-                                            delete(entry.value['id']),
-                                        hoverColor: const Color(0xFFF06292)
-                                            .withOpacity(0.1),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ],

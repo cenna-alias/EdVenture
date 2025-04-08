@@ -47,26 +47,30 @@ class _RegisterState extends State<Register> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Lottie.asset(
-                        'assets/popper.json',
-                        width: 200,
-                        height: 200,
-                        repeat: false,
-                        fit: BoxFit.contain,
-                        onLoaded: (composition) async {
-                          await Future.delayed(composition.duration);
-                          if (mounted) {
-                            Navigator.of(context).pop();
-                          }
-                        },
+                      Center(
+                        child: Lottie.asset(
+                          'assets/popper.json',
+                          width: 200,
+                          height: 200,
+                          repeat: false,
+                          fit: BoxFit.contain,
+                          onLoaded: (composition) async {
+                            await Future.delayed(composition.duration);
+                            if (mounted) {
+                              Navigator.of(context).pop();
+                            }
+                          },
+                        ),
                       ),
                       const SizedBox(height: 20),
-                      const Text(
-                        "Done!",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
+                      const Center(
+                        child: Text(
+                          "DONE!",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],

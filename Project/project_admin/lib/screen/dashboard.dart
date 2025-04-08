@@ -24,7 +24,7 @@ class _AdminHomeState extends State<AdminHome> {
   final List<Widget> _pages = [
     Center(
       child: Image.asset(
-        'assets/home.png',
+        'assets/bg.jpg',
         width: 500,
         height: 500,
       ),

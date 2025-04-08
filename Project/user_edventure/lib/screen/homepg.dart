@@ -265,7 +265,7 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16.0),
                       child: CategoryCard(
-                        image: "assets/cat1.jpeg",
+                        image: "assets/img2.jpeg",
                         size: cardSize,
                         page: 'MCQ',
                       ),

@@ -50,7 +50,7 @@ class _AdminLoginState extends State<AdminLogin> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/baba.jpg'),
+            image: AssetImage('assets/bg.jpg'),
             fit: BoxFit.cover,
             filterQuality: FilterQuality.high,
           ),
