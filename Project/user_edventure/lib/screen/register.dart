@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'login.dart';
 
 class Register extends StatefulWidget {
@@ -35,14 +36,56 @@ class _RegisterState extends State<Register> {
           'user_dob': _dobController.text.trim(),
         });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Registration successful!")),
+        // Show Lottie animation in a full-screen dialog with black background
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: Scaffold(
+                backgroundColor: Colors.black,
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset(
+                        'assets/popper.json',
+                        width: 200, // Increased from 150 to 200
+                        height: 200, // Increased from 150 to 200
+                        repeat: false,
+                        fit: BoxFit.contain,
+                        onLoaded: (composition) async {
+                          await Future.delayed(composition.duration);
+                          if (mounted) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "Done!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 32, // Increased from 24 to 32
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         );
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const Login()),
-        );
+        // Navigate after dialog closes
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Login()),
+          );
+        }
       }
     } catch (error) {
       ScaffoldMessenger.of(
@@ -68,6 +111,8 @@ class _RegisterState extends State<Register> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Icon(Icons.how_to_reg, size: 60, color: Colors.yellow),
+                const SizedBox(height: 10),
                 const Text(
                   "Create Account",
                   style: TextStyle(
@@ -141,7 +186,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(
@@ -162,7 +207,6 @@ class _RegisterState extends State<Register> {
                           color: Colors.purple[300],
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ],

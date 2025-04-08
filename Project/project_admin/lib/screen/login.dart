@@ -24,10 +24,8 @@ class _AdminLoginState extends State<AdminLogin> {
         password: _passwordController.text,
       );
 
-      final user = await supabase
-          .from('tbl_admin')
-          .select()
-          .eq('id', res.user!.id);
+      final user =
+          await supabase.from('tbl_admin').select().eq('id', res.user!.id);
 
       if (user.isNotEmpty) {
         Navigator.pushReplacement(

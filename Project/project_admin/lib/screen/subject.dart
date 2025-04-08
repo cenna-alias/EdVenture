@@ -138,248 +138,218 @@ class _SubjectState extends State<Subject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: const Color(0xFF1A1A1A), // Deep black background
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(32.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Header
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.blue.shade800, Colors.blue.shade600],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: 16),
-                        Icon(Icons.book_rounded, color: Colors.white, size: 28),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Subjects',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            letterSpacing: 0.5,
-                          ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.book_rounded,
+                          color: const Color(0xFF8A4AF0), size: 32), // Purple
+                      const SizedBox(width: 12),
+                      Text(
+                        'Subjects',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white, // Bright white
+                          letterSpacing: 0.2,
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.blue.shade800,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 2,
-                        ),
-                        onPressed: () =>
-                            setState(() => _isFormVisible = !_isFormVisible),
-                        icon: Icon(_isFormVisible ? Icons.close : Icons.add,
-                            size: 20),
-                        label: Text(_isFormVisible ? "Close" : "Add Subject"),
                       ),
+                    ],
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF8A4AF0), // Purple
+                      foregroundColor: Colors.white, // Bright white
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      elevation: 2,
                     ),
-                  ],
-                ),
+                    onPressed: () =>
+                        setState(() => _isFormVisible = !_isFormVisible),
+                    icon: Icon(_isFormVisible ? Icons.close : Icons.add,
+                        size: 20),
+                    label: Text(_isFormVisible ? "Close" : "Add New",
+                        style: const TextStyle(fontWeight: FontWeight.w600)),
+                  ),
+                ],
               ),
-              const SizedBox(height: 24),
-
-              // Form Section
+              const SizedBox(height: 32),
               AnimatedContainer(
                 duration: _animationDuration,
                 curve: Curves.easeInOut,
                 child: _isFormVisible
-                    ? Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                    ? Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2A2A2A), // Lighter black
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 20,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    _editingId != null
-                                        ? Icons.edit
-                                        : Icons.add_circle,
-                                    color: Colors.blue.shade600,
-                                    size: 24,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    _editingId != null
-                                        ? "Edit Subject"
-                                        : "New Subject",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.blue.shade800,
-                                    ),
-                                  ),
-                                ],
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _editingId != null
+                                  ? "Edit Subject"
+                                  : "New Subject",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white, // Bright white
                               ),
-                              const SizedBox(height: 20),
-                              TextFormField(
-                                controller: _subjectnameController,
-                                decoration: InputDecoration(
-                                  labelText: 'Subject Name',
-                                  hintText: 'Enter subject name',
-                                  filled: true,
-                                  fillColor: Colors.grey[100],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: Colors.blue.shade600,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 14),
-                                  prefixIcon: Icon(Icons.book_rounded,
-                                      color: Colors.blue.shade600),
+                            ),
+                            const SizedBox(height: 24),
+                            TextFormField(
+                              controller: _subjectnameController,
+                              decoration: InputDecoration(
+                                labelText: 'Subject Name',
+                                labelStyle: TextStyle(
+                                    color: Colors.white), // Bright white
+                                filled: true,
+                                fillColor:
+                                    const Color(0xFF2A2A2A), // Lighter black
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey[800]!, width: 1),
                                 ),
-                              ),
-                              const SizedBox(height: 20),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: ElevatedButton(
-                                  onPressed: submit,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade600,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24, vertical: 12),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    elevation: 2,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        _editingId != null
-                                            ? Icons.update
-                                            : Icons.save,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(_editingId != null
-                                          ? "Update"
-                                          : "Save"),
-                                    ],
-                                  ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey[800]!, width: 1),
                                 ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF8A4AF0),
+                                      width: 1.5), // Purple
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 14),
+                                prefixIcon: Icon(Icons.book_rounded,
+                                    color: const Color(0xFF8A4AF0)), // Purple
                               ),
-                            ],
-                          ),
+                              style: const TextStyle(
+                                  color: Colors.white), // Bright white
+                            ),
+                            const SizedBox(height: 24),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: ElevatedButton(
+                                onPressed: submit,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color(0xFF8A4AF0), // Purple
+                                  foregroundColor: Colors.white, // Bright white
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 32, vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  elevation: 2,
+                                ),
+                                child: Text(
+                                    _editingId != null
+                                        ? "Update Subject"
+                                        : "Add Subject",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600)),
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     : Container(),
               ),
-              const SizedBox(height: 24),
-
-              // Subjects List
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+              const SizedBox(height: 32),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2A2A2A), // Lighter black
+                  borderRadius: BorderRadius.circular(16), // Circular edges
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                child: _subjectList.isEmpty
-                    ? Container(
-                        padding: const EdgeInsets.all(40),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.book,
-                              size: 48,
-                              color: Colors.grey[400],
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              "No subjects available",
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(16), // Full circular effect
+                  child: _subjectList.isEmpty
+                      ? Container(
+                          padding: const EdgeInsets.all(24),
+                          child: Center(
+                            child: Text(
+                              "No subjects yet",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.grey[600],
+                                color: Colors.white, // Bright white
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                          ],
-                        ),
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: DataTable(
+                          ),
+                        )
+                      : DataTable(
                           columnSpacing: 24,
-                          dataRowHeight: 56,
+                          dataRowHeight: 64,
                           headingRowHeight: 56,
-                          headingRowColor:
-                              WidgetStateProperty.all(Colors.blue.shade50),
+                          headingRowColor: WidgetStateProperty.all(
+                              const Color(0xFF2A2A2A)), // Lighter black
                           border: TableBorder(
                             horizontalInside:
-                                BorderSide(color: Colors.grey[200]!, width: 1),
+                                BorderSide(color: Colors.grey[800]!, width: 1),
+                            top: BorderSide(color: Colors.grey[800]!, width: 1),
+                            bottom:
+                                BorderSide(color: Colors.grey[800]!, width: 1),
+                            left:
+                                BorderSide(color: Colors.grey[800]!, width: 1),
+                            right:
+                                BorderSide(color: Colors.grey[800]!, width: 1),
                           ),
-                          columns: [
+                          columns: const [
                             DataColumn(
-                              label: Text(
-                                "No.",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue.shade800,
-                                ),
-                              ),
-                            ),
+                                label: Text("No.",
+                                    style: TextStyle(
+                                        fontSize: 16, // Medium size
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white))), // Bright white
                             DataColumn(
-                              label: Text(
-                                "Subject",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue.shade800,
-                                ),
-                              ),
-                            ),
+                                label: Text("Subject",
+                                    style: TextStyle(
+                                        fontSize: 16, // Medium size
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white))), // Bright white
                             DataColumn(
-                              label: Text(
-                                "Actions",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue.shade800,
-                                ),
-                              ),
-                            ),
+                                label: Text("Actions",
+                                    style: TextStyle(
+                                        fontSize: 16, // Medium size
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white))), // Bright white
                           ],
                           rows: _subjectList.asMap().entries.map((entry) {
                             return DataRow(
                               cells: [
-                                DataCell(
-                                  Text(
-                                    (entry.key + 1).toString(),
-                                    style: TextStyle(color: Colors.grey[800]),
-                                  ),
-                                ),
+                                DataCell(Text((entry.key + 1).toString(),
+                                    style: const TextStyle(
+                                        fontSize: 16, // Medium size
+                                        color: Colors.white))), // Bright white
                                 DataCell(
                                   Container(
                                     width: 200,
@@ -387,32 +357,31 @@ class _SubjectState extends State<Subject> {
                                       entry.value['subject_name']?.toString() ??
                                           'N/A',
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(color: Colors.grey[800]),
+                                      style: const TextStyle(
+                                          fontSize: 16, // Medium size
+                                          color: Colors.white), // Bright white
                                     ),
                                   ),
                                 ),
                                 DataCell(
                                   Row(
                                     children: [
-                                      Tooltip(
-                                        message: 'Edit',
-                                        child: IconButton(
-                                          icon: Icon(Icons.edit_rounded,
-                                              color: Colors.blue.shade600),
-                                          onPressed: () =>
-                                              editSubject(entry.value),
-                                          hoverColor: Colors.blue[50],
-                                        ),
+                                      IconButton(
+                                        icon: const Icon(Icons.edit,
+                                            color: Color(0xFF8A4AF0)), // Purple
+                                        onPressed: () =>
+                                            editSubject(entry.value),
+                                        hoverColor: const Color(0xFF8A4AF0)
+                                            .withOpacity(0.1),
                                       ),
-                                      Tooltip(
-                                        message: 'Delete',
-                                        child: IconButton(
-                                          icon: Icon(Icons.delete_rounded,
-                                              color: Colors.red.shade600),
-                                          onPressed: () =>
-                                              delete(entry.value['id']),
-                                          hoverColor: Colors.red[50],
-                                        ),
+                                      IconButton(
+                                        icon: const Icon(Icons.delete,
+                                            color:
+                                                Color(0xFFF06292)), // Soft pink
+                                        onPressed: () =>
+                                            delete(entry.value['id']),
+                                        hoverColor: const Color(0xFFF06292)
+                                            .withOpacity(0.1),
                                       ),
                                     ],
                                   ),
@@ -421,7 +390,7 @@ class _SubjectState extends State<Subject> {
                             );
                           }).toList(),
                         ),
-                      ),
+                ),
               ),
             ],
           ),

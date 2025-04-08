@@ -89,9 +89,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
-                Icons.star_rounded,
+                Icons.face_retouching_natural,
                 size: 60,
-                color: Colors.purpleAccent,
+                color: Colors.white,
               ),
               const SizedBox(height: 10),
               Text(
@@ -99,13 +99,13 @@ class _HomePageState extends State<HomePage> {
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.purpleAccent,
                   fontFamily: 'ComicSans',
                 ),
               ),
               const SizedBox(height: 5),
               Text(
-                "Email: ${userData['user_email']}",
+                "Email : ${userData['user_email']}",
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.purpleAccent,
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 5),
               Text(
-                "DOB: ${userData['user_dob'] ?? 'Not Set'}",
+                "DOB : ${userData['user_dob'] ?? 'Not Set'}",
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.purpleAccent,
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Edventure',
+          'EdVenture',
           style: TextStyle(
             fontFamily: 'ComicSans',
             fontSize: 26,
@@ -177,9 +177,9 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.account_circle,
+              Icons.face_retouching_natural,
               size: 35,
-              color: Colors.purpleAccent,
+              color: Colors.white,
             ),
             onPressed: _showUserProfile, // Keep the original modal behavior
           ),

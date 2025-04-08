@@ -13,15 +13,15 @@ class SideBar extends StatefulWidget {
   static const List<String> pages = [
     "HOME",
     // "ACTIVITY",
-    "LEVEL",
-    "SUBJECT",
+    "LEVELS",
+    "SUBJECTS",
     "MCQ QUESTIONS",
     "T/F QUESTIONS",
     "FILL QUESTIONS",
-    "USER",
+    "USERS",
     // "REPORT",
-    "REVIEW",
-    "VIEW COMPLAINT",
+    "REVIEWS",
+    "VIEW COMPLAINTS",
   ];
 
   static const List<IconData> icons = [
@@ -56,25 +56,30 @@ class _SideBarState extends State<SideBar> {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         decoration: BoxDecoration(
           color: isSelected
-              ? Colors.yellowAccent.withOpacity(0.1)
+              ? const Color(0xFF8A4AF0).withOpacity(0.2) // Purple highlight
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
           border: isSelected
-              ? Border.all(color: Colors.yellowAccent.shade700, width: 1)
+              ? Border.all(
+                  color: const Color(0xFF8A4AF0), width: 1) // Purple border
               : null,
         ),
         child: Row(
           children: [
             Icon(
               SideBar.icons[index],
-              color: isSelected ? Colors.yellowAccent.shade700 : Colors.white,
+              color: isSelected
+                  ? const Color(0xFF8A4AF0)
+                  : Colors.white, // Purple when selected
               size: 24,
             ),
             const SizedBox(width: 16),
             Text(
               SideBar.pages[index],
               style: TextStyle(
-                color: isSelected ? Colors.yellowAccent.shade700 : Colors.white,
+                color: isSelected
+                    ? const Color(0xFF8A4AF0)
+                    : Colors.white, // Purple when selected
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -90,7 +95,7 @@ class _SideBarState extends State<SideBar> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 1000),
       width: 250,
-      color: Colors.black,
+      color: const Color(0xFF1A1A1A), // Deep black background
       child: Column(
         children: [
           Expanded(

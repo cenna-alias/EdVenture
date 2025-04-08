@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:project_admin/components/appbar.dart';
 import 'package:project_admin/components/sidebar.dart';
-// import 'package:project_admin/screen/activity.dart';
 import 'package:project_admin/screen/add_question.dart';
 import 'package:project_admin/screen/complaints.dart';
-// import 'package:project_admin/screen/category.dart';
 import 'package:project_admin/screen/fillquestion.dart';
 import 'package:project_admin/screen/level.dart';
 import 'package:project_admin/screen/subject.dart';
 import 'package:project_admin/screen/tfquestion.dart';
 import 'package:project_admin/screen/user.dart';
-import 'package:project_admin/screen/report.dart';
 import 'package:project_admin/screen/review.dart';
 
 class AdminHome extends StatefulWidget {
@@ -32,15 +29,12 @@ class _AdminHomeState extends State<AdminHome> {
         height: 500,
       ),
     ),
-    // Activity(),
-    // Category(),
     Level(),
     Subject(),
     AddQuestion(),
     Tfquestion(),
     Fillquestion(),
     User(),
-    // Report(),
     Review(),
     AdminComplaints(),
   ];
@@ -60,7 +54,7 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: const Color(0xFF1A1A1A), // Deep black background
       body: Column(
         children: [
           Appbar1(
@@ -84,7 +78,21 @@ class _AdminHomeState extends State<AdminHome> {
                       : 6, // Full width when sidebar hidden
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: _pages[_selectedIndex],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(
+                            0xFF2A2A2A), // Slightly lighter black for content area
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: _pages[_selectedIndex],
+                    ),
                   ),
                 ),
               ],

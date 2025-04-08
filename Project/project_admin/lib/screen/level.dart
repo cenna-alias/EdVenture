@@ -16,12 +16,11 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
   final TextEditingController _timeController = TextEditingController();
   PlatformFile? pickedImage;
   List<Map<String, dynamic>> _levelList = [];
-  int? _editingId; // Added to track which level is being edited
+  int? _editingId;
 
   Future<void> submit() async {
     try {
       if (_editingId != null) {
-        // Update existing level
         await supabase.from("tbl_level").update({
           "level_name": _levelnameController.text,
           "level_time": int.tryParse(_timeController.text) ?? 0,
@@ -37,9 +36,8 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
             duration: const Duration(seconds: 2),
           ),
         );
-        _editingId = null; // Reset editing state
+        _editingId = null;
       } else {
-        // Add new level
         await supabase.from("tbl_level").insert({
           "level_name": _levelnameController.text,
           "level_time": int.tryParse(_timeController.text) ?? 0,
@@ -145,10 +143,10 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF1A1A1A), // Deep black background
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(32.0), // Increased padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -157,51 +155,54 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.stairs, color: Colors.black87, size: 28),
+                      Icon(Icons.stairs,
+                          color: const Color(0xFF8A4AF0), // Purple
+                          size: 32),
                       const SizedBox(width: 12),
                       Text(
                         'Levels',
                         style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                          letterSpacing: 0.5,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white, // White text
+                          letterSpacing: 0.2,
                         ),
                       ),
                     ],
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black87,
+                      backgroundColor: const Color(0xFF8A4AF0), // Purple
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 12),
+                          horizontal: 24, vertical: 14),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      elevation: 0,
+                          borderRadius: BorderRadius.circular(8)),
+                      elevation: 2,
                     ),
                     onPressed: () =>
                         setState(() => _isFormVisible = !_isFormVisible),
                     icon: Icon(_isFormVisible ? Icons.close : Icons.add,
                         size: 20),
-                    label: Text(_isFormVisible ? "Close" : "Add New"),
+                    label: Text(_isFormVisible ? "Close" : "Add New",
+                        style: const TextStyle(fontWeight: FontWeight.w600)),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               AnimatedContainer(
                 duration: _animationDuration,
                 curve: Curves.easeInOut,
                 child: _isFormVisible
                     ? Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
+                          color: const Color(0xFF2A2A2A), // Lighter black
+                          borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              blurRadius: 12,
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 20,
                               offset: const Offset(0, 4),
                             ),
                           ],
@@ -211,28 +212,45 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                           children: [
                             Text(
                               _editingId != null ? "Edit Level" : "New Level",
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: const TextStyle(
+                                fontSize: 20,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.black87,
+                                color: Colors.white, // White text
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 24),
                             TextFormField(
                               controller: _levelnameController,
                               decoration: InputDecoration(
                                 labelText: 'Level Name',
+                                labelStyle: TextStyle(
+                                    color: Colors.white70), // Subtle white
                                 filled: true,
-                                fillColor: Colors.grey[100],
+                                fillColor:
+                                    const Color(0xFF2A2A2A), // Lighter black
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey[800]!, width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey[800]!, width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF8A4AF0),
+                                      width: 1.5), // Purple
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 14),
-                                prefixIcon:
-                                    Icon(Icons.stairs, color: Colors.black54),
+                                prefixIcon: Icon(Icons.stairs,
+                                    color: const Color(0xFF8A4AF0)), // Purple
                               ),
+                              style: const TextStyle(
+                                  color: Colors.white), // White input text
                             ),
                             const SizedBox(height: 16),
                             TextFormField(
@@ -240,35 +258,56 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: 'Time (in minutes)',
+                                labelStyle: TextStyle(
+                                    color: Colors.white70), // Subtle white
                                 filled: true,
-                                fillColor: Colors.grey[100],
+                                fillColor:
+                                    const Color(0xFF2A2A2A), // Lighter black
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey[800]!, width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey[800]!, width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF8A4AF0),
+                                      width: 1.5), // Purple
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 14),
-                                prefixIcon:
-                                    Icon(Icons.timer, color: Colors.black54),
+                                prefixIcon: Icon(Icons.timer,
+                                    color: const Color(0xFF8A4AF0)), // Purple
                               ),
+                              style: const TextStyle(
+                                  color: Colors.white), // White input text
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 24),
                             Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton(
                                 onPressed: submit,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black87,
+                                  backgroundColor:
+                                      const Color(0xFF8A4AF0), // Purple
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 12),
+                                      horizontal: 32, vertical: 14),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  elevation: 0,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  elevation: 2,
                                 ),
-                                child: Text(_editingId != null
-                                    ? "Update Level"
-                                    : "Add Level"),
+                                child: Text(
+                                    _editingId != null
+                                        ? "Update Level"
+                                        : "Add Level",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600)),
                               ),
                             ),
                           ],
@@ -276,107 +315,139 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                       )
                     : Container(),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  color: const Color(0xFF2A2A2A), // Lighter black
+                  borderRadius:
+                      BorderRadius.circular(16), // Increased for circular edges
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      blurRadius: 12,
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
                   ],
                 ),
-                child: _levelList.isEmpty
-                    ? Container(
-                        padding: const EdgeInsets.all(20),
-                        child: Center(
-                          child: Text(
-                            "No levels yet",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.w500,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      16), // Matches container for full circular effect
+                  child: _levelList.isEmpty
+                      ? Container(
+                          padding: const EdgeInsets.all(24),
+                          child: Center(
+                            child: Text(
+                              "No levels yet",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70, // Subtle white
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : DataTable(
-                        columnSpacing: 24,
-                        dataRowHeight: 56,
-                        headingRowHeight: 56,
-                        headingRowColor:
-                            WidgetStateProperty.all(Colors.grey[100]),
-                        border: TableBorder(
-                          horizontalInside:
-                              BorderSide(color: Colors.grey[200]!, width: 1),
-                        ),
-                        columns: const [
-                          DataColumn(
-                              label: Text("No.",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text("Level",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text("Time",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text("Actions",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                        ],
-                        rows: _levelList.asMap().entries.map((entry) {
-                          return DataRow(
-                            cells: [
-                              DataCell(Text((entry.key + 1).toString())),
-                              DataCell(
-                                Container(
-                                  width: 200,
-                                  child: Text(
-                                    entry.value['level_name']?.toString() ??
-                                        'N/A',
-                                    overflow: TextOverflow.ellipsis,
+                        )
+                      : DataTable(
+                          columnSpacing: 24,
+                          dataRowHeight: 64,
+                          headingRowHeight: 56,
+                          headingRowColor: WidgetStateProperty.all(
+                              const Color(0xFF2A2A2A)), // Lighter black
+                          border: TableBorder(
+                            horizontalInside:
+                                BorderSide(color: Colors.grey[800]!, width: 1),
+                            top: BorderSide(color: Colors.grey[800]!, width: 1),
+                            bottom:
+                                BorderSide(color: Colors.grey[800]!, width: 1),
+                            left:
+                                BorderSide(color: Colors.grey[800]!, width: 1),
+                            right:
+                                BorderSide(color: Colors.grey[800]!, width: 1),
+                          ),
+                          columns: const [
+                            DataColumn(
+                                label: Text("No.",
+                                    style: TextStyle(
+                                        fontSize: 16, // Medium size
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white))), // Bright white
+                            DataColumn(
+                                label: Text("Level",
+                                    style: TextStyle(
+                                        fontSize: 16, // Medium size
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white))), // Bright white
+                            DataColumn(
+                                label: Text("Time",
+                                    style: TextStyle(
+                                        fontSize: 16, // Medium size
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white))), // Bright white
+                            DataColumn(
+                                label: Text("Actions",
+                                    style: TextStyle(
+                                        fontSize: 16, // Medium size
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white))), // Bright white
+                          ],
+                          rows: _levelList.asMap().entries.map((entry) {
+                            return DataRow(
+                              cells: [
+                                DataCell(Text((entry.key + 1).toString(),
+                                    style: const TextStyle(
+                                        fontSize: 16, // Medium size
+                                        color: Colors.white))), // Bright white
+                                DataCell(
+                                  Container(
+                                    width: 200,
+                                    child: Text(
+                                      entry.value['level_name']?.toString() ??
+                                          'N/A',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontSize: 16, // Medium size
+                                          color: Colors.white), // Bright white
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Container(
-                                  width: 150,
-                                  child: Text(
-                                    "${entry.value['level_time']?.toString() ?? '0'} min",
-                                    overflow: TextOverflow.ellipsis,
+                                DataCell(
+                                  Container(
+                                    width: 150,
+                                    child: Text(
+                                      "${entry.value['level_time']?.toString() ?? '0'} min",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontSize: 16, // Medium size
+                                          color: Colors.white), // Bright white
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.edit,
-                                          color: Colors.blue[600]),
-                                      onPressed: () => editLevel(entry.value),
-                                      hoverColor: Colors.blue[50],
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.delete,
-                                          color: Colors.red[600]),
-                                      onPressed: () =>
-                                          delete(entry.value['id']),
-                                      hoverColor: Colors.red[50],
-                                    ),
-                                  ],
+                                DataCell(
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.edit,
+                                            color: Color(0xFF8A4AF0)), // Purple
+                                        onPressed: () => editLevel(entry.value),
+                                        hoverColor: const Color(0xFF8A4AF0)
+                                            .withOpacity(0.1),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.delete,
+                                            color:
+                                                Color(0xFFF06292)), // Soft pink
+                                        onPressed: () =>
+                                            delete(entry.value['id']),
+                                        hoverColor: const Color(0xFFF06292)
+                                            .withOpacity(0.1),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                ),
               ),
             ],
           ),

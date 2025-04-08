@@ -12,8 +12,12 @@ class AdminComplaints extends StatefulWidget {
 }
 
 class _AdminComplaintsState extends State<AdminComplaints> {
-  final primaryColor = const Color(0xFF6A1B9A);
-  final accentColor = const Color(0xFFE91E63);
+  final Color primaryColor = const Color(0xFF6A1B9A);
+  final Color accentColor = const Color(0xFF9C27B0);
+  final Color backgroundColor = const Color(0xFF121212);
+  final Color cardColor = const Color(0xFF1E1E1E);
+  final Color textColor = const Color(0xFFE0E0E0);
+  final Color secondaryTextColor = const Color(0xFFB0B0B0);
 
   List<Map<String, dynamic>> complaints = [];
   bool isLoading = true;
@@ -37,7 +41,10 @@ class _AdminComplaintsState extends State<AdminComplaints> {
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error loading complaints: $e')),
+        SnackBar(
+          content: Text('Error loading complaints: $e'),
+          backgroundColor: Colors.red[800],
+        ),
       );
       setState(() {
         isLoading = false;
@@ -52,21 +59,36 @@ class _AdminComplaintsState extends State<AdminComplaints> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: primaryColor,
+        backgroundColor: Colors.transparent,
         title: Text(
           "Admin - Complaints",
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.bold,
+            color: textColor,
           ),
         ),
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [primaryColor.withOpacity(0.8), Colors.black],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator(color: primaryColor))
+          ? Center(
+              child: CircularProgressIndicator(
+                color: accentColor,
+                strokeWidth: 3,
+              ),
+            )
           : complaints.isEmpty
               ? Center(
                   child: Column(
@@ -75,21 +97,23 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                       Icon(
                         Icons.inbox_outlined,
                         size: 80,
-                        color: Colors.grey[400],
+                        color: secondaryTextColor,
                       ),
                       const SizedBox(height: 16),
                       Text(
                         "No Complaints Found",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[600],
+                          color: secondaryTextColor,
                         ),
                       ),
                     ],
                   ),
                 )
               : RefreshIndicator(
+                  color: accentColor,
+                  backgroundColor: cardColor,
                   onRefresh: fetchComplaints,
                   child: ListView.builder(
                     padding: const EdgeInsets.all(16),
@@ -98,117 +122,192 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                       final complaint = complaints[index];
                       final isReplied = complaint['complaint_status'] == 1;
 
-                      return Card(
-                        elevation: 2,
+                      return Container(
                         margin: const EdgeInsets.only(bottom: 16),
-                        shape: RoundedRectangleBorder(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    formatDate(complaint['created_at']),
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: isReplied
-                                          ? Colors.green.withOpacity(0.1)
-                                          : Colors.orange.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      isReplied ? "Replied" : "Pending",
+                        child: Card(
+                          elevation: 0,
+                          color: cardColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      formatDate(complaint['created_at']),
                                       style: TextStyle(
-                                        color: isReplied
-                                            ? Colors.green
-                                            : Colors.orange,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
+                                        color: secondaryTextColor,
+                                        fontSize: 14,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'User: ${complaint['tbl_user']['user_name']}',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: isReplied
+                                            ? Colors.green.withOpacity(0.2)
+                                            : Colors.orange.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: isReplied
+                                              ? Colors.green
+                                              : Colors.orange,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        isReplied ? "Replied" : "Pending",
+                                        style: TextStyle(
+                                          color: isReplied
+                                              ? Colors.green
+                                              : Colors.orange,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                complaint['complaint_text'],
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              if (isReplied &&
-                                  complaint['complaint_reply'] != null) ...[
+                                const SizedBox(height: 8),
+                                Text(
+                                  'User: ${complaint['tbl_user']['user_name']}',
+                                  style: TextStyle(
+                                    color: secondaryTextColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
                                 const SizedBox(height: 16),
+                                // Enhanced Complaint Content Field
                                 Container(
-                                  padding: const EdgeInsets.all(12),
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(16),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[100],
+                                    color: Colors.black.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: primaryColor.withOpacity(0.3),
+                                    ),
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Reply:",
+                                        "COMPLAINT:",
                                         style: TextStyle(
-                                          color: primaryColor,
+                                          color: accentColor,
                                           fontWeight: FontWeight.bold,
+                                          fontSize: 14,
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
-                                      Text(complaint['complaint_reply']),
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        complaint['complaint_text'],
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 16,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                              ],
-                              const SizedBox(height: 12),
-                              if (!isReplied)
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    final result = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Reply(
-                                          complaint: complaint,
-                                          onReplySubmitted: fetchComplaints,
-                                        ),
-                                      ),
-                                    );
-                                    if (result == true) {
-                                      fetchComplaints();
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: accentColor,
-                                    shape: RoundedRectangleBorder(
+                                if (isReplied &&
+                                    complaint['complaint_reply'] != null) ...[
+                                  const SizedBox(height: 16),
+                                  // Enhanced Reply Section
+                                  Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.3),
                                       borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: primaryColor.withOpacity(0.5),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "ADMIN REPLY:",
+                                          style: TextStyle(
+                                            color: accentColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12),
+                                        Text(
+                                          complaint['complaint_reply'],
+                                          style: TextStyle(
+                                            color: textColor,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  child: const Text('Reply'),
-                                ),
-                            ],
+                                ],
+                                const SizedBox(height: 16),
+                                if (!isReplied)
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        final result = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Reply(
+                                              complaint: complaint,
+                                              onReplySubmitted: fetchComplaints,
+                                            ),
+                                          ),
+                                        );
+                                        if (result == true) {
+                                          fetchComplaints();
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: primaryColor,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        elevation: 0,
+                                      ),
+                                      child: Text(
+                                        'REPLY TO COMPLAINT',
+                                        style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
                       );

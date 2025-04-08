@@ -285,16 +285,6 @@ class _MCQState extends State<MCQ> {
                   // Save feedback and game results
                   try {
                     // Insert game results
-                    final gameResponse = await supabase
-                        .from('tbl_game')
-                        .insert({
-                          'qstn_level': currentQuestionLevel,
-                          'game_score': totalScore,
-                          'qstn_count': totalQuestionsAttended,
-                          'level_id': widget.level,
-                          'subject_id': widget.subject,
-                          'game_type': 'MCQ',
-                        });
 
                     // Insert review
                     await supabase.from('tbl_review').insert({
