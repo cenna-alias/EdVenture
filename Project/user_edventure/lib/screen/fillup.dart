@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:user_edventure/screen/homepg.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart'; // Added for rating bar
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FILL extends StatefulWidget {
   final int level;
@@ -28,9 +28,9 @@ class _FILLState extends State<FILL> {
   Map<int, List<dynamic>> choices = {};
   int currentQuestionIndex = 0;
   String? selectedAnswer;
-  int score = 0; // Current level score
-  int totalScore = 0; // Total score across all levels
-  int totalQuestionsAttended = 0; // Total questions attended across all levels
+  int score = 0;
+  int totalScore = 0;
+  int totalQuestionsAttended = 0;
   late Timer _timer;
   late int _remainingTime;
   int currentQuestionLevel = 1;
@@ -75,7 +75,7 @@ class _FILLState extends State<FILL> {
   @override
   void initState() {
     super.initState();
-    _remainingTime = widget.time; // Set initial time only once
+    _remainingTime = widget.time;
     startTimer();
     fetchFILL();
   }
@@ -170,7 +170,7 @@ class _FILLState extends State<FILL> {
                       questions.clear();
                       choices.clear();
                       fetchFILL();
-                      startTimer(); // Resume timer with current _remainingTime
+                      startTimer();
                     });
                   },
                   child: const Text('Next Level'),
@@ -185,7 +185,7 @@ class _FILLState extends State<FILL> {
                     totalScore = 0;
                     totalQuestionsAttended = 0;
                     selectedAnswer = null;
-                    _remainingTime = widget.time; // Reset time only on restart
+                    _remainingTime = widget.time;
                     questions.clear();
                     choices.clear();
                     fetchFILL();
@@ -197,7 +197,7 @@ class _FILLState extends State<FILL> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  showExitDialog(); // Modified to show exit dialog
+                  showExitDialog();
                 },
                 child: const Text('Exit'),
               ),
@@ -206,7 +206,6 @@ class _FILLState extends State<FILL> {
     );
   }
 
-  // New method to show exit dialog with rating and feedback
   void showExitDialog() {
     double rating = 0.0;
     TextEditingController feedbackController = TextEditingController();
@@ -278,14 +277,13 @@ class _FILLState extends State<FILL> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  saveGameResults(); // Cancel feedback and save game results
+                  saveGameResults();
                 },
                 child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () async {
                   try {
-                    // Insert game results
                     await supabase.from('tbl_game').insert({
                       'qstn_level': currentQuestionLevel,
                       'game_score': totalScore,
@@ -295,20 +293,13 @@ class _FILLState extends State<FILL> {
                       'game_type': 'FILL',
                     });
 
-                    // Insert review
                     await supabase.from('tbl_review').insert({
-                      'review_rating':
-                          rating
-                              .toString(), // Convert rating to string as per table schema
-                      'review_content':
-                          feedbackController.text, // User's feedback
+                      'review_rating': rating.toString(),
+                      'review_content': feedbackController.text,
                       'review_date':
-                          DateTime.now().toIso8601String().split(
-                            'T',
-                          )[0], // Current date in YYYY-MM-DD
+                          DateTime.now().toIso8601String().split('T')[0],
                       'user_id':
-                          supabase.auth.currentUser?.id ??
-                          'unknown_user', // Use authenticated user ID or fallback
+                          supabase.auth.currentUser?.id ?? 'unknown_user',
                     });
 
                     Navigator.pushAndRemoveUntil(

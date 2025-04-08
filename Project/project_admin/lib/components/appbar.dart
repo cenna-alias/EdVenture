@@ -15,14 +15,14 @@ class Appbar1 extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFF1A1A1A), // Deep black
+          backgroundColor: const Color(0xFF1A1A1A),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
           title: Text(
             'Logout',
             style: TextStyle(
-              color: const Color(0xFF8A4AF0), // Purple
+              color: const Color(0xFF8A4AF0),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -33,7 +33,7 @@ class Appbar1 extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
+                Navigator.of(context).pop();
               },
               child: Text(
                 'Cancel',
@@ -42,13 +42,12 @@ class Appbar1 extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-                // Navigate to Login Page
+                Navigator.of(context).pop();
                 Navigator.of(context).pushReplacementNamed('/login');
               },
               child: Text(
                 'Logout',
-                style: TextStyle(color: const Color(0xFFF06292)), // Soft pink for contrast
+                style: TextStyle(color: const Color(0xFFF06292)),
               ),
             ),
           ],
@@ -62,7 +61,7 @@ class Appbar1 extends StatelessWidget {
     return Container(
       height: 65,
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A), // Deep black
+        color: const Color(0xFF1A1A1A),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -86,14 +85,14 @@ class Appbar1 extends StatelessWidget {
                       },
                       icon: Icon(
                         isSidebarVisible ? Icons.menu_open : Icons.menu,
-                        color: const Color(0xFF8A4AF0), // Purple
+                        color: const Color(0xFF8A4AF0),
                         size: 30,
                       ),
                     ),
                     Text(
                       "EdVenture",
                       style: TextStyle(
-                        color: const Color(0xFF8A4AF0), // Purple
+                        color: const Color(0xFF8A4AF0),
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -111,12 +110,12 @@ class Appbar1 extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: Row(
                 children: [
-                  Icon(Icons.person, color: const Color(0xFF8A4AF0)), // Purple
+                  Icon(Icons.person, color: const Color(0xFF8A4AF0)),
                   SizedBox(width: 10),
                   Text(
                     "Admin",
                     style: TextStyle(
-                      color: const Color(0xFF8A4AF0), // Purple
+                      color: const Color(0xFF8A4AF0),
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),

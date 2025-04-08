@@ -7,33 +7,29 @@ class SideBar extends StatefulWidget {
   const SideBar({
     super.key,
     required this.onItemSelected,
-    required this.selectedIndex, // Receive selected index from parent
+    required this.selectedIndex,
   });
 
   static const List<String> pages = [
     "HOME",
-    // "ACTIVITY",
     "LEVELS",
     "SUBJECTS",
     "MCQ QUESTIONS",
     "T/F QUESTIONS",
     "FILL QUESTIONS",
     "USERS",
-    // "REPORT",
     "REVIEWS",
     "VIEW COMPLAINTS",
   ];
 
   static const List<IconData> icons = [
     Icons.home,
-    // Icons.sports_esports,
     Icons.stacked_bar_chart,
     Icons.menu_book,
     Icons.radio_button_checked,
     Icons.check_box,
     Icons.edit,
     Icons.person,
-    // Icons.insert_chart,
     Icons.rate_review,
     Icons.feedback,
   ];
@@ -48,7 +44,7 @@ class _SideBarState extends State<SideBar> {
 
     return InkWell(
       onTap: () {
-        widget.onItemSelected(index); // Notify parent widget
+        widget.onItemSelected(index);
       },
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -56,30 +52,25 @@ class _SideBarState extends State<SideBar> {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF8A4AF0).withOpacity(0.2) // Purple highlight
+              ? const Color(0xFF8A4AF0).withOpacity(0.2)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
           border: isSelected
-              ? Border.all(
-                  color: const Color(0xFF8A4AF0), width: 1) // Purple border
+              ? Border.all(color: const Color(0xFF8A4AF0), width: 1)
               : null,
         ),
         child: Row(
           children: [
             Icon(
               SideBar.icons[index],
-              color: isSelected
-                  ? const Color(0xFF8A4AF0)
-                  : Colors.white, // Purple when selected
+              color: isSelected ? const Color(0xFF8A4AF0) : Colors.white,
               size: 24,
             ),
             const SizedBox(width: 16),
             Text(
               SideBar.pages[index],
               style: TextStyle(
-                color: isSelected
-                    ? const Color(0xFF8A4AF0)
-                    : Colors.white, // Purple when selected
+                color: isSelected ? const Color(0xFF8A4AF0) : Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -95,7 +86,7 @@ class _SideBarState extends State<SideBar> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 1000),
       width: 250,
-      color: const Color(0xFF1A1A1A), // Deep black background
+      color: const Color(0xFF1A1A1A),
       child: Column(
         children: [
           Expanded(

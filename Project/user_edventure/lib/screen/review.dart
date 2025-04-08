@@ -1,5 +1,3 @@
-// review.dart
-
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_edventure/screen/viewscore.dart';
@@ -39,11 +37,12 @@ class _ReviewLevelState extends State<ReviewLevel> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => ViewScorePage(
-          score: 0, // Pass score if you have it here
-          userId: widget.userId,
-          levelId: widget.levelId,
-        ),
+        builder:
+            (_) => ViewScorePage(
+              score: 0,
+              userId: widget.userId,
+              levelId: widget.levelId,
+            ),
       ),
     );
   }
@@ -86,9 +85,9 @@ class _ReviewLevelState extends State<ReviewLevel> {
             isSubmitting
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-                    onPressed: submitReview,
-                    child: const Text("Submit"),
-                  ),
+                  onPressed: submitReview,
+                  child: const Text("Submit"),
+                ),
           ],
         ),
       ),

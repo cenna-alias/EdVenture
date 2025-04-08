@@ -1,5 +1,3 @@
-// view_score_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:user_edventure/screen/review.dart';
 
@@ -39,15 +37,13 @@ class ViewScorePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ReviewLevel(
-                      userId: userId,
-                      levelId: levelId,
-                    ),
+                    builder:
+                        (_) => ReviewLevel(userId: userId, levelId: levelId),
                   ),
                 );
               },
               child: const Text("Feedback"),
-            )
+            ),
           ],
         ),
       ),

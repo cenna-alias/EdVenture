@@ -37,59 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     setState(() {
       isLoading = true;
     });
-
-    //   try {
-    //     // First, verify the old password by attempting to sign in
-    //     final response = await supabase.auth.signInWithPassword(
-    //       email: supabase.auth.currentUser!.email!,
-    //       password: _oldPasswordController.text,
-    //     );
-
-    //     if (response.user == null) {
-    //       throw Exception('Current password is incorrect');
-    //     }
-
-    //     // If sign in was successful, update the password
-    //     await supabase.auth.updateUser(
-    //       UserAttributes(
-    //         password: _newPasswordController.text,
-    //       ),
-    //     );
-
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text('Password changed successfully'),
-    //         backgroundColor: Colors.green,
-    //         behavior: SnackBarBehavior.floating,
-    //         shape: RoundedRectangleBorder(
-    //           borderRadius: BorderRadius.circular(10),
-    //         ),
-    //       ),
-    //     );
-
-    //     Navigator.pop(context);
-    //   } catch (e) {
-    //     print('Error changing password: $e');
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text(e.toString().contains('incorrect')
-    //             ? 'Current password is incorrect'
-    //             : 'Failed to change password'),
-    //         backgroundColor: Colors.red,
-    //         behavior: SnackBarBehavior.floating,
-    //         shape: RoundedRectangleBorder(
-    //           borderRadius: BorderRadius.circular(10),
-    //         ),
-    //       ),
-    //     );
-    //   } finally {
-    //     setState(() {
-    //       isLoading = false;
-    //     });
-    //   }
-    // }
     try {
-      // First, verify the old password by attempting to sign in
       final response = await supabase.auth.signInWithPassword(
         email: supabase.auth.currentUser!.email!,
         password: _oldPasswordController.text,
@@ -99,7 +47,6 @@ class _ChangePasswordState extends State<ChangePassword> {
         throw Exception('Current password is incorrect');
       }
 
-      // If sign in was successful, update the password
       await supabase.auth.updateUser(
         UserAttributes(password: _newPasswordController.text),
       );

@@ -17,7 +17,7 @@ class _ReviewState extends State<Review> {
   final Color cardColor = const Color(0xFF1E1E1E);
   final Color textColor = const Color(0xFFE0E0E0);
   final Color secondaryTextColor = const Color(0xFFB0B0B0);
-  final Color starColor = const Color(0xFFFFD700); // Golden color for stars
+  final Color starColor = const Color(0xFFFFD700);
 
   List<dynamic> reviews = [];
   bool isLoading = true;
@@ -165,7 +165,7 @@ class _ReviewState extends State<Review> {
                                           0.0,
                                       itemBuilder: (context, _) => Icon(
                                         Icons.star,
-                                        color: starColor, // Golden stars
+                                        color: starColor,
                                       ),
                                       itemCount: 5,
                                       itemSize: 24.0,

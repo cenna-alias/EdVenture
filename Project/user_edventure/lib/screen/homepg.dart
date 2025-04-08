@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0; // Default to "Home"
+  int _selectedIndex = 0;
   final supabase = Supabase.instance.client;
   Future<Map<String, dynamic>?>? _userDataFuture;
 
@@ -40,16 +40,14 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
     if (index == 2) {
-      // Navigate to Profile page and reset to "Home" when returning
       await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Profile()),
       );
       setState(() {
-        _selectedIndex = 0; // Reset to "Home" after profile is closed
+        _selectedIndex = 0;
       });
     } else if (index == 1) {
-      // Navigate to LeaderboardPage and reset to "Home" when returning
       await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LeaderboardPage()),
@@ -181,7 +179,7 @@ class _HomePageState extends State<HomePage> {
               size: 35,
               color: Colors.white,
             ),
-            onPressed: _showUserProfile, // Keep the original modal behavior
+            onPressed: _showUserProfile,
           ),
         ],
       ),
@@ -265,9 +263,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                        left: 16.0,
-                      ), // Left-aligned
+                      padding: const EdgeInsets.only(left: 16.0),
                       child: CategoryCard(
                         image: "assets/cat1.jpeg",
                         size: cardSize,
@@ -276,7 +272,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 15),
                     Center(
-                      // Center-aligned
                       child: CategoryCard(
                         image: "assets/english.jpg",
                         size: cardSize,
@@ -285,9 +280,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 15),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        right: 16.0,
-                      ), // Right-aligned
+                      padding: const EdgeInsets.only(right: 16.0),
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: CategoryCard(

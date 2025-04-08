@@ -36,8 +36,8 @@ class _ReplyState extends State<Reply> {
         }).eq('id', widget.complaint['id']);
 
         _replyController.clear();
-        widget.onReplySubmitted(); // Refresh the complaint list
-        Navigator.pop(context, true); // Go back to the previous page
+        widget.onReplySubmitted();
+        Navigator.pop(context, true);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

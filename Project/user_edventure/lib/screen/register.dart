@@ -35,8 +35,6 @@ class _RegisterState extends State<Register> {
           'parent_name': _parentController.text.trim(),
           'user_dob': _dobController.text.trim(),
         });
-
-        // Show Lottie animation in a full-screen dialog with black background
         await showDialog(
           context: context,
           barrierDismissible: false,
@@ -51,8 +49,8 @@ class _RegisterState extends State<Register> {
                     children: [
                       Lottie.asset(
                         'assets/popper.json',
-                        width: 200, // Increased from 150 to 200
-                        height: 200, // Increased from 150 to 200
+                        width: 200,
+                        height: 200,
                         repeat: false,
                         fit: BoxFit.contain,
                         onLoaded: (composition) async {
@@ -67,7 +65,7 @@ class _RegisterState extends State<Register> {
                         "Done!",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 32, // Increased from 24 to 32
+                          fontSize: 32,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -79,7 +77,6 @@ class _RegisterState extends State<Register> {
           },
         );
 
-        // Navigate after dialog closes
         if (mounted) {
           Navigator.pushReplacement(
             context,

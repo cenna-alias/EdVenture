@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:project_admin/screen/addtfchoice.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:project_admin/main.dart';
 import 'dart:io';
 import 'dart:typed_data';
@@ -35,7 +34,7 @@ class _FillquestionState extends State<Fillquestion> {
   PlatformFile? _pickedImage;
   bool _isLoading = true;
   String? _errorMessage;
-  int? _editingQuestionId; // To track which question is being edited
+  int? _editingQuestionId;
 
   @override
   void initState() {
@@ -322,7 +321,7 @@ class _FillquestionState extends State<Fillquestion> {
       _selectedLevel = question['level']?.toString();
       _selectedSubject = question['subject']?.toString();
       _selectedNumber = question['qstn_level'];
-      _pickedImage = null; // Reset image to allow re-picking
+      _pickedImage = null;
       _isFormVisible = true;
     });
   }

@@ -85,7 +85,7 @@ class _AddChoiceState extends State<AddChoice> {
       _answerController.clear();
       setState(() {
         isCorrect = null;
-        _isFormVisible = false; // Hide form after adding
+        _isFormVisible = false;
       });
 
       await fetchAnswer();
@@ -231,7 +231,6 @@ class _AddChoiceState extends State<AddChoice> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // Header
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -271,8 +270,6 @@ class _AddChoiceState extends State<AddChoice> {
                           ],
                         ),
                         const SizedBox(height: 24),
-
-                        // Form Section
                         AnimatedContainer(
                           duration: _animationDuration,
                           curve: Curves.easeInOut,
@@ -392,8 +389,6 @@ class _AddChoiceState extends State<AddChoice> {
                               : Container(),
                         ),
                         const SizedBox(height: 24),
-
-                        // Choices List
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white,

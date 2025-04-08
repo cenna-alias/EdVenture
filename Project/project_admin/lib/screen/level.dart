@@ -143,10 +143,10 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A), // Deep black background
+      backgroundColor: const Color(0xFF1A1A1A),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(32.0), // Increased padding
+          padding: const EdgeInsets.all(32.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -156,15 +156,14 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                   Row(
                     children: [
                       Icon(Icons.stairs,
-                          color: const Color(0xFF8A4AF0), // Purple
-                          size: 32),
+                          color: const Color(0xFF8A4AF0), size: 32),
                       const SizedBox(width: 12),
                       Text(
                         'Levels',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white, // White text
+                          color: Colors.white,
                           letterSpacing: 0.2,
                         ),
                       ),
@@ -172,7 +171,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF8A4AF0), // Purple
+                      backgroundColor: const Color(0xFF8A4AF0),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 14),
@@ -197,7 +196,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                     ? Container(
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF2A2A2A), // Lighter black
+                          color: const Color(0xFF2A2A2A),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -215,7 +214,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white, // White text
+                                color: Colors.white,
                               ),
                             ),
                             const SizedBox(height: 24),
@@ -223,11 +222,9 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               controller: _levelnameController,
                               decoration: InputDecoration(
                                 labelText: 'Level Name',
-                                labelStyle: TextStyle(
-                                    color: Colors.white70), // Subtle white
+                                labelStyle: TextStyle(color: Colors.white70),
                                 filled: true,
-                                fillColor:
-                                    const Color(0xFF2A2A2A), // Lighter black
+                                fillColor: const Color(0xFF2A2A2A),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
@@ -241,16 +238,14 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
-                                      color: Color(0xFF8A4AF0),
-                                      width: 1.5), // Purple
+                                      color: Color(0xFF8A4AF0), width: 1.5),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 14),
                                 prefixIcon: Icon(Icons.stairs,
-                                    color: const Color(0xFF8A4AF0)), // Purple
+                                    color: const Color(0xFF8A4AF0)),
                               ),
-                              style: const TextStyle(
-                                  color: Colors.white), // White input text
+                              style: const TextStyle(color: Colors.white),
                             ),
                             const SizedBox(height: 16),
                             TextFormField(
@@ -258,11 +253,9 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: 'Time (in minutes)',
-                                labelStyle: TextStyle(
-                                    color: Colors.white70), // Subtle white
+                                labelStyle: TextStyle(color: Colors.white70),
                                 filled: true,
-                                fillColor:
-                                    const Color(0xFF2A2A2A), // Lighter black
+                                fillColor: const Color(0xFF2A2A2A),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
@@ -276,16 +269,14 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
-                                      color: Color(0xFF8A4AF0),
-                                      width: 1.5), // Purple
+                                      color: Color(0xFF8A4AF0), width: 1.5),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 14),
                                 prefixIcon: Icon(Icons.timer,
-                                    color: const Color(0xFF8A4AF0)), // Purple
+                                    color: const Color(0xFF8A4AF0)),
                               ),
-                              style: const TextStyle(
-                                  color: Colors.white), // White input text
+                              style: const TextStyle(color: Colors.white),
                             ),
                             const SizedBox(height: 24),
                             Align(
@@ -293,8 +284,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               child: ElevatedButton(
                                 onPressed: submit,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color(0xFF8A4AF0), // Purple
+                                  backgroundColor: const Color(0xFF8A4AF0),
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 32, vertical: 14),
@@ -318,9 +308,8 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
               const SizedBox(height: 32),
               Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A), // Lighter black
-                  borderRadius:
-                      BorderRadius.circular(16), // Increased for circular edges
+                  color: const Color(0xFF2A2A2A),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
@@ -330,8 +319,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      16), // Matches container for full circular effect
+                  borderRadius: BorderRadius.circular(16),
                   child: _levelList.isEmpty
                       ? Container(
                           padding: const EdgeInsets.all(24),
@@ -340,7 +328,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               "No levels yet",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white70, // Subtle white
+                                color: Colors.white70,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -350,8 +338,8 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                           columnSpacing: 24,
                           dataRowHeight: 64,
                           headingRowHeight: 56,
-                          headingRowColor: WidgetStateProperty.all(
-                              const Color(0xFF2A2A2A)), // Lighter black
+                          headingRowColor:
+                              WidgetStateProperty.all(const Color(0xFF2A2A2A)),
                           border: TableBorder(
                             horizontalInside:
                                 BorderSide(color: Colors.grey[800]!, width: 1),
@@ -367,35 +355,34 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                             DataColumn(
                                 label: Text("No.",
                                     style: TextStyle(
-                                        fontSize: 16, // Medium size
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white))), // Bright white
+                                        color: Colors.white))),
                             DataColumn(
                                 label: Text("Level",
                                     style: TextStyle(
-                                        fontSize: 16, // Medium size
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white))), // Bright white
+                                        color: Colors.white))),
                             DataColumn(
                                 label: Text("Time",
                                     style: TextStyle(
-                                        fontSize: 16, // Medium size
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white))), // Bright white
+                                        color: Colors.white))),
                             DataColumn(
                                 label: Text("Actions",
                                     style: TextStyle(
-                                        fontSize: 16, // Medium size
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white))), // Bright white
+                                        color: Colors.white))),
                           ],
                           rows: _levelList.asMap().entries.map((entry) {
                             return DataRow(
                               cells: [
                                 DataCell(Text((entry.key + 1).toString(),
                                     style: const TextStyle(
-                                        fontSize: 16, // Medium size
-                                        color: Colors.white))), // Bright white
+                                        fontSize: 16, color: Colors.white))),
                                 DataCell(
                                   Container(
                                     width: 200,
@@ -404,8 +391,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                                           'N/A',
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
-                                          fontSize: 16, // Medium size
-                                          color: Colors.white), // Bright white
+                                          fontSize: 16, color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -416,8 +402,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                                       "${entry.value['level_time']?.toString() ?? '0'} min",
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
-                                          fontSize: 16, // Medium size
-                                          color: Colors.white), // Bright white
+                                          fontSize: 16, color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -426,15 +411,14 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                                     children: [
                                       IconButton(
                                         icon: const Icon(Icons.edit,
-                                            color: Color(0xFF8A4AF0)), // Purple
+                                            color: Color(0xFF8A4AF0)),
                                         onPressed: () => editLevel(entry.value),
                                         hoverColor: const Color(0xFF8A4AF0)
                                             .withOpacity(0.1),
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.delete,
-                                            color:
-                                                Color(0xFFF06292)), // Soft pink
+                                            color: Color(0xFFF06292)),
                                         onPressed: () =>
                                             delete(entry.value['id']),
                                         hoverColor: const Color(0xFFF06292)

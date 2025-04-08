@@ -28,11 +28,11 @@ class _MCQState extends State<MCQ> {
   Map<int, List<dynamic>> choices = {};
   int currentQuestionIndex = 0;
   String? selectedAnswer;
-  int score = 0; // Current level score
-  int totalScore = 0; // Total score across all levels
-  int totalQuestionsAttended = 0; // Total questions attended across all levels
+  int score = 0;
+  int totalScore = 0;
+  int totalQuestionsAttended = 0;
   late Timer _timer;
-  late int _remainingTime; // Will persist across levels
+  late int _remainingTime;
   int currentQuestionLevel = 1;
   final int questionsPerLevel = 5;
 
@@ -75,7 +75,7 @@ class _MCQState extends State<MCQ> {
   @override
   void initState() {
     super.initState();
-    _remainingTime = widget.time; // Set initial time only once
+    _remainingTime = widget.time;
     startTimer();
     fetchMCQ();
   }
@@ -197,7 +197,7 @@ class _MCQState extends State<MCQ> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  showExitDialog(); // Show the new exit dialog
+                  showExitDialog();
                 },
                 child: const Text('Exit'),
               ),
@@ -282,24 +282,14 @@ class _MCQState extends State<MCQ> {
               ),
               TextButton(
                 onPressed: () async {
-                  // Save feedback and game results
                   try {
-                    // Insert game results
-
-                    // Insert review
                     await supabase.from('tbl_review').insert({
-                      'review_rating':
-                          rating
-                              .toString(), // Convert rating to string as per table schema (text)
-                      'review_content':
-                          feedbackController.text, // User's feedback
+                      'review_rating': rating.toString(),
+                      'review_content': feedbackController.text,
                       'review_date':
-                          DateTime.now().toIso8601String().split(
-                            'T',
-                          )[0], // Current date in YYYY-MM-DD format
+                          DateTime.now().toIso8601String().split('T')[0],
                       'user_id':
-                          supabase.auth.currentUser?.id ??
-                          'unknown_user', // Use authenticated user ID or fallback
+                          supabase.auth.currentUser?.id ?? 'unknown_user',
                     });
 
                     Navigator.pushAndRemoveUntil(

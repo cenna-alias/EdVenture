@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:intl/intl.dart'; // Add this to your pubspec.yaml: intl: ^any
+import 'package:intl/intl.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

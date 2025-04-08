@@ -1,12 +1,10 @@
-// level.dart
-
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_edventure/screen/mcq.dart';
 import 'package:user_edventure/screen/review.dart';
 import 'package:user_edventure/screen/truefalse.dart';
 import 'package:user_edventure/screen/fillup.dart';
-import 'package:user_edventure/screen/viewscore.dart'; // Import view score page
+import 'package:user_edventure/screen/viewscore.dart';
 
 class Level extends StatefulWidget {
   final int subject;

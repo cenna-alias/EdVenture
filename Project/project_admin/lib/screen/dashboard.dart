@@ -24,7 +24,7 @@ class _AdminHomeState extends State<AdminHome> {
   final List<Widget> _pages = [
     Center(
       child: Image.asset(
-        'assets/home.png', // Replace with your image path
+        'assets/home.png',
         width: 500,
         height: 500,
       ),
@@ -54,7 +54,7 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A), // Deep black background
+      backgroundColor: const Color(0xFF1A1A1A),
       body: Column(
         children: [
           Appbar1(
@@ -69,19 +69,16 @@ class _AdminHomeState extends State<AdminHome> {
                     flex: 1,
                     child: SideBar(
                       onItemSelected: onSidebarItemTapped,
-                      selectedIndex: _selectedIndex, // Pass selected index
+                      selectedIndex: _selectedIndex,
                     ),
                   ),
                 Expanded(
-                  flex: _isSidebarVisible
-                      ? 5
-                      : 6, // Full width when sidebar hidden
+                  flex: _isSidebarVisible ? 5 : 6,
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color(
-                            0xFF2A2A2A), // Slightly lighter black for content area
+                        color: const Color(0xFF2A2A2A),
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(

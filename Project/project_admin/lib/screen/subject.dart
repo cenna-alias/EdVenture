@@ -138,7 +138,7 @@ class _SubjectState extends State<Subject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A), // Deep black background
+      backgroundColor: const Color(0xFF1A1A1A),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -151,14 +151,14 @@ class _SubjectState extends State<Subject> {
                   Row(
                     children: [
                       Icon(Icons.book_rounded,
-                          color: const Color(0xFF8A4AF0), size: 32), // Purple
+                          color: const Color(0xFF8A4AF0), size: 32),
                       const SizedBox(width: 12),
                       Text(
                         'Subjects',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white, // Bright white
+                          color: Colors.white,
                           letterSpacing: 0.2,
                         ),
                       ),
@@ -166,8 +166,8 @@ class _SubjectState extends State<Subject> {
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF8A4AF0), // Purple
-                      foregroundColor: Colors.white, // Bright white
+                      backgroundColor: const Color(0xFF8A4AF0),
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -191,7 +191,7 @@ class _SubjectState extends State<Subject> {
                     ? Container(
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF2A2A2A), // Lighter black
+                          color: const Color(0xFF2A2A2A),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -211,7 +211,7 @@ class _SubjectState extends State<Subject> {
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white, // Bright white
+                                color: Colors.white,
                               ),
                             ),
                             const SizedBox(height: 24),
@@ -219,11 +219,9 @@ class _SubjectState extends State<Subject> {
                               controller: _subjectnameController,
                               decoration: InputDecoration(
                                 labelText: 'Subject Name',
-                                labelStyle: TextStyle(
-                                    color: Colors.white), // Bright white
+                                labelStyle: TextStyle(color: Colors.white),
                                 filled: true,
-                                fillColor:
-                                    const Color(0xFF2A2A2A), // Lighter black
+                                fillColor: const Color(0xFF2A2A2A),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
@@ -237,16 +235,14 @@ class _SubjectState extends State<Subject> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
-                                      color: Color(0xFF8A4AF0),
-                                      width: 1.5), // Purple
+                                      color: Color(0xFF8A4AF0), width: 1.5),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 14),
                                 prefixIcon: Icon(Icons.book_rounded,
-                                    color: const Color(0xFF8A4AF0)), // Purple
+                                    color: const Color(0xFF8A4AF0)),
                               ),
-                              style: const TextStyle(
-                                  color: Colors.white), // Bright white
+                              style: const TextStyle(color: Colors.white),
                             ),
                             const SizedBox(height: 24),
                             Align(
@@ -254,9 +250,8 @@ class _SubjectState extends State<Subject> {
                               child: ElevatedButton(
                                 onPressed: submit,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color(0xFF8A4AF0), // Purple
-                                  foregroundColor: Colors.white, // Bright white
+                                  backgroundColor: const Color(0xFF8A4AF0),
+                                  foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 32, vertical: 14),
                                   shape: RoundedRectangleBorder(
@@ -279,8 +274,8 @@ class _SubjectState extends State<Subject> {
               const SizedBox(height: 32),
               Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A), // Lighter black
-                  borderRadius: BorderRadius.circular(16), // Circular edges
+                  color: const Color(0xFF2A2A2A),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
@@ -290,8 +285,7 @@ class _SubjectState extends State<Subject> {
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(16), // Full circular effect
+                  borderRadius: BorderRadius.circular(16),
                   child: _subjectList.isEmpty
                       ? Container(
                           padding: const EdgeInsets.all(24),
@@ -300,7 +294,7 @@ class _SubjectState extends State<Subject> {
                               "No subjects yet",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white, // Bright white
+                                color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -310,8 +304,8 @@ class _SubjectState extends State<Subject> {
                           columnSpacing: 24,
                           dataRowHeight: 64,
                           headingRowHeight: 56,
-                          headingRowColor: WidgetStateProperty.all(
-                              const Color(0xFF2A2A2A)), // Lighter black
+                          headingRowColor:
+                              WidgetStateProperty.all(const Color(0xFF2A2A2A)),
                           border: TableBorder(
                             horizontalInside:
                                 BorderSide(color: Colors.grey[800]!, width: 1),
@@ -327,29 +321,28 @@ class _SubjectState extends State<Subject> {
                             DataColumn(
                                 label: Text("No.",
                                     style: TextStyle(
-                                        fontSize: 16, // Medium size
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white))), // Bright white
+                                        color: Colors.white))),
                             DataColumn(
                                 label: Text("Subject",
                                     style: TextStyle(
-                                        fontSize: 16, // Medium size
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white))), // Bright white
+                                        color: Colors.white))),
                             DataColumn(
                                 label: Text("Actions",
                                     style: TextStyle(
-                                        fontSize: 16, // Medium size
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white))), // Bright white
+                                        color: Colors.white))),
                           ],
                           rows: _subjectList.asMap().entries.map((entry) {
                             return DataRow(
                               cells: [
                                 DataCell(Text((entry.key + 1).toString(),
                                     style: const TextStyle(
-                                        fontSize: 16, // Medium size
-                                        color: Colors.white))), // Bright white
+                                        fontSize: 16, color: Colors.white))),
                                 DataCell(
                                   Container(
                                     width: 200,
@@ -358,8 +351,7 @@ class _SubjectState extends State<Subject> {
                                           'N/A',
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
-                                          fontSize: 16, // Medium size
-                                          color: Colors.white), // Bright white
+                                          fontSize: 16, color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -368,7 +360,7 @@ class _SubjectState extends State<Subject> {
                                     children: [
                                       IconButton(
                                         icon: const Icon(Icons.edit,
-                                            color: Color(0xFF8A4AF0)), // Purple
+                                            color: Color(0xFF8A4AF0)),
                                         onPressed: () =>
                                             editSubject(entry.value),
                                         hoverColor: const Color(0xFF8A4AF0)
@@ -376,8 +368,7 @@ class _SubjectState extends State<Subject> {
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.delete,
-                                            color:
-                                                Color(0xFFF06292)), // Soft pink
+                                            color: Color(0xFFF06292)),
                                         onPressed: () =>
                                             delete(entry.value['id']),
                                         hoverColor: const Color(0xFFF06292)

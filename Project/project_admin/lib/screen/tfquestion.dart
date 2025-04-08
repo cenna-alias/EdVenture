@@ -20,7 +20,6 @@ class _TfquestionState extends State<Tfquestion> {
   List<Map<String, dynamic>> _subjectList = [];
   String? _selectedSubject;
 
-  List<Map<String, dynamic>> _questionList = [];
   int? _selectedNumber;
 
   List<Map<String, dynamic>> _tfquestionList = [];
@@ -53,7 +52,7 @@ class _TfquestionState extends State<Tfquestion> {
     });
 
     try {
-      final response = await supabase.from("tbl_tfquestion").insert({
+      final _ = await supabase.from("tbl_tfquestion").insert({
         "question_text": _tfquestionController.text,
         "level": _selectedLevel,
         "subject": _selectedSubject,
@@ -283,11 +282,11 @@ class _TfquestionState extends State<Tfquestion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A), // Deep black background
+      backgroundColor: const Color(0xFF1A1A1A),
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF8A4AF0), // Purple
+                color: Color(0xFF8A4AF0),
               ),
             )
           : _errorMessage != null
@@ -295,7 +294,7 @@ class _TfquestionState extends State<Tfquestion> {
                   child: Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF2A2A2A), // Lighter black
+                      color: const Color(0xFF2A2A2A),
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
@@ -309,21 +308,20 @@ class _TfquestionState extends State<Tfquestion> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Icon(Icons.error_outline,
-                            color: Color(0xFFF06292), size: 40), // Soft pink
+                            color: Color(0xFFF06292), size: 40),
                         const SizedBox(height: 10),
                         Text(
                           _errorMessage!,
                           style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16), // Bright white
+                              color: Colors.white, fontSize: 16),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: _loadInitialData,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF8A4AF0), // Purple
-                            foregroundColor: Colors.white, // Bright white
+                            backgroundColor: const Color(0xFF8A4AF0),
+                            foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 24, vertical: 12),
                             shape: RoundedRectangleBorder(
@@ -347,15 +345,14 @@ class _TfquestionState extends State<Tfquestion> {
                             Row(
                               children: [
                                 Icon(Icons.check_circle_outline,
-                                    color: const Color(0xFF8A4AF0),
-                                    size: 28), // Purple
+                                    color: const Color(0xFF8A4AF0), size: 28),
                                 const SizedBox(width: 12),
                                 Text(
                                   'True/False Questions',
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white, // Bright white
+                                    color: Colors.white,
                                     letterSpacing: 0.5,
                                   ),
                                 ),
@@ -363,9 +360,8 @@ class _TfquestionState extends State<Tfquestion> {
                             ),
                             ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    const Color(0xFF8A4AF0), // Purple
-                                foregroundColor: Colors.white, // Bright white
+                                backgroundColor: const Color(0xFF8A4AF0),
+                                foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 12),
                                 shape: RoundedRectangleBorder(
@@ -398,8 +394,7 @@ class _TfquestionState extends State<Tfquestion> {
                               ? Container(
                                   padding: const EdgeInsets.all(20),
                                   decoration: BoxDecoration(
-                                    color: const Color(
-                                        0xFF2A2A2A), // Lighter black
+                                    color: const Color(0xFF2A2A2A),
                                     borderRadius: BorderRadius.circular(16),
                                     boxShadow: [
                                       BoxShadow(
@@ -422,7 +417,7 @@ class _TfquestionState extends State<Tfquestion> {
                                           style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
-                                            color: Colors.white, // Bright white
+                                            color: Colors.white,
                                           ),
                                         ),
                                         const SizedBox(height: 20),
@@ -432,11 +427,9 @@ class _TfquestionState extends State<Tfquestion> {
                                           decoration: InputDecoration(
                                             labelText: 'Question',
                                             labelStyle: const TextStyle(
-                                                color: Colors
-                                                    .white), // Bright white
+                                                color: Colors.white),
                                             filled: true,
-                                            fillColor: const Color(
-                                                0xFF2A2A2A), // Lighter black
+                                            fillColor: const Color(0xFF2A2A2A),
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -456,7 +449,7 @@ class _TfquestionState extends State<Tfquestion> {
                                                   BorderRadius.circular(12),
                                               borderSide: const BorderSide(
                                                   color: Color(0xFF8A4AF0),
-                                                  width: 1.5), // Purple
+                                                  width: 1.5),
                                             ),
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
@@ -464,12 +457,10 @@ class _TfquestionState extends State<Tfquestion> {
                                                     vertical: 14),
                                             prefixIcon: Icon(
                                                 Icons.question_answer,
-                                                color: const Color(
-                                                    0xFF8A4AF0)), // Purple
+                                                color: const Color(0xFF8A4AF0)),
                                           ),
                                           style: const TextStyle(
-                                              color:
-                                                  Colors.white), // Bright white
+                                              color: Colors.white),
                                           validator: (value) =>
                                               value == null || value.isEmpty
                                                   ? "Please enter a question"
@@ -482,11 +473,9 @@ class _TfquestionState extends State<Tfquestion> {
                                           decoration: InputDecoration(
                                             labelText: 'Subject',
                                             labelStyle: const TextStyle(
-                                                color: Colors
-                                                    .white), // Bright white
+                                                color: Colors.white),
                                             filled: true,
-                                            fillColor: const Color(
-                                                0xFF2A2A2A), // Lighter black
+                                            fillColor: const Color(0xFF2A2A2A),
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -506,15 +495,14 @@ class _TfquestionState extends State<Tfquestion> {
                                                   BorderRadius.circular(12),
                                               borderSide: const BorderSide(
                                                   color: Color(0xFF8A4AF0),
-                                                  width: 1.5), // Purple
+                                                  width: 1.5),
                                             ),
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
                                                     horizontal: 16,
                                                     vertical: 14),
                                             prefixIcon: Icon(Icons.book,
-                                                color: const Color(
-                                                    0xFF8A4AF0)), // Purple
+                                                color: const Color(0xFF8A4AF0)),
                                           ),
                                           items: _subjectList.map((subject) {
                                             return DropdownMenuItem<String>(
@@ -523,8 +511,7 @@ class _TfquestionState extends State<Tfquestion> {
                                                   subject['subject_name'] ??
                                                       'N/A',
                                                   style: const TextStyle(
-                                                      color: Colors
-                                                          .white)), // Bright white
+                                                      color: Colors.white)),
                                             );
                                           }).toList(),
                                           onChanged: (value) => setState(
@@ -532,8 +519,8 @@ class _TfquestionState extends State<Tfquestion> {
                                           validator: (value) => value == null
                                               ? "Please select a subject"
                                               : null,
-                                          dropdownColor: const Color(
-                                              0xFF2A2A2A), // Lighter black
+                                          dropdownColor:
+                                              const Color(0xFF2A2A2A),
                                         ),
                                         const SizedBox(height: 16),
                                         DropdownButtonFormField<String>(
@@ -542,11 +529,9 @@ class _TfquestionState extends State<Tfquestion> {
                                           decoration: InputDecoration(
                                             labelText: 'Level',
                                             labelStyle: const TextStyle(
-                                                color: Colors
-                                                    .white), // Bright white
+                                                color: Colors.white),
                                             filled: true,
-                                            fillColor: const Color(
-                                                0xFF2A2A2A), // Lighter black
+                                            fillColor: const Color(0xFF2A2A2A),
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -566,15 +551,14 @@ class _TfquestionState extends State<Tfquestion> {
                                                   BorderRadius.circular(12),
                                               borderSide: const BorderSide(
                                                   color: Color(0xFF8A4AF0),
-                                                  width: 1.5), // Purple
+                                                  width: 1.5),
                                             ),
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
                                                     horizontal: 16,
                                                     vertical: 14),
                                             prefixIcon: Icon(Icons.stairs,
-                                                color: const Color(
-                                                    0xFF8A4AF0)), // Purple
+                                                color: const Color(0xFF8A4AF0)),
                                           ),
                                           items: _levelList.map((level) {
                                             return DropdownMenuItem<String>(
@@ -582,8 +566,7 @@ class _TfquestionState extends State<Tfquestion> {
                                               child: Text(
                                                   level['level_name'] ?? 'N/A',
                                                   style: const TextStyle(
-                                                      color: Colors
-                                                          .white)), // Bright white
+                                                      color: Colors.white)),
                                             );
                                           }).toList(),
                                           onChanged: (value) => setState(
@@ -591,8 +574,8 @@ class _TfquestionState extends State<Tfquestion> {
                                           validator: (value) => value == null
                                               ? "Please select a level"
                                               : null,
-                                          dropdownColor: const Color(
-                                              0xFF2A2A2A), // Lighter black
+                                          dropdownColor:
+                                              const Color(0xFF2A2A2A),
                                         ),
                                         const SizedBox(height: 16),
                                         DropdownButtonFormField<int>(
@@ -602,11 +585,9 @@ class _TfquestionState extends State<Tfquestion> {
                                           decoration: InputDecoration(
                                             labelText: 'Question Level',
                                             labelStyle: const TextStyle(
-                                                color: Colors
-                                                    .white), // Bright white
+                                                color: Colors.white),
                                             filled: true,
-                                            fillColor: const Color(
-                                                0xFF2A2A2A), // Lighter black
+                                            fillColor: const Color(0xFF2A2A2A),
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -626,15 +607,14 @@ class _TfquestionState extends State<Tfquestion> {
                                                   BorderRadius.circular(12),
                                               borderSide: const BorderSide(
                                                   color: Color(0xFF8A4AF0),
-                                                  width: 1.5), // Purple
+                                                  width: 1.5),
                                             ),
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
                                                     horizontal: 16,
                                                     vertical: 14),
                                             prefixIcon: Icon(Icons.trending_up,
-                                                color: const Color(
-                                                    0xFF8A4AF0)), // Purple
+                                                color: const Color(0xFF8A4AF0)),
                                           ),
                                           items: List.generate(4, (index) {
                                             return DropdownMenuItem<int>(
@@ -642,8 +622,7 @@ class _TfquestionState extends State<Tfquestion> {
                                               child: Text(
                                                   (index + 1).toString(),
                                                   style: const TextStyle(
-                                                      color: Colors
-                                                          .white)), // Bright white
+                                                      color: Colors.white)),
                                             );
                                           }),
                                           onChanged: (value) => setState(
@@ -651,8 +630,8 @@ class _TfquestionState extends State<Tfquestion> {
                                           validator: (value) => value == null
                                               ? "Please select a question level"
                                               : null,
-                                          dropdownColor: const Color(
-                                              0xFF2A2A2A), // Lighter black
+                                          dropdownColor:
+                                              const Color(0xFF2A2A2A),
                                         ),
                                         const SizedBox(height: 20),
                                         Text(
@@ -660,7 +639,7 @@ class _TfquestionState extends State<Tfquestion> {
                                           style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.white, // Bright white
+                                            color: Colors.white,
                                           ),
                                         ),
                                         const SizedBox(height: 10),
@@ -670,28 +649,26 @@ class _TfquestionState extends State<Tfquestion> {
                                               child: RadioListTile<bool>(
                                                 title: const Text('True',
                                                     style: TextStyle(
-                                                        color: Colors
-                                                            .white)), // Bright white
+                                                        color: Colors.white)),
                                                 value: true,
                                                 groupValue: isCorrect,
                                                 onChanged: (value) => setState(
                                                     () => isCorrect = value),
-                                                activeColor: const Color(
-                                                    0xFF8A4AF0), // Purple
+                                                activeColor:
+                                                    const Color(0xFF8A4AF0),
                                               ),
                                             ),
                                             Expanded(
                                               child: RadioListTile<bool>(
                                                 title: const Text('False',
                                                     style: TextStyle(
-                                                        color: Colors
-                                                            .white)), // Bright white
+                                                        color: Colors.white)),
                                                 value: false,
                                                 groupValue: isCorrect,
                                                 onChanged: (value) => setState(
                                                     () => isCorrect = value),
-                                                activeColor: const Color(
-                                                    0xFF8A4AF0), // Purple
+                                                activeColor:
+                                                    const Color(0xFF8A4AF0),
                                               ),
                                             ),
                                           ],
@@ -706,10 +683,9 @@ class _TfquestionState extends State<Tfquestion> {
                                                         _editingQuestionId!)
                                                     : insert(),
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: const Color(
-                                                  0xFF8A4AF0), // Purple
-                                              foregroundColor:
-                                                  Colors.white, // Bright white
+                                              backgroundColor:
+                                                  const Color(0xFF8A4AF0),
+                                              foregroundColor: Colors.white,
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 24,
@@ -735,9 +711,8 @@ class _TfquestionState extends State<Tfquestion> {
                         const SizedBox(height: 24),
                         Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xFF2A2A2A), // Lighter black
-                            borderRadius:
-                                BorderRadius.circular(16), // Circular edges
+                            color: const Color(0xFF2A2A2A),
+                            borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.2),
@@ -747,8 +722,7 @@ class _TfquestionState extends State<Tfquestion> {
                             ],
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                                16), // Full circular effect
+                            borderRadius: BorderRadius.circular(16),
                             child: _tfquestionList.isEmpty
                                 ? Container(
                                     padding: const EdgeInsets.all(20),
@@ -757,7 +731,7 @@ class _TfquestionState extends State<Tfquestion> {
                                         "No questions yet",
                                         style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.white, // Bright white
+                                          color: Colors.white,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -768,8 +742,7 @@ class _TfquestionState extends State<Tfquestion> {
                                     dataRowHeight: 56,
                                     headingRowHeight: 56,
                                     headingRowColor: WidgetStateProperty.all(
-                                        const Color(
-                                            0xFF2A2A2A)), // Lighter black
+                                        const Color(0xFF2A2A2A)),
                                     border: TableBorder(
                                       horizontalInside: BorderSide(
                                           color: Colors.grey[800]!, width: 1),
@@ -786,59 +759,51 @@ class _TfquestionState extends State<Tfquestion> {
                                       DataColumn(
                                           label: Text("No.",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                       DataColumn(
                                           label: Text("Question",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                       DataColumn(
                                           label: Text("Answer",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                       DataColumn(
                                           label: Text("Subject",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                       DataColumn(
                                           label: Text("Level",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                       DataColumn(
                                           label: Text("Q. Level",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                       DataColumn(
                                           label: Text("Edit",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                       DataColumn(
                                           label: Text("Delete",
                                               style: TextStyle(
-                                                  fontSize: 16, // Medium size
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .white))), // Bright white
+                                                  color: Colors.white))),
                                     ],
                                     rows: _tfquestionList
                                         .asMap()
@@ -855,9 +820,8 @@ class _TfquestionState extends State<Tfquestion> {
                                       return DataRow(cells: [
                                         DataCell(Text((index + 1).toString(),
                                             style: const TextStyle(
-                                                fontSize: 16, // Medium size
-                                                color: Colors
-                                                    .white))), // Bright white
+                                                fontSize: 16,
+                                                color: Colors.white))),
                                         DataCell(
                                           Container(
                                             width: 200,
@@ -866,9 +830,8 @@ class _TfquestionState extends State<Tfquestion> {
                                                   'N/A',
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
-                                                  fontSize: 16, // Medium size
-                                                  color: Colors
-                                                      .white), // Bright white
+                                                  fontSize: 16,
+                                                  color: Colors.white),
                                             ),
                                           ),
                                         ),
@@ -879,7 +842,7 @@ class _TfquestionState extends State<Tfquestion> {
                                                 ? "True"
                                                 : "False",
                                             style: TextStyle(
-                                              fontSize: 16, // Medium size
+                                              fontSize: 16,
                                               color: tfquestion[
                                                           'question_iscorrect'] ==
                                                       true
@@ -891,28 +854,24 @@ class _TfquestionState extends State<Tfquestion> {
                                         DataCell(Text(
                                             subject['subject_name'] ?? 'N/A',
                                             style: const TextStyle(
-                                                fontSize: 16, // Medium size
-                                                color: Colors
-                                                    .white))), // Bright white
+                                                fontSize: 16,
+                                                color: Colors.white))),
                                         DataCell(Text(
                                             level['level_name'] ?? 'N/A',
                                             style: const TextStyle(
-                                                fontSize: 16, // Medium size
-                                                color: Colors
-                                                    .white))), // Bright white
+                                                fontSize: 16,
+                                                color: Colors.white))),
                                         DataCell(Text(
                                             tfquestion['question_level']
                                                     ?.toString() ??
                                                 'N/A',
                                             style: const TextStyle(
-                                                fontSize: 16, // Medium size
-                                                color: Colors
-                                                    .white))), // Bright white
+                                                fontSize: 16,
+                                                color: Colors.white))),
                                         DataCell(
                                           IconButton(
                                             icon: const Icon(Icons.edit,
-                                                color: Color(
-                                                    0xFF8A4AF0)), // Purple
+                                                color: Color(0xFF8A4AF0)),
                                             onPressed: () =>
                                                 _editQuestion(tfquestion),
                                             hoverColor: const Color(0xFF8A4AF0)
@@ -922,8 +881,7 @@ class _TfquestionState extends State<Tfquestion> {
                                         DataCell(
                                           IconButton(
                                             icon: const Icon(Icons.delete,
-                                                color: Color(
-                                                    0xFFF06292)), // Soft pink
+                                                color: Color(0xFFF06292)),
                                             onPressed: () => delete(id),
                                             hoverColor: const Color(0xFFF06292)
                                                 .withOpacity(0.1),

@@ -51,9 +51,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // Define a consistent spacing value for a professional look
-    // Increased for a more spacious design
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -69,28 +66,19 @@ class _LoginState extends State<Login> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 100),
-
-              // Image at the very top with curved edges
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
-                    'assets/login.avif', // Replace with your image path
-                    width:
-                        MediaQuery.of(context).size.width *
-                        0.85, // 85% of screen width
-                    height:
-                        MediaQuery.of(context).size.height *
-                        0.25, // 25% of screen height
+                    'assets/login.avif',
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    height: MediaQuery.of(context).size.height * 0.25,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ), // Equal spacing between image and welcome message
-              // Welcome Back with Smiling Emoji
+              SizedBox(height: 30),
               RichText(
                 text: TextSpan(
                   children: [
@@ -109,19 +97,14 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ), // Reduced gap between welcome and subtext
+              const SizedBox(height: 10),
               Text(
                 "Please login to continue!",
                 style: TextStyle(fontSize: 16, color: Colors.purple[200]),
               ),
-              SizedBox(height: 30), // Equal spacing between subtext and card
-              // Card with login form
+              SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ), // Increased horizontal padding for a professional look
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -129,9 +112,7 @@ class _LoginState extends State<Login> {
                   elevation: 5,
                   color: Colors.black.withOpacity(0.7),
                   child: Padding(
-                    padding: const EdgeInsets.all(
-                      24,
-                    ), // Increased internal padding for consistency
+                    padding: const EdgeInsets.all(24),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -143,13 +124,9 @@ class _LoginState extends State<Login> {
                             icon: Icons.email,
                             keyboardType: TextInputType.emailAddress,
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ), // Increased spacing between fields
+                          const SizedBox(height: 20),
                           _buildPasswordField(),
-                          const SizedBox(
-                            height: 20,
-                          ), // Increased spacing before button
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.purple[600],
@@ -184,9 +161,7 @@ class _LoginState extends State<Login> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 65,
-                  ), // Added bottom padding for a professional finish
+                  padding: const EdgeInsets.only(bottom: 65),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

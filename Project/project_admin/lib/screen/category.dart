@@ -160,7 +160,6 @@ class _CategoryState extends State<Category> {
               ),
               const SizedBox(height: 24),
 
-              // Form Section
               AnimatedContainer(
                 duration: _animationDuration,
                 curve: Curves.easeInOut,
@@ -248,7 +247,6 @@ class _CategoryState extends State<Category> {
               ),
               const SizedBox(height: 24),
 
-              // Categories List (Non-scrollable DataTable within scrolling page)
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,

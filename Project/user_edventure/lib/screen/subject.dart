@@ -86,14 +86,10 @@ class _SubjectPageState extends State<SubjectPage> {
                     ),
                   )
                   : Container(
-                    width:
-                        MediaQuery.of(context).size.width *
-                        0.8, // Smaller width
-                    height:
-                        MediaQuery.of(context).size.height *
-                        0.4, // Smaller height
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
-                      color: Colors.amber[50], // Changed color to light amber
+                      color: Colors.amber[50],
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
@@ -105,10 +101,8 @@ class _SubjectPageState extends State<SubjectPage> {
                     ),
                     child: Center(
                       child: ListView.builder(
-                        shrinkWrap:
-                            true, // Ensures list takes only needed space
-                        physics:
-                            const NeverScrollableScrollPhysics(), // Disable scrolling
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         padding: const EdgeInsets.all(16),
                         itemCount: subjects.length,
                         itemBuilder: (context, index) {

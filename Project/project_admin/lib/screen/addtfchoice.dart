@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'; // Explicit import for Supabase
-import 'package:project_admin/main.dart'; // Assuming supabase is initialized here
+import 'package:project_admin/main.dart';
 
 class AddTFChoice extends StatefulWidget {
   final int id;

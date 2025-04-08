@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:user_edventure/main.dart'; // Assuming supabase is defined here
+import 'package:user_edventure/main.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
@@ -164,7 +164,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                         padding: const EdgeInsets.all(12),
                         child: Row(
                           children: [
-                            // Rank Badge
                             Container(
                               width: 50,
                               height: 50,
@@ -196,7 +195,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                               ),
                             ),
                             const SizedBox(width: 15),
-                            // Player Info
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,7 +244,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                                 ],
                               ),
                             ),
-                            // Trophy Icon for Top 3
                             if (index < 3)
                               Icon(
                                 Icons.star_rounded,

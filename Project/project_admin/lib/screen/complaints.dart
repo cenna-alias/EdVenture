@@ -195,7 +195,6 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                                   ),
                                 ),
                                 const SizedBox(height: 16),
-                                // Enhanced Complaint Content Field
                                 Container(
                                   width: double.infinity,
                                   padding: const EdgeInsets.all(16),
@@ -232,7 +231,6 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                                 if (isReplied &&
                                     complaint['complaint_reply'] != null) ...[
                                   const SizedBox(height: 16),
-                                  // Enhanced Reply Section
                                   Container(
                                     width: double.infinity,
                                     padding: const EdgeInsets.all(16),

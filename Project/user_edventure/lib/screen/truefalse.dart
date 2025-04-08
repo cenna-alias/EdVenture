@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:user_edventure/screen/homepg.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart'; // Added for rating bar
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class TrueFalse extends StatefulWidget {
   final int level;
@@ -75,7 +75,7 @@ class _TrueFalseState extends State<TrueFalse> {
   @override
   void initState() {
     super.initState();
-    _remainingTime = widget.time; // Set initial time only once
+    _remainingTime = widget.time;
     startTimer();
     fetchTrueFalseQuestions();
     getLevelName();
@@ -193,7 +193,7 @@ class _TrueFalseState extends State<TrueFalse> {
                       selectedAnswer = null;
                       questions.clear();
                       fetchTrueFalseQuestions();
-                      startTimer(); // Resume timer with current _remainingTime
+                      startTimer();
                     });
                   },
                   child: const Text(
@@ -205,7 +205,7 @@ class _TrueFalseState extends State<TrueFalse> {
                 onPressed: () {
                   Navigator.pop(context);
                   if (isGameOver) {
-                    showExitDialog(); // Modified to show exit dialog
+                    showExitDialog();
                   } else {
                     setState(() {
                       currentSet = 1;
@@ -215,8 +215,7 @@ class _TrueFalseState extends State<TrueFalse> {
                       totalScore = 0;
                       totalQuestionsAttended = 0;
                       selectedAnswer = null;
-                      _remainingTime =
-                          widget.time; // Reset time only on restart
+                      _remainingTime = widget.time;
                       questions.clear();
                       fetchTrueFalseQuestions();
                       startTimer();
@@ -231,7 +230,7 @@ class _TrueFalseState extends State<TrueFalse> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  showExitDialog(); // Modified to show exit dialog
+                  showExitDialog();
                 },
                 child: const Text(
                   'Exit',
@@ -243,7 +242,6 @@ class _TrueFalseState extends State<TrueFalse> {
     );
   }
 
-  // New method to show exit dialog with rating and feedback
   void showExitDialog() {
     double rating = 0.0;
     TextEditingController feedbackController = TextEditingController();
@@ -315,14 +313,13 @@ class _TrueFalseState extends State<TrueFalse> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  saveGameResults(); // Cancel feedback and save game results
+                  saveGameResults();
                 },
                 child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () async {
                   try {
-                    // Insert game results
                     await supabase.from('tbl_game').insert({
                       'qstn_level': currentQuestionLevel,
                       'game_score': totalScore,
@@ -332,20 +329,13 @@ class _TrueFalseState extends State<TrueFalse> {
                       'game_type': 'TF',
                     });
 
-                    // Insert review
                     await supabase.from('tbl_review').insert({
-                      'review_rating':
-                          rating
-                              .toString(), // Convert rating to string as per table schema
-                      'review_content':
-                          feedbackController.text, // User's feedback
+                      'review_rating': rating.toString(),
+                      'review_content': feedbackController.text,
                       'review_date':
-                          DateTime.now().toIso8601String().split(
-                            'T',
-                          )[0], // Current date in YYYY-MM-DD
+                          DateTime.now().toIso8601String().split('T')[0],
                       'user_id':
-                          supabase.auth.currentUser?.id ??
-                          'unknown_user', // Use authenticated user ID or fallback
+                          supabase.auth.currentUser?.id ?? 'unknown_user',
                     });
 
                     Navigator.pushAndRemoveUntil(
