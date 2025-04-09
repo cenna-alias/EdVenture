@@ -15,7 +15,7 @@ class _EditProfileState extends State<EditProfile> {
   final _usernameController = TextEditingController();
   final _parentNameController = TextEditingController();
   final _dobController = TextEditingController();
-  bool _isLoading = false;
+  bool _isLoading = false; // Fixed syntax error here
   Map<String, dynamic>? userData;
 
   @override
@@ -100,19 +100,34 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
-        backgroundColor: Colors.blue.shade700,
-        elevation: 0,
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(
+            fontFamily: 'ComicSans',
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.purple[900],
+        elevation: 4,
+        shadowColor: Colors.black54,
       ),
       body:
           userData == null
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.purpleAccent,
+                  ),
+                ),
+              )
               : Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade700, Colors.white],
+                    colors: [Colors.black, Colors.purple[800]!],
                   ),
                 ),
                 child: Padding(
@@ -123,10 +138,12 @@ class _EditProfileState extends State<EditProfile> {
                       children: [
                         const SizedBox(height: 20),
                         Card(
-                          elevation: 4,
+                          elevation: 6,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(15),
                           ),
+                          shadowColor: Colors.purple[900]!.withOpacity(0.5),
+                          color: Colors.black87,
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
@@ -137,16 +154,47 @@ class _EditProfileState extends State<EditProfile> {
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
+                                    color: Colors.purpleAccent,
+                                    fontFamily: 'ComicSans',
                                   ),
                                 ),
                                 const SizedBox(height: 20),
                                 TextFormField(
                                   controller: _usernameController,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     labelText: 'Username',
-                                    border: OutlineInputBorder(),
-                                    prefixIcon: Icon(Icons.person),
+                                    labelStyle: TextStyle(
+                                      color: Colors.purple[200],
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.person,
+                                      color: Colors.purpleAccent,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.black54,
+                                  ),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'ComicSans',
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -158,10 +206,40 @@ class _EditProfileState extends State<EditProfile> {
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _parentNameController,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     labelText: 'Parent Name',
-                                    border: OutlineInputBorder(),
-                                    prefixIcon: Icon(Icons.family_restroom),
+                                    labelStyle: TextStyle(
+                                      color: Colors.purple[200],
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.family_restroom,
+                                      color: Colors.purpleAccent,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.black54,
+                                  ),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'ComicSans',
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -175,10 +253,40 @@ class _EditProfileState extends State<EditProfile> {
                                   controller: _dobController,
                                   readOnly: true,
                                   onTap: () => _selectDate(context),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     labelText: 'Date of Birth',
-                                    border: OutlineInputBorder(),
-                                    prefixIcon: Icon(Icons.cake),
+                                    labelStyle: TextStyle(
+                                      color: Colors.purple[200],
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purpleAccent,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.cake,
+                                      color: Colors.purpleAccent,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.black54,
+                                  ),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'ComicSans',
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -190,12 +298,17 @@ class _EditProfileState extends State<EditProfile> {
                                 const SizedBox(height: 24),
                                 _isLoading
                                     ? const Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                              Colors.purpleAccent,
+                                            ),
+                                      ),
                                     )
                                     : ElevatedButton(
                                       onPressed: _updateProfile,
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.blue.shade700,
+                                        backgroundColor: Colors.purple[700],
                                         padding: const EdgeInsets.symmetric(
                                           vertical: 15,
                                         ),
@@ -208,12 +321,16 @@ class _EditProfileState extends State<EditProfile> {
                                           double.infinity,
                                           50,
                                         ),
+                                        shadowColor: Colors.purple[900]!
+                                            .withOpacity(0.5),
+                                        elevation: 4,
                                       ),
                                       child: const Text(
                                         'Update Profile',
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.white,
+                                          fontFamily: 'ComicSans',
                                         ),
                                       ),
                                     ),

@@ -37,19 +37,34 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Profile'),
-        backgroundColor: Colors.blue.shade700,
-        elevation: 0,
+        title: const Text(
+          'My Profile',
+          style: TextStyle(
+            fontFamily: 'ComicSans',
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.purple[900],
+        elevation: 4,
+        shadowColor: Colors.black54,
       ),
       body:
           userData == null
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.purpleAccent,
+                  ),
+                ),
+              )
               : Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.blue.shade700, Colors.white],
+                    colors: [Colors.black, Colors.purple[800]!],
                   ),
                 ),
                 child: ListView(
@@ -57,10 +72,12 @@ class _ProfileState extends State<Profile> {
                   children: [
                     const SizedBox(height: 20),
                     Card(
-                      elevation: 4,
+                      elevation: 6,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(15),
                       ),
+                      shadowColor: Colors.purple[900]!.withOpacity(0.5),
+                      color: Colors.black87,
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
@@ -71,7 +88,8 @@ class _ProfileState extends State<Profile> {
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.blue,
+                                color: Colors.purpleAccent,
+                                fontFamily: 'ComicSans',
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -154,7 +172,7 @@ class _ProfileState extends State<Profile> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.blue.shade700, size: 24),
+          Icon(icon, color: Colors.purpleAccent, size: 24),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -162,7 +180,11 @@ class _ProfileState extends State<Profile> {
               children: [
                 Text(
                   label,
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.purple[200],
+                    fontFamily: 'ComicSans',
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -170,6 +192,8 @@ class _ProfileState extends State<Profile> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontFamily: 'ComicSans',
                   ),
                 ),
               ],
@@ -188,14 +212,20 @@ class _ProfileState extends State<Profile> {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: Colors.purple[700],
         padding: const EdgeInsets.symmetric(vertical: 15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         minimumSize: const Size(double.infinity, 50),
+        shadowColor: Colors.purple[900]!.withOpacity(0.5),
+        elevation: 4,
       ),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 16, color: Colors.white),
+        style: const TextStyle(
+          fontSize: 16,
+          color: Colors.white,
+          fontFamily: 'ComicSans',
+        ),
       ),
     );
   }

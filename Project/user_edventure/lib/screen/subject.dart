@@ -48,14 +48,16 @@ class _SubjectPageState extends State<SubjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber[700],
-        elevation: 0,
+        backgroundColor: Colors.purple[900],
+        elevation: 4,
+        shadowColor: Colors.black54,
         title: const Text(
           'Select Subject',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.white,
+            fontFamily: 'ComicSans',
           ),
         ),
         centerTitle: true,
@@ -63,7 +65,7 @@ class _SubjectPageState extends State<SubjectPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.amber[50]!, Colors.amber[100]!],
+            colors: [Colors.black, Colors.purple[800]!],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -71,7 +73,7 @@ class _SubjectPageState extends State<SubjectPage> {
         child: Center(
           child:
               isLoading
-                  ? const CircularProgressIndicator(color: Colors.amber)
+                  ? const CircularProgressIndicator(color: Colors.purpleAccent)
                   : errorMessage != null
                   ? Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -81,6 +83,7 @@ class _SubjectPageState extends State<SubjectPage> {
                         color: Colors.redAccent,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'ComicSans',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -89,11 +92,11 @@ class _SubjectPageState extends State<SubjectPage> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
-                      color: Colors.amber[50],
+                      color: Colors.black87,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.purple[900]!.withOpacity(0.5),
                           blurRadius: 15,
                           offset: const Offset(0, 5),
                         ),
@@ -132,7 +135,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
                                   ),
-                                  color: Colors.white,
+                                  color: Colors.transparent,
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 20,
@@ -141,13 +144,19 @@ class _SubjectPageState extends State<SubjectPage> {
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
-                                          Colors.amber[200]!,
-                                          Colors.amber[300]!,
+                                          Colors.purple[700]!,
+                                          Colors.black54,
                                         ],
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                       ),
                                       borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(
+                                        color: Colors.purpleAccent.withOpacity(
+                                          0.5,
+                                        ),
+                                        width: 1,
+                                      ),
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -160,14 +169,15 @@ class _SubjectPageState extends State<SubjectPage> {
                                             style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.black87,
+                                              color: Colors.white,
+                                              fontFamily: 'ComicSans',
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios,
-                                          color: Colors.black54,
+                                          color: Colors.purpleAccent,
                                           size: 20,
                                         ),
                                       ],

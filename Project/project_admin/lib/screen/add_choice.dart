@@ -240,7 +240,7 @@ class _AddChoiceState extends State<AddChoice> {
                                     color: Colors.black87, size: 28),
                                 const SizedBox(width: 12),
                                 Text(
-                                  'Choices for Question ${widget.id}',
+                                  'Manage Choices',
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -297,7 +297,7 @@ class _AddChoiceState extends State<AddChoice> {
                                           "New Choice",
                                           style: TextStyle(
                                             fontSize: 18,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.black87,
                                           ),
                                         ),
@@ -332,7 +332,7 @@ class _AddChoiceState extends State<AddChoice> {
                                           "Is Correct:",
                                           style: TextStyle(
                                             fontSize: 16,
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.black87,
                                           ),
                                         ),
@@ -341,7 +341,10 @@ class _AddChoiceState extends State<AddChoice> {
                                           children: [
                                             Expanded(
                                               child: RadioListTile<bool>(
-                                                title: const Text('True'),
+                                                title: const Text('True',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                                 value: true,
                                                 groupValue: isCorrect,
                                                 onChanged: (value) => setState(
@@ -351,7 +354,10 @@ class _AddChoiceState extends State<AddChoice> {
                                             ),
                                             Expanded(
                                               child: RadioListTile<bool>(
-                                                title: const Text('False'),
+                                                title: const Text('False',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                                 value: false,
                                                 groupValue: isCorrect,
                                                 onChanged: (value) => setState(
@@ -379,7 +385,10 @@ class _AddChoiceState extends State<AddChoice> {
                                                           12)),
                                               elevation: 0,
                                             ),
-                                            child: const Text("Add Choice"),
+                                            child: const Text("Add Choice",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                           ),
                                         ),
                                       ],
@@ -410,37 +419,45 @@ class _AddChoiceState extends State<AddChoice> {
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey,
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
                                 )
                               : DataTable(
-                                  columnSpacing: 24,
-                                  dataRowHeight: 56,
-                                  headingRowHeight: 56,
+                                  columnSpacing: 12,
+                                  dataRowHeight: 48,
+                                  headingRowHeight: 48,
+                                  horizontalMargin: 12,
                                   headingRowColor:
                                       WidgetStateProperty.all(Colors.grey[100]),
-                                  border: TableBorder(
-                                      horizontalInside: BorderSide(
-                                          color: Colors.grey[200]!, width: 1)),
-                                  columns: const [
+                                  columns: [
                                     DataColumn(
-                                        label: Text("No.",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold))),
+                                        label: Padding(
+                                      padding: const EdgeInsets.only(left: 12),
+                                      child: Text("No.",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87)),
+                                    )),
                                     DataColumn(
                                         label: Text("Answer",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold))),
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black87))),
                                     DataColumn(
-                                        label: Text("Is Correct",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold))),
+                                        label: Padding(
+                                      padding: const EdgeInsets.only(right: 12),
+                                      child: Text("Correct",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87)),
+                                    )),
                                     DataColumn(
                                         label: Text("Delete",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold))),
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black87))),
                                   ],
                                   rows:
                                       _answerList.asMap().entries.map((entry) {
@@ -448,36 +465,41 @@ class _AddChoiceState extends State<AddChoice> {
                                     final Map<String, dynamic> answer =
                                         entry.value;
                                     return DataRow(cells: [
-                                      DataCell(Text((index + 1).toString())),
-                                      DataCell(
-                                        Container(
-                                          width: 300,
-                                          child: Text(
-                                            answer['answer'] ?? 'N/A',
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                      DataCell(
-                                        Text(
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 12),
+                                        child: Text((index + 1).toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black87)),
+                                      )),
+                                      DataCell(Text(
+                                        answer['answer'] ?? 'N/A',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87),
+                                      )),
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 12),
+                                        child: Text(
                                           answer['is_correct'] == true
-                                              ? "CORRECT"
-                                              : "INCORRECT",
+                                              ? "✓"
+                                              : "✗",
                                           style: TextStyle(
                                             color: answer['is_correct'] == true
                                                 ? Colors.green
                                                 : Colors.red,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        IconButton(
-                                          icon: Icon(Icons.delete,
-                                              color: Colors.red[600]),
-                                          onPressed: () => delete(answer['id']),
-                                          hoverColor: Colors.red[50],
-                                        ),
-                                      ),
+                                      )),
+                                      DataCell(IconButton(
+                                        icon: Icon(Icons.delete,
+                                            color: Colors.red[600]),
+                                        onPressed: () => delete(answer['id']),
+                                        hoverColor: Colors.red[50],
+                                      )),
                                     ]);
                                   }).toList(),
                                 ),

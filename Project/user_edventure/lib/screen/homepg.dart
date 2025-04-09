@@ -158,6 +158,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double cardSize = screenWidth * 0.3;
+    double welcomeBoxWidth =
+        (cardSize * 2) + 40; // Two cards + estimated spacing
 
     return Scaffold(
       appBar: AppBar(
@@ -198,97 +200,132 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 const SizedBox(height: 30),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.8),
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(color: Colors.purpleAccent, width: 2),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        blurRadius: 10,
-                        spreadRadius: 2,
+                Center(
+                  child: Container(
+                    width: welcomeBoxWidth,
+                    padding: const EdgeInsets.all(16), // Reduced padding
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.purple[800]!, Colors.black87],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                    ],
-                  ),
-                  child: FutureBuilder<Map<String, dynamic>?>(
-                    future: _userDataFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.purpleAccent,
-                          ),
-                        );
-                      }
-                      final userName = snapshot.data?['user_name'] ?? 'User';
-                      return Column(
-                        children: [
-                          const Icon(
-                            Icons.gamepad_rounded,
-                            size: 60,
-                            color: Colors.purpleAccent,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "WELCOME, $userName!",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'ComicSans',
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Colors.purpleAccent.withOpacity(0.7),
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.purple[900]!.withOpacity(0.5),
+                          blurRadius: 15,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: FutureBuilder<Map<String, dynamic>?>(
+                      future: _userDataFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.purpleAccent,
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            "Pick a fun adventure to start!",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
+                          );
+                        }
+                        final userName = snapshot.data?['user_name'] ?? 'User';
+                        return Column(
+                          children: [
+                            const Icon(
+                              Icons.gamepad_rounded,
+                              size: 40, // Reduced icon size
                               color: Colors.purpleAccent,
-                              fontFamily: 'ComicSans',
                             ),
-                          ),
-                        ],
-                      );
-                    },
+                            const SizedBox(height: 8), // Reduced spacing
+                            Text(
+                              "WELCOME, $userName!",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 24, // Slightly smaller font
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'ComicSans',
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.purpleAccent,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 4), // Reduced spacing
+                            Text(
+                              "Ready for Your Next Quest?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14, // Slightly smaller font
+                                color: Colors.purple[200],
+                                fontFamily: 'ComicSans',
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: CategoryCard(
-                        image: "assets/img2.jpeg",
-                        size: cardSize,
-                        page: 'MCQ',
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CategoryCard(
+                          image: "assets/img2.jpeg",
+                          size: cardSize,
+                          page: 'MCQ',
+                        ),
+                        CategoryCard(
+                          image: "assets/english.jpg",
+                          size: cardSize,
+                          page: 'TF',
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 15),
-                    Center(
-                      child: CategoryCard(
-                        image: "assets/english.jpg",
-                        size: cardSize,
-                        page: 'TF',
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: CategoryCard(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CategoryCard(
                           image: "assets/maths.avif",
                           size: cardSize,
                           page: 'FILL',
                         ),
-                      ),
+                        CategoryCard(
+                          image: "assets/img2.jpeg",
+                          size: cardSize,
+                          page: 'MCQ',
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CategoryCard(
+                          image: "assets/english.jpg",
+                          size: cardSize,
+                          page: 'TF',
+                        ),
+                        CategoryCard(
+                          image: "assets/maths.avif",
+                          size: cardSize,
+                          page: 'FILL',
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 30),
                   ],
