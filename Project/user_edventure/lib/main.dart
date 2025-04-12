@@ -13,7 +13,6 @@ Future<void> main() async {
 
 final supabase = Supabase.instance.client;
 
-// Intro Screen with PageView
 class IntroScreen extends StatefulWidget {
   @override
   _IntroScreenState createState() => _IntroScreenState();
@@ -22,7 +21,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
-  final int _totalPages = 3; // Number of intro pages
+  final int _totalPages = 3;
 
   @override
   void dispose() {
@@ -163,7 +162,7 @@ class _IntroScreenState extends State<IntroScreen> {
               },
             ),
           ),
-          SizedBox(height: 40), // Increased from 20 to 40 for more spacing
+          SizedBox(height: 40),
           Text(
             title,
             style: TextStyle(
@@ -172,7 +171,7 @@ class _IntroScreenState extends State<IntroScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 12), // Slightly increased from 10 to 12
+          SizedBox(height: 12),
           Text(
             subtitle,
             style: TextStyle(
@@ -198,15 +197,14 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/intro',
       theme: ThemeData(
-        // Adjusted Theme for Intro Page
         primarySwatch: Colors.deepPurple,
-        primaryColor: Colors.deepPurple[600], // Slightly lighter deep purple
-        scaffoldBackgroundColor: Colors.grey[900], // Softer black
+        primaryColor: Colors.deepPurple[600],
+        scaffoldBackgroundColor: Colors.grey[900],
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.deepPurple,
           brightness: Brightness.dark,
         ).copyWith(
-          secondary: Colors.deepPurple[200], // Softer purple accent
+          secondary: Colors.deepPurple[200],
           onPrimary: Colors.white,
           onBackground: Colors.white,
           onSurface: Colors.white70,
@@ -218,14 +216,11 @@ class MainApp extends StatelessWidget {
             color: Colors.white,
           ),
           bodyMedium: TextStyle(fontSize: 16.0, color: Colors.white70),
-          labelLarge: TextStyle(
-            fontSize: 16.0,
-            color: Colors.grey[300],
-          ), // Brighter grey for "Skip"
+          labelLarge: TextStyle(fontSize: 16.0, color: Colors.grey[300]),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.deepPurple[600], // Matching primary color
+            backgroundColor: Colors.deepPurple[600],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),

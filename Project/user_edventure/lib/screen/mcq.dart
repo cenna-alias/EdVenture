@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:user_edventure/screen/homepg.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:audioplayers/audioplayers.dart'; // Added for background music
 
 class MCQ extends StatefulWidget {
   final int level;
@@ -35,6 +37,94 @@ class _MCQState extends State<MCQ> {
   late int _remainingTime;
   int currentQuestionLevel = 1;
   final int questionsPerLevel = 5;
+
+// tts and music strats
+  FlutterTts flutterTts = FlutterTts();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isMusicPlaying = false;
+  bool _isMuted = false; // Track mute state
+  double _musicVolume = 0.5; // Default music volume
+
+  // Initialize TTS and set completion handler
+  Future<void> _initTts() async {
+    flutterTts.setCompletionHandler(() {
+      // Resume music or restore volume after TTS, unless muted
+      if (!_isMuted) {
+        _resumeBackgroundMusic();
+      }
+    });
+  }
+
+  // Play background music
+  Future<void> _playBackgroundMusic() async {
+    if (_isMuted) return; // Don't play if muted
+    try {
+      await _audioPlayer.play(AssetSource('bgmusic.mp3'), volume: _musicVolume);
+      await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+      setState(() {
+        _isMusicPlaying = true;
+      });
+    } catch (e) {
+      print("Error playing background music: $e");
+    }
+  }
+
+  // Pause background music
+  Future<void> _pauseBackgroundMusic() async {
+    if (_isMusicPlaying && !_isMuted) {
+      await _audioPlayer.pause();
+      setState(() {
+        _isMusicPlaying = false;
+      });
+    }
+  }
+
+  // Resume background music
+  Future<void> _resumeBackgroundMusic() async {
+    if (!_isMusicPlaying && !_isMuted) {
+      await _audioPlayer.resume();
+      await _audioPlayer.setVolume(_musicVolume);
+      setState(() {
+        _isMusicPlaying = true;
+      });
+    }
+  }
+
+  // Toggle mute state
+  void _toggleMute() async {
+    setState(() {
+      _isMuted = !_isMuted;
+    });
+    if (_isMuted) {
+      // Mute: Pause or set volume to 0
+      await _audioPlayer.pause();
+      setState(() {
+        _isMusicPlaying = false;
+      });
+    } else {
+      // Unmute: Resume or restore volume
+      await _playBackgroundMusic();
+    }
+  }
+
+  Future speak(String stext) async {
+    try {
+      // Pause music before speaking, unless already muted
+      if (!_isMuted) {
+        await _pauseBackgroundMusic();
+      }
+      await flutterTts.setLanguage("en-US");
+      await flutterTts.speak(stext);
+    } catch (e) {
+      print("Error with TTS: $e");
+      // Resume music if not muted
+      if (!_isMuted) {
+        _resumeBackgroundMusic();
+      }
+    }
+  }
+
+  // tts and music ends here
 
   Future<void> fetchMCQ() async {
     try {
@@ -78,6 +168,8 @@ class _MCQState extends State<MCQ> {
     _remainingTime = widget.time;
     startTimer();
     fetchMCQ();
+    _initTts();
+    _playBackgroundMusic();
   }
 
   void startTimer() {
@@ -171,6 +263,8 @@ class _MCQState extends State<MCQ> {
                       choices.clear();
                       fetchMCQ();
                       startTimer();
+                      if (!_isMuted)
+                        _playBackgroundMusic(); // Resume music if not muted
                     });
                   },
                   child: const Text('Next Level'),
@@ -190,6 +284,8 @@ class _MCQState extends State<MCQ> {
                     choices.clear();
                     fetchMCQ();
                     startTimer();
+                    if (!_isMuted)
+                      _playBackgroundMusic(); // Resume music if not muted
                   });
                 },
                 child: const Text('Restart'),
@@ -318,6 +414,11 @@ class _MCQState extends State<MCQ> {
   @override
   void dispose() {
     _timer.cancel();
+    // tts and music
+    flutterTts.stop();
+    _audioPlayer.stop();
+    _audioPlayer.dispose();
+
     super.dispose();
   }
 
@@ -391,6 +492,15 @@ class _MCQState extends State<MCQ> {
         centerTitle: true,
         elevation: 0,
         actions: [
+          // Mute button
+          IconButton(
+            icon: Icon(
+              _isMuted ? Icons.volume_off : Icons.volume_up,
+              color: Colors.white,
+            ),
+            onPressed: _toggleMute,
+            tooltip: _isMuted ? 'Unmute Music' : 'Mute Music',
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Chip(
@@ -463,13 +573,26 @@ class _MCQState extends State<MCQ> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        currentQuestion['question'] ?? '',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              currentQuestion['question'] ?? '',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              speak(currentQuestion['question']);
+                            },
+                            icon: const Icon(Icons.mic),
+                          ),
+                        ],
                       ),
                       if (currentQuestion['sub_question'] != null) ...[
                         const SizedBox(height: 8),

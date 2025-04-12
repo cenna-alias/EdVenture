@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:user_edventure/screen/homepg.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_tts/flutter_tts.dart'; // Added for TTS
+import 'package:audioplayers/audioplayers.dart'; // Added for background music
 
 class FILL extends StatefulWidget {
   final int level;
@@ -35,6 +37,96 @@ class _FILLState extends State<FILL> {
   late int _remainingTime;
   int currentQuestionLevel = 1;
   final int questionsPerLevel = 5;
+
+  FlutterTts flutterTts = FlutterTts(); // Initialize TTS
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Initialize AudioPlayer
+  bool _isMusicPlaying = false; // Track music state
+  bool _isMuted = false; // Track mute state
+  double _musicVolume = 0.5; // Default music volume
+
+  // Initialize TTS and set completion handler
+  Future<void> _initTts() async {
+    flutterTts.setCompletionHandler(() {
+      // Resume music after TTS, unless muted
+      if (!_isMuted) {
+        _resumeBackgroundMusic();
+      }
+    });
+  }
+
+  // Play background music
+  Future<void> _playBackgroundMusic() async {
+    if (_isMuted) return; // Don't play if muted
+    try {
+      await _audioPlayer.play(AssetSource('bgmusic.mp3'), volume: _musicVolume);
+      await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+      setState(() {
+        _isMusicPlaying = true;
+      });
+    } catch (e) {
+      print("Error playing background music: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error playing music: $e')));
+    }
+  }
+
+  // Pause background music
+  Future<void> _pauseBackgroundMusic() async {
+    if (_isMusicPlaying && !_isMuted) {
+      await _audioPlayer.pause();
+      setState(() {
+        _isMusicPlaying = false;
+      });
+    }
+  }
+
+  // Resume background music
+  Future<void> _resumeBackgroundMusic() async {
+    if (!_isMusicPlaying && !_isMuted) {
+      await _audioPlayer.resume();
+      await _audioPlayer.setVolume(_musicVolume);
+      setState(() {
+        _isMusicPlaying = true;
+      });
+    }
+  }
+
+  // Toggle mute state
+  void _toggleMute() async {
+    setState(() {
+      _isMuted = !_isMuted;
+    });
+    if (_isMuted) {
+      await _audioPlayer.pause();
+      setState(() {
+        _isMusicPlaying = false;
+      });
+    } else {
+      await _playBackgroundMusic();
+    }
+  }
+
+  // Speak question using TTS
+  Future<void> speak(String text) async {
+    try {
+      // Pause music before speaking, unless muted
+      if (!_isMuted) {
+        await _pauseBackgroundMusic();
+      }
+      await flutterTts.setLanguage("en-US");
+      await flutterTts.speak(text);
+    } catch (e) {
+      print("Error with TTS: $e");
+      // Resume music if not muted
+      if (!_isMuted) {
+        _resumeBackgroundMusic();
+      }
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error with TTS: $e')));
+    }
+  }
 
   Future<void> fetchFILL() async {
     try {
@@ -78,6 +170,8 @@ class _FILLState extends State<FILL> {
     _remainingTime = widget.time;
     startTimer();
     fetchFILL();
+    _initTts(); // Initialize TTS
+    _playBackgroundMusic(); // Start background music
   }
 
   void startTimer() {
@@ -171,6 +265,8 @@ class _FILLState extends State<FILL> {
                       choices.clear();
                       fetchFILL();
                       startTimer();
+                      if (!_isMuted)
+                        _playBackgroundMusic(); // Resume music if not muted
                     });
                   },
                   child: const Text('Next Level'),
@@ -190,6 +286,8 @@ class _FILLState extends State<FILL> {
                     choices.clear();
                     fetchFILL();
                     startTimer();
+                    if (!_isMuted)
+                      _playBackgroundMusic(); // Resume music if not muted
                   });
                 },
                 child: const Text('Restart'),
@@ -328,6 +426,9 @@ class _FILLState extends State<FILL> {
   @override
   void dispose() {
     _timer.cancel();
+    flutterTts.stop(); // Stop TTS
+    _audioPlayer.stop(); // Stop music
+    _audioPlayer.dispose(); // Dispose AudioPlayer
     super.dispose();
   }
 
@@ -401,6 +502,14 @@ class _FILLState extends State<FILL> {
         centerTitle: true,
         elevation: 0,
         actions: [
+          IconButton(
+            icon: Icon(
+              _isMuted ? Icons.volume_off : Icons.volume_up,
+              color: Colors.white,
+            ),
+            onPressed: _toggleMute,
+            tooltip: _isMuted ? 'Unmute Music' : 'Mute Music',
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Chip(
@@ -473,35 +582,50 @@ class _FILLState extends State<FILL> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: currentQuestion['qstn_text1'] ?? '',
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: currentQuestion['qstn_text1'] ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' _____ ',
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.teal,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: currentQuestion['qstn_text2'] ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            const TextSpan(
-                              text: ' _____ ',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.teal,
-                              ),
-                            ),
-                            TextSpan(
-                              text: currentQuestion['qstn_text2'] ?? '',
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              speak(
+                                "${currentQuestion['qstn_text1'] ?? ''} fill in the blank ${currentQuestion['qstn_text2'] ?? ''}",
+                              );
+                            },
+                            icon: const Icon(Icons.mic, color: Colors.teal),
+                          ),
+                        ],
                       ),
                       if (currentQuestion['image'] != null) ...[
                         const SizedBox(height: 16),

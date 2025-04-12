@@ -161,7 +161,7 @@ class _LoginState extends State<Login> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 65),
+                  padding: const EdgeInsets.only(bottom: 152),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
