@@ -184,12 +184,16 @@ class Appbar1 extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: Row(
                 children: [
-                  Icon(Icons.person, color: const Color(0xFF8A4AF0)),
+                  CircleAvatar(
+                    radius: 12, // Adjust size as needed
+                    backgroundImage: AssetImage(
+                        'assets/icon.jpg'), // Replace with your image path
+                  ),
                   SizedBox(width: 10),
                   Text(
-                    "Admin",
+                    "You",
                     style: TextStyle(
-                      color: const Color(0xFF8A4AF0),
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),

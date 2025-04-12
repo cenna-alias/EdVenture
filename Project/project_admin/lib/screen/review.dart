@@ -33,7 +33,8 @@ class _ReviewState extends State<Review> {
     try {
       final response = await Supabase.instance.client
           .from('tbl_review')
-          .select('review_rating, review_content, review_date')
+          .select(
+              'review_rating, review_content, review_date, tbl_user(user_name)')
           .order('created_at', ascending: false);
 
       setState(() {
@@ -159,19 +160,34 @@ class _ReviewState extends State<Review> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    RatingBarIndicator(
-                                      rating: double.tryParse(
-                                              review['review_rating']) ??
-                                          0.0,
-                                      itemBuilder: (context, _) => Icon(
-                                        Icons.star,
-                                        color: starColor,
-                                      ),
-                                      itemCount: 5,
-                                      itemSize: 24.0,
-                                      direction: Axis.horizontal,
-                                      unratedColor:
-                                          secondaryTextColor.withOpacity(0.5),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          review['tbl_user']['user_name'] ??
+                                              'Anonymous',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                        RatingBarIndicator(
+                                          rating: double.tryParse(
+                                                  review['review_rating']) ??
+                                              0.0,
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: starColor,
+                                          ),
+                                          itemCount: 5,
+                                          itemSize: 24.0,
+                                          direction: Axis.horizontal,
+                                          unratedColor: secondaryTextColor
+                                              .withOpacity(0.5),
+                                        ),
+                                      ],
                                     ),
                                     const SizedBox(height: 16),
                                     Container(

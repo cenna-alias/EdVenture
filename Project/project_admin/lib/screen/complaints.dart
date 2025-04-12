@@ -188,7 +188,7 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'User: ${complaint['tbl_user']['user_name']}',
+                                  'User : ${complaint['tbl_user']['user_name']}',
                                   style: TextStyle(
                                     color: secondaryTextColor,
                                     fontSize: 14,
@@ -210,7 +210,7 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "COMPLAINT:",
+                                        "COMPLAINT :",
                                         style: TextStyle(
                                           color: accentColor,
                                           fontWeight: FontWeight.bold,
@@ -246,7 +246,7 @@ class _AdminComplaintsState extends State<AdminComplaints> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "ADMIN REPLY:",
+                                          "ADMIN REPLY :",
                                           style: TextStyle(
                                             color: accentColor,
                                             fontWeight: FontWeight.bold,

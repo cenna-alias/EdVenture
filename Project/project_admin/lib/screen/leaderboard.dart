@@ -114,201 +114,315 @@ class _LeaderboardPageState extends State<LeaderboardPage>
     super.dispose();
   }
 
-  Widget buildLeaderboard(List<dynamic> data, String title) {
+  Widget _buildTopThreePodium(List<dynamic> data) {
+    if (data.isEmpty || isLoading) return const SizedBox.shrink();
+
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.purple[900]!, Colors.black],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          // Second place
+          if (data.length > 1)
+            _buildPodiumItem(data[1], 120, Colors.grey[400]!, '2nd'),
+
+          // First place
+          if (data.isNotEmpty)
+            _buildPodiumItem(data[0], 150, Colors.yellow[700]!, '1st'),
+
+          // Third place
+          if (data.length > 2)
+            _buildPodiumItem(data[2], 100, Colors.brown[400]!, '3rd'),
+        ],
       ),
-      child: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Colors.purpleAccent,
+    );
+  }
+
+  Widget _buildPodiumItem(
+      Map<String, dynamic> user, double height, Color color, String rank) {
+    return Column(
+      children: [
+        Container(
+          width: 90,
+          height: height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                color.withOpacity(0.8),
+                color.withOpacity(0.5),
+              ],
+            ),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.3),
+                blurRadius: 8,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.emoji_events,
+                color: Colors.white,
+                size: height == 150 ? 40 : 30,
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text(
+                  user['username'],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: height == 150 ? 16 : 14,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            )
-          : data.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No scores yet, be the first!',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.purpleAccent,
-                      fontFamily: 'ComicSans',
-                    ),
-                  ),
-                )
-              : ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final entry = data[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 6,
-                        color: Colors.black.withOpacity(0.85),
-                        shadowColor: Colors.purple[900]!.withOpacity(0.5),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: index == 0
-                                      ? Colors.yellow[700]
-                                      : index == 1
-                                          ? Colors.grey[400]
-                                          : index == 2
-                                              ? Colors.brown[400]
-                                              : Colors.purple[700],
-                                  border: Border.all(
-                                    color: Colors.purpleAccent,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'ComicSans',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 15),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      entry['username'],
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontFamily: 'ComicSans',
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      'Score: ${entry['total_score']}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.purpleAccent,
-                                        fontFamily: 'ComicSans',
-                                      ),
-                                    ),
-                                    Text(
-                                      'Questions: ${entry['total_questions']}',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.purpleAccent,
-                                        fontFamily: 'ComicSans',
-                                      ),
-                                    ),
-                                    Text(
-                                      'Level: ${entry['level_name']}',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.purpleAccent,
-                                        fontFamily: 'ComicSans',
-                                      ),
-                                    ),
-                                    Text(
-                                      'Subject: ${entry['subject_name']}',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.purpleAccent,
-                                        fontFamily: 'ComicSans',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              if (index < 3)
-                                Icon(
-                                  Icons.star_rounded,
-                                  color: index == 0
-                                      ? Colors.yellow[700]
-                                      : index == 1
-                                          ? Colors.grey[400]
-                                          : Colors.brown[400],
-                                  size: 30,
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+              Text(
+                '${user['total_score']} pts',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: height == 150 ? 14 : 12,
                 ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: 90,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              rank,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
+  }
+
+  Widget _buildLeaderboardItem(Map<String, dynamic> user, int index) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.grey[900]!.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: _getRankColor(index).withOpacity(0.5),
+          width: 1,
+        ),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: _getRankColor(index),
+          child: Text(
+            '${index + 1}',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        title: Text(
+          user['username'],
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.star, color: _getRankColor(index), size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  '${user['total_score']} pts',
+                  style: TextStyle(
+                    color: Colors.purpleAccent[100],
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              '${user['level_name']} • ${user['subject_name']}',
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _getRankColor(int index) {
+    switch (index) {
+      case 0:
+        return Colors.yellow[700]!;
+      case 1:
+        return Colors.grey[400]!;
+      case 2:
+        return Colors.brown[400]!;
+      default:
+        return Colors.purple[700]!;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Leaderboard',
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: 'ComicSans',
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.purple[800],
-        elevation: 0,
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.purpleAccent,
-          labelColor: Colors.purpleAccent,
-          unselectedLabelColor: Colors.grey[400],
-          labelStyle: const TextStyle(
-            fontFamily: 'ComicSans',
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontFamily: 'ComicSans',
-            fontSize: 14,
-          ),
-          tabs: const [
-            Tab(text: 'Overall'),
-            Tab(text: 'MCQ'),
-            Tab(text: 'T/F'),
-            Tab(text: 'FILLUP'),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
+      backgroundColor: const Color(0xFF1A1A1A),
+      body: Column(
         children: [
-          buildLeaderboard(overallData, 'Overall Top 10'),
-          buildLeaderboard(mcqData, 'MCQ Top 10'),
-          buildLeaderboard(tfData, 'True/False Top 10'),
-          buildLeaderboard(fillData, 'Fill in the Blanks Top 10'),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.purple[900]!,
+                  Colors.purple[800]!,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                const Text(
+                  'Top Performers',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                TabBar(
+                  controller: _tabController,
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.purpleAccent.withOpacity(0.3),
+                  ),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.grey[300],
+                  labelStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  tabs: const [
+                    Tab(text: 'OVERALL'),
+                    Tab(text: 'MCQ'),
+                    Tab(text: 'TRUE/FALSE'),
+                    Tab(text: 'FILL UP'),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildLeaderboardTab(overallData),
+                _buildLeaderboardTab(mcqData),
+                _buildLeaderboardTab(tfData),
+                _buildLeaderboardTab(fillData),
+              ],
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  Widget _buildLeaderboardTab(List<dynamic> data) {
+    return isLoading
+        ? const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.purpleAccent),
+            ),
+          )
+        : data.isEmpty
+            ? const Center(
+                child: Text(
+                  'No scores yet, be the first!',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.purpleAccent,
+                  ),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildTopThreePodium(data),
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Divider(
+                        color: Colors.purpleAccent,
+                        thickness: 0.5,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'All Participants',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return _buildLeaderboardItem(data[index], index);
+                      },
+                    ),
+                  ],
+                ),
+              );
   }
 }

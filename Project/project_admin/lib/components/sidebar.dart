@@ -11,7 +11,7 @@ class SideBar extends StatefulWidget {
   });
 
   static const List<String> pages = [
-    "HOME",
+    "DASHBOARD",
     "LEVELS",
     "SUBJECTS",
     "MCQ QUESTIONS",
@@ -70,7 +70,7 @@ class _SideBarState extends State<SideBar> {
             Text(
               SideBar.pages[index],
               style: TextStyle(
-                color: isSelected ? Colors.deepPurpleAccent : Colors.white,
+                color: isSelected ? Colors.white : Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
