@@ -39,6 +39,7 @@ class _TrueFalseState extends State<TrueFalse> {
   final int questionsPerSet = 5;
   final int totalSets = 4;
   String title = "";
+  List<int> usedQuestionIds = []; // Track used question IDs
 
   FlutterTts flutterTts = FlutterTts(); // Initialize TTS
   final AudioPlayer _audioPlayer = AudioPlayer(); // Initialize AudioPlayer
@@ -54,6 +55,23 @@ class _TrueFalseState extends State<TrueFalse> {
         _resumeBackgroundMusic();
       }
     });
+  }
+
+  List<dynamic> allLevelQuestions = [];
+
+  Future<void> fetchAllQuestions() async {
+    try {
+      final response = await supabase
+          .from('tbl_tfquestion')
+          .select()
+          .eq('subject', widget.subject)
+          .eq('level', widget.level);
+      setState(() {
+        allLevelQuestions = List.from(response)..shuffle(Random());
+      });
+    } catch (e) {
+      print("Error fetching all questions: $e");
+    }
   }
 
   // Play background music
@@ -138,47 +156,98 @@ class _TrueFalseState extends State<TrueFalse> {
 
   Future<void> fetchTrueFalseQuestions() async {
     try {
+      // Fetch questions excluding used ones
       final questionResponse = await supabase
           .from('tbl_tfquestion')
           .select()
           .eq('subject', widget.subject)
           .eq('level', widget.level)
-          .eq('question_level', currentQuestionLevel);
+          .eq('question_level', currentQuestionLevel)
+          .not(
+            'id',
+            'in',
+            usedQuestionIds,
+          ); // Assuming questions have an 'id' field
 
-      List<dynamic> shuffledQuestions = List.from(questionResponse)
-        ..shuffle(Random());
+      List<dynamic> allQuestions = List.from(questionResponse);
+      if (allQuestions.isEmpty) {
+        // Reset usedQuestionIds if no questions are left
+        usedQuestionIds.clear();
+        // Retry fetching without exclusion
+        final retryResponse = await supabase
+            .from('tbl_tfquestion')
+            .select()
+            .eq('subject', widget.subject)
+            .eq('level', widget.level)
+            .eq('question_level', currentQuestionLevel);
+        allQuestions = List.from(retryResponse);
+      }
+
+      if (allQuestions.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('No questions available for this level'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+        return;
+      }
+
+      allQuestions.shuffle(Random());
       List<dynamic> selectedQuestions =
-          shuffledQuestions.take(questionsPerSet).toList();
+          allQuestions.take(questionsPerSet).toList();
+
+      // Update usedQuestionIds
+      usedQuestionIds.addAll(
+        selectedQuestions.map((q) => q['id'] as int).toList(),
+      );
 
       setState(() {
         questions = selectedQuestions;
       });
 
-      if (questions.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('No questions available'),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
+      if (questions.isNotEmpty && !_isMuted) {
+        speak(questions[currentQuestionIndex]['question_text']);
       }
     } catch (e) {
-      print("Error: $e");
+      print("Error fetching questions: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.redAccent),
+        SnackBar(
+          content: Text('Error fetching questions: $e'),
+          backgroundColor: Colors.redAccent,
+        ),
       );
     }
+  }
+
+  // Reset usedQuestionIds when restarting the game
+  void resetGame() {
+    setState(() {
+      usedQuestionIds.clear();
+      currentSet = 1;
+      currentQuestionLevel = 1;
+      currentQuestionIndex = 0;
+      setScore = 0;
+      totalScore = 0;
+      totalQuestionsAttended = 0;
+      selectedAnswer = null;
+      _remainingTime = widget.time;
+      questions.clear();
+      fetchTrueFalseQuestions();
+      startTimer();
+      if (!_isMuted) _playBackgroundMusic();
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _remainingTime = widget.time;
+    fetchAllQuestions().then((_) => fetchTrueFalseQuestions());
     startTimer();
-    fetchTrueFalseQuestions();
     getLevelName();
-    _initTts(); // Initialize TTS
-    _playBackgroundMusic(); // Start background music
+    _initTts();
+    _playBackgroundMusic();
   }
 
   void startTimer() {
@@ -223,6 +292,7 @@ class _TrueFalseState extends State<TrueFalse> {
     showEndDialog('Time\'s Up!');
   }
 
+  // Update showEndDialog to use resetGame
   void showEndDialog(String title) {
     _timer.cancel();
     totalScore += setScore;
@@ -294,8 +364,7 @@ class _TrueFalseState extends State<TrueFalse> {
                       questions.clear();
                       fetchTrueFalseQuestions();
                       startTimer();
-                      if (!_isMuted)
-                        _playBackgroundMusic(); // Resume music if not muted
+                      if (!_isMuted) _playBackgroundMusic();
                     });
                   },
                   child: const Text(
@@ -309,21 +378,7 @@ class _TrueFalseState extends State<TrueFalse> {
                   if (isGameOver) {
                     showExitDialog();
                   } else {
-                    setState(() {
-                      currentSet = 1;
-                      currentQuestionLevel = 1;
-                      currentQuestionIndex = 0;
-                      setScore = 0;
-                      totalScore = 0;
-                      totalQuestionsAttended = 0;
-                      selectedAnswer = null;
-                      _remainingTime = widget.time;
-                      questions.clear();
-                      fetchTrueFalseQuestions();
-                      startTimer();
-                      if (!_isMuted)
-                        _playBackgroundMusic(); // Resume music if not muted
-                    });
+                    resetGame();
                   }
                 },
                 child: const Text(

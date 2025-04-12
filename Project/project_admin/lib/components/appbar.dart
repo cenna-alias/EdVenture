@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_admin/main.dart';
+import 'package:project_admin/screen/login.dart';
 
 class Appbar1 extends StatelessWidget {
   final Function(bool) onToggleSidebar;
@@ -70,14 +72,6 @@ class Appbar1 extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                          color: Colors.white70, // Light grayish-white
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -87,20 +81,26 @@ class Appbar1 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushReplacementNamed('/login');
-                      },
                       child: Text(
-                        'Logout',
+                        'Cancel',
                         style: TextStyle(
-                          color: const Color(0xFFFFFFFF), // White text
+                          color: Colors.white70, // Light grayish-white
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        await supabase.auth.signOut();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AdminLogin(),
+                          ),
+                          (route) => false,
+                        );
+                      },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -108,6 +108,14 @@ class Appbar1 extends StatelessWidget {
                             const Color(0xFF8A4AF0), // Purple accent
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: const Color(0xFFFFFFFF), // White text
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),

@@ -834,402 +834,410 @@ class _AddQuestionState extends State<AddQuestion>
                                       ),
                                     ),
                                   )
-                                : DataTable(
-                                    columnSpacing: 24,
-                                    dataRowHeight: 64,
-                                    headingRowHeight: 56,
-                                    headingRowColor:
-                                        WidgetStateProperty.all(Colors.black),
-                                    border: TableBorder(
-                                      horizontalInside: BorderSide(
-                                          color: Colors.deepPurpleAccent,
-                                          width: 1),
-                                      top: BorderSide(
-                                          color: Colors.deepPurpleAccent,
-                                          width: 1),
-                                      bottom: BorderSide(
-                                          color: Colors.deepPurpleAccent,
-                                          width: 1),
-                                    ),
-                                    columns: [
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 50,
-                                          child: Center(
-                                            child: Text(
-                                              "No.",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                : SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: DataTable(
+                                      columnSpacing: 24,
+                                      dataRowHeight: 64,
+                                      headingRowHeight: 56,
+                                      headingRowColor:
+                                          WidgetStateProperty.all(Colors.black),
+                                      border: TableBorder(
+                                        horizontalInside: BorderSide(
+                                            color: Colors.deepPurpleAccent,
+                                            width: 1),
+                                        top: BorderSide(
+                                            color: Colors.deepPurpleAccent,
+                                            width: 1),
+                                        bottom: BorderSide(
+                                            color: Colors.deepPurpleAccent,
+                                            width: 1),
                                       ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 200,
-                                          child: Center(
-                                            child: Text(
-                                              "Question",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 200,
-                                          child: Center(
-                                            child: Text(
-                                              "Sub Question",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 150,
-                                          child: Center(
-                                            child: Text(
-                                              "Subject",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 150,
-                                          child: Center(
-                                            child: Text(
-                                              "Level",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 100,
-                                          child: Center(
-                                            child: Text(
-                                              "Q. Level",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 100,
-                                          child: Center(
-                                            child: Text(
-                                              "Image",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 150,
-                                          child: Center(
-                                            child: Text(
-                                              "Choices",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: SizedBox(
-                                          width: 150,
-                                          child: Center(
-                                            child: Text(
-                                              "Actions",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                    rows: _questionList
-                                        .asMap()
-                                        .entries
-                                        .map((entry) {
-                                      final int index = entry.key;
-                                      final Map<String, dynamic> question =
-                                          entry.value;
-                                      final level = question['tbl_level'] ?? {};
-                                      final subject =
-                                          question['tbl_subject'] ?? {};
-                                      final int id = question['id'];
-                                      return DataRow(
-                                        cells: [
-                                          DataCell(
-                                            SizedBox(
-                                              width: 50,
-                                              child: Center(
-                                                child: Text(
-                                                  (index + 1).toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.white),
+                                      columns: [
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 50,
+                                            child: Center(
+                                              child: Text(
+                                                "No.",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 200,
-                                              child: Center(
-                                                child: Text(
-                                                  question['question'] ?? 'N/A',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.white),
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 200,
+                                            child: Center(
+                                              child: Text(
+                                                "Question",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 200,
-                                              child: Center(
-                                                child: Text(
-                                                  question['sub_question'] ??
-                                                      'N/A',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.white),
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 200,
+                                            child: Center(
+                                              child: Text(
+                                                "Sub Question",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 150,
-                                              child: Center(
-                                                child: Text(
-                                                  subject['subject_name'] ??
-                                                      'N/A',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.white),
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 150,
+                                            child: Center(
+                                              child: Text(
+                                                "Subject",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 150,
-                                              child: Center(
-                                                child: Text(
-                                                  level['level_name'] ?? 'N/A',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.white),
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 150,
+                                            child: Center(
+                                              child: Text(
+                                                "Level",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 100,
-                                              child: Center(
-                                                child: Text(
-                                                  question['question_level']
-                                                          ?.toString() ??
-                                                      'N/A',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.white),
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "Q. Level",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 100,
-                                              child: Center(
-                                                child: question['image'] !=
-                                                            null &&
-                                                        question['image']
-                                                            .isNotEmpty
-                                                    ? GestureDetector(
-                                                        onTap: () {
-                                                          showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (context) =>
-                                                                    Dialog(
-                                                              backgroundColor:
-                                                                  Colors.black,
-                                                              child:
-                                                                  Image.network(
-                                                                question[
-                                                                    'image'],
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "Image",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 150,
+                                            child: Center(
+                                              child: Text(
+                                                "Choices",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: SizedBox(
+                                            width: 150,
+                                            child: Center(
+                                              child: Text(
+                                                "Actions",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      rows: _questionList
+                                          .asMap()
+                                          .entries
+                                          .map((entry) {
+                                        final int index = entry.key;
+                                        final Map<String, dynamic> question =
+                                            entry.value;
+                                        final level =
+                                            question['tbl_level'] ?? {};
+                                        final subject =
+                                            question['tbl_subject'] ?? {};
+                                        final int id = question['id'];
+                                        return DataRow(
+                                          cells: [
+                                            DataCell(
+                                              SizedBox(
+                                                width: 50,
+                                                child: Center(
+                                                  child: Text(
+                                                    (index + 1).toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              SizedBox(
+                                                width: 200,
+                                                child: Center(
+                                                  child: Text(
+                                                    question['question'] ??
+                                                        'N/A',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              SizedBox(
+                                                width: 200,
+                                                child: Center(
+                                                  child: Text(
+                                                    question['sub_question'] ??
+                                                        'N/A',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              SizedBox(
+                                                width: 150,
+                                                child: Center(
+                                                  child: Text(
+                                                    subject['subject_name'] ??
+                                                        'N/A',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              SizedBox(
+                                                width: 150,
+                                                child: Center(
+                                                  child: Text(
+                                                    level['level_name'] ??
+                                                        'N/A',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              SizedBox(
+                                                width: 100,
+                                                child: Center(
+                                                  child: Text(
+                                                    question['question_level']
+                                                            ?.toString() ??
+                                                        'N/A',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              SizedBox(
+                                                width: 100,
+                                                child: Center(
+                                                  child: question['image'] !=
+                                                              null &&
+                                                          question['image']
+                                                              .isNotEmpty
+                                                      ? GestureDetector(
+                                                          onTap: () {
+                                                            showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) =>
+                                                                      Dialog(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .black,
+                                                                child: Image
+                                                                    .network(
+                                                                  question[
+                                                                      'image'],
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      const Text(
+                                                                          "Failed to load image",
+                                                                          style:
+                                                                              TextStyle(color: Colors.white)),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                            width: 50,
+                                                            height: 50,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              image:
+                                                                  DecorationImage(
+                                                                image: NetworkImage(
+                                                                    question[
+                                                                        'image']),
                                                                 fit: BoxFit
-                                                                    .contain,
-                                                                errorBuilder: (context,
-                                                                        error,
+                                                                    .cover,
+                                                                onError: (exception,
                                                                         stackTrace) =>
-                                                                    const Text(
-                                                                        "Failed to load image",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white)),
+                                                                    const Icon(
+                                                                        Icons
+                                                                            .error,
+                                                                        color: Colors
+                                                                            .white),
                                                               ),
                                                             ),
-                                                          );
-                                                        },
-                                                        child: Container(
-                                                          width: 50,
-                                                          height: 50,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            image:
-                                                                DecorationImage(
-                                                              image: NetworkImage(
-                                                                  question[
-                                                                      'image']),
-                                                              fit: BoxFit.cover,
-                                                              onError: (exception,
-                                                                      stackTrace) =>
-                                                                  const Icon(
-                                                                      Icons
-                                                                          .error,
-                                                                      color: Colors
-                                                                          .white),
-                                                            ),
                                                           ),
-                                                        ),
-                                                      )
-                                                    : const Text("No Image",
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors
-                                                                .white70)),
+                                                        )
+                                                      : const Text("No Image",
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors
+                                                                  .white70)),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 150,
-                                              child: Center(
-                                                child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.deepPurpleAccent,
-                                                    foregroundColor:
-                                                        Colors.white,
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 16,
-                                                        vertical: 8),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8)),
+                                            DataCell(
+                                              SizedBox(
+                                                width: 150,
+                                                child: Center(
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor: Colors
+                                                          .deepPurpleAccent,
+                                                      foregroundColor:
+                                                          Colors.white,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 16,
+                                                          vertical: 8),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                AddChoice(
+                                                                    id: id)),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                        "Add Choices"),
                                                   ),
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              AddChoice(
-                                                                  id: id)),
-                                                    );
-                                                  },
-                                                  child:
-                                                      const Text("Add Choices"),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          DataCell(
-                                            SizedBox(
-                                              width: 150,
-                                              child: Center(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    IconButton(
-                                                      icon: Icon(Icons.edit,
-                                                          color: Colors
-                                                              .greenAccent),
-                                                      onPressed: () =>
-                                                          editQuestion(
-                                                              question),
-                                                      hoverColor: Colors
-                                                          .greenAccent
-                                                          .withOpacity(0.1),
-                                                    ),
-                                                    IconButton(
-                                                      icon: Icon(Icons.delete,
-                                                          color:
-                                                              Colors.redAccent),
-                                                      onPressed: () =>
-                                                          delete(id),
-                                                      hoverColor: Colors
-                                                          .redAccent
-                                                          .withOpacity(0.1),
-                                                    ),
-                                                  ],
+                                            DataCell(
+                                              SizedBox(
+                                                width: 150,
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      IconButton(
+                                                        icon: Icon(Icons.edit,
+                                                            color: Colors
+                                                                .greenAccent),
+                                                        onPressed: () =>
+                                                            editQuestion(
+                                                                question),
+                                                        hoverColor: Colors
+                                                            .greenAccent
+                                                            .withOpacity(0.1),
+                                                      ),
+                                                      IconButton(
+                                                        icon: Icon(Icons.delete,
+                                                            color: Colors
+                                                                .redAccent),
+                                                        onPressed: () =>
+                                                            delete(id),
+                                                        hoverColor: Colors
+                                                            .redAccent
+                                                            .withOpacity(0.1),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      );
-                                    }).toList(),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
                           ),
                         ),

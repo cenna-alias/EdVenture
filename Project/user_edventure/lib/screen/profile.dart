@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_edventure/screen/changepassword.dart';
 import 'package:user_edventure/screen/complaints.dart';
 import 'package:user_edventure/screen/editprofile.dart';
+import 'package:user_edventure/screen/login.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -152,6 +153,21 @@ class _ProfileState extends State<Profile> {
                                     builder: (context) => const Complaints(),
                                   ),
                                 ),
+                          ),
+                          const SizedBox(height: 10),
+                          _buildButton(
+                            context: context,
+                            title: 'Logout',
+                            onPressed: () async {
+                              await supabase.auth.signOut();
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Login(),
+                                ),
+                                (route) => false,
+                              );
+                            },
                           ),
                         ],
                       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_edventure/screen/login.dart';
+import 'package:user_edventure/screen/homepg.dart'; // Import HomePage
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
     url: 'https://zocmpjizmgscrhudkozy.supabase.co',
     anonKey:
@@ -12,6 +14,91 @@ Future<void> main() async {
 }
 
 final supabase = Supabase.instance.client;
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/splash', // Start with a splash route to check auth
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+        primaryColor: Colors.deepPurple[600],
+        scaffoldBackgroundColor: Colors.grey[900],
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepPurple,
+          brightness: Brightness.dark,
+        ).copyWith(
+          secondary: Colors.deepPurple[200],
+          onPrimary: Colors.white,
+          onBackground: Colors.white,
+          onSurface: Colors.white70,
+        ),
+        textTheme: TextTheme(
+          headlineLarge: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          bodyMedium: TextStyle(fontSize: 16.0, color: Colors.white70),
+          labelLarge: TextStyle(fontSize: 16.0, color: Colors.grey[300]),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepPurple[600],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          ),
+        ),
+      ),
+      routes: {
+        '/splash': (context) => SplashScreen(),
+        '/intro': (context) => IntroScreen(),
+        '/login': (context) => Login(),
+        '/home': (context) => HomePage(),
+      },
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthAndNavigate();
+  }
+
+  Future<void> _checkAuthAndNavigate() async {
+    await Future.delayed(Duration(seconds: 1)); // Optional: Simulate loading
+    final session = supabase.auth.currentSession;
+    if (session != null) {
+      // User is logged in, go to HomePage
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+    } else {
+      // User is not logged in, go to IntroScreen
+      Navigator.pushNamedAndRemoveUntil(context, '/intro', (route) => false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[900],
+      body: Center(
+        child: CircularProgressIndicator(color: Colors.deepPurple[600]),
+      ),
+    );
+  }
+}
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -69,7 +156,11 @@ class _IntroScreenState extends State<IntroScreen> {
               children: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/login');
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/login',
+                      (route) => false,
+                    );
                   },
                   child: Text(
                     'Skip',
@@ -105,7 +196,11 @@ class _IntroScreenState extends State<IntroScreen> {
                         curve: Curves.easeInOut,
                       );
                     } else {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/login',
+                        (route) => false,
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -184,54 +279,6 @@ class _IntroScreenState extends State<IntroScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/intro',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        primaryColor: Colors.deepPurple[600],
-        scaffoldBackgroundColor: Colors.grey[900],
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-          brightness: Brightness.dark,
-        ).copyWith(
-          secondary: Colors.deepPurple[200],
-          onPrimary: Colors.white,
-          onBackground: Colors.white,
-          onSurface: Colors.white70,
-        ),
-        textTheme: TextTheme(
-          headlineLarge: TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-          bodyMedium: TextStyle(fontSize: 16.0, color: Colors.white70),
-          labelLarge: TextStyle(fontSize: 16.0, color: Colors.grey[300]),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.deepPurple[600],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          ),
-        ),
-      ),
-      routes: {
-        '/intro': (context) => IntroScreen(),
-        '/login': (context) => Login(),
-      },
     );
   }
 }

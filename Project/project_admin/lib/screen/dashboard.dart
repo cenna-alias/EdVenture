@@ -9,6 +9,7 @@ import 'package:project_admin/screen/subject.dart';
 import 'package:project_admin/screen/tfquestion.dart';
 import 'package:project_admin/screen/user.dart';
 import 'package:project_admin/screen/review.dart';
+import 'package:project_admin/screen/leaderboard.dart'; // Import LeaderboardPage
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -22,63 +23,15 @@ class _AdminHomeState extends State<AdminHome> {
   bool _isSidebarVisible = true;
 
   final List<Widget> _pages = [
-    Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            image: DecorationImage(
-              image: AssetImage('assets/squ.png'),
-              fit: BoxFit.cover,
-              filterQuality: FilterQuality.high,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 40,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Welcome Back !",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900,
-                      shadows: [
-                        Shadow(
-                          color: Colors.white.withOpacity(0.3),
-                          blurRadius: 8,
-                          offset: Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextSpan(
-                    text: "🏠",
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-    Level(),
-    Subject(),
-    AddQuestion(),
-    Tfquestion(),
-    Fillquestion(),
-    User(),
-    Review(),
-    AdminComplaints(),
+    const LeaderboardPage(), // Replaced Stack with LeaderboardPage
+    const Level(),
+    const Subject(),
+    const AddQuestion(),
+    const Tfquestion(),
+    const Fillquestion(),
+    const User(),
+    const Review(),
+    const AdminComplaints(),
   ];
 
   void onSidebarItemTapped(int index) {

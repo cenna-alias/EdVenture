@@ -6,6 +6,8 @@ import 'package:user_edventure/screen/subject.dart';
 import 'package:user_edventure/screen/profile.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -28,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           await supabase
               .from('tbl_user')
               .select()
-              .eq('user_email', user.email as Object)
+              .eq('id', supabase.auth.currentUser!.id)
               .single();
       return response;
     }
@@ -123,9 +125,10 @@ class _HomePageState extends State<HomePage> {
               ElevatedButton(
                 onPressed: () async {
                   await supabase.auth.signOut();
-                  Navigator.pushReplacement(
+                  Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => const Login()),
+                    MaterialPageRoute(builder: (context) => Login()),
+                    (route) => false,
                   );
                 },
                 style: ElevatedButton.styleFrom(

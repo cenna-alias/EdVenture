@@ -34,6 +34,8 @@ class _RegisterState extends State<Register> {
           'user_name': _usernameController.text.trim(),
           'parent_name': _parentController.text.trim(),
           'user_dob': _dobController.text.trim(),
+          'user_email': _emailController.text,
+          'user_password': _passwordController.text,
         });
         await showDialog(
           context: context,

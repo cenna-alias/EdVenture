@@ -38,7 +38,7 @@ class _MCQState extends State<MCQ> {
   int currentQuestionLevel = 1;
   final int questionsPerLevel = 5;
 
-// tts and music strats
+  // tts and music strats
   FlutterTts flutterTts = FlutterTts();
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool _isMusicPlaying = false;
