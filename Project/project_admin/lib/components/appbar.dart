@@ -159,14 +159,14 @@ class Appbar1 extends StatelessWidget {
                       },
                       icon: Icon(
                         isSidebarVisible ? Icons.menu_open : Icons.menu,
-                        color: const Color(0xFF8A4AF0),
+                        color: Colors.white,
                         size: 30,
                       ),
                     ),
                     Text(
                       "EdVenture",
                       style: TextStyle(
-                        color: const Color(0xFF8A4AF0),
+                        color: Colors.white,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -184,17 +184,22 @@ class Appbar1 extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 12, // Adjust size as needed
-                    backgroundImage: AssetImage(
-                        'assets/icon.jpg'), // Replace with your image path
+                  Icon(
+                    Icons.person,
+                    size: 24, // Adjust size as needed
+                    color: Colors.yellow[700], // Adjust color as needed
                   ),
+                  // CircleAvatar(
+                  //   radius: 12, // Adjust size as needed
+                  //   backgroundImage: AssetImage(
+                  //       'assets/icon.jpg'), // Replace with your image path
+                  // ),
                   SizedBox(width: 10),
                   Text(
-                    "You",
+                    "Admin",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
