@@ -110,7 +110,7 @@ class _ViewscoreState extends State<Viewscore> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -120,21 +120,21 @@ class _ViewscoreState extends State<Viewscore> {
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 22,
-            color: Colors.white,
+            color: Colors.black,
             letterSpacing: 0.5,
           ),
         ),
-        backgroundColor: Colors.indigo[900],
+        // backgroundColor: Colors.indigo[900],
         elevation: 0,
         centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.indigo[900]!, Colors.indigo[700]!],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
+              // gradient: LinearGradient(
+              //   colors: [Colors.indigo[900]!, Colors.indigo[700]!],
+              //   begin: Alignment.topCenter,
+              //   end: Alignment.bottomCenter,
+              // ),
+              ),
         ),
       ),
       body: Container(

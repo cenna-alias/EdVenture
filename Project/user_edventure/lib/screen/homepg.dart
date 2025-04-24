@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Hai $userName!",
+                                      "Hey $userName!",
                                       style: const TextStyle(
                                         fontSize: 28,
                                         fontWeight: FontWeight.bold,

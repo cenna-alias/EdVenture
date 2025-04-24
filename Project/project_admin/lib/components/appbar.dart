@@ -159,7 +159,7 @@ class Appbar1 extends StatelessWidget {
                       },
                       icon: Icon(
                         isSidebarVisible ? Icons.menu_open : Icons.menu,
-                        color: Colors.white,
+                        color: Colors.deepPurple,
                         size: 30,
                       ),
                     ),
@@ -198,7 +198,7 @@ class Appbar1 extends StatelessWidget {
                   Text(
                     "Admin",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.yellow[700],
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),

@@ -198,7 +198,7 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.deepPurpleAccent),
+                            border: Border.all(color: Colors.white),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.2),

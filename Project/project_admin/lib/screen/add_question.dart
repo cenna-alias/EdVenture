@@ -324,15 +324,16 @@ class _AddQuestionState extends State<AddQuestion>
           : _errorMessage != null
               ? Center(
                   child: Container(
-                    padding: const EdgeInsets.all(24),
+                    width: 400,
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.deepPurpleAccent),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.deepPurple.withOpacity(0.3),
-                          blurRadius: 20,
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
                       ],
@@ -340,16 +341,18 @@ class _AddQuestionState extends State<AddQuestion>
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.error_outline,
-                            color: Colors.redAccent, size: 40),
-                        const SizedBox(height: 10),
+                        const Icon(Icons.error_outline,
+                            color: Colors.redAccent, size: 32),
+                        const SizedBox(height: 8),
                         Text(
                           _errorMessage!,
                           style: const TextStyle(
-                              color: Colors.black, fontSize: 16),
+                            color: Colors.black87,
+                            fontSize: 14,
+                          ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: _loadInitialData,
                           style: ElevatedButton.styleFrom(
@@ -375,21 +378,14 @@ class _AddQuestionState extends State<AddQuestion>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.question_answer,
-                                    color: Colors.deepPurpleAccent, size: 32),
-                                const SizedBox(width: 12),
-                                Text(
-                                  'Questions',
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                    letterSpacing: 0.2,
-                                  ),
-                                ),
-                              ],
+                            const Text(
+                              'MCQ Questions',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black87,
+                                letterSpacing: 0.2,
+                              ),
                             ),
                             ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
@@ -401,8 +397,18 @@ class _AddQuestionState extends State<AddQuestion>
                                     borderRadius: BorderRadius.circular(8)),
                                 elevation: 2,
                               ),
-                              onPressed: () => setState(
-                                  () => _isFormVisible = !_isFormVisible),
+                              onPressed: () => setState(() {
+                                _isFormVisible = !_isFormVisible;
+                                if (!_isFormVisible) {
+                                  _questionController.clear();
+                                  _subquestionController.clear();
+                                  _selectedLevel = null;
+                                  _selectedSubject = null;
+                                  _selectedNumber = null;
+                                  _pickedImage = null;
+                                  _editingId = null;
+                                }
+                              }),
                               icon: Icon(
                                   _isFormVisible ? Icons.close : Icons.add,
                                   size: 20),
@@ -413,931 +419,853 @@ class _AddQuestionState extends State<AddQuestion>
                           ],
                         ),
                         const SizedBox(height: 32),
-                        AnimatedContainer(
-                          duration: _animationDuration,
-                          curve: Curves.easeInOut,
-                          child: _isFormVisible
-                              ? Container(
-                                  padding: const EdgeInsets.all(24),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                        color: Colors.deepPurpleAccent),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            Colors.deepPurple.withOpacity(0.3),
-                                        blurRadius: 20,
-                                        offset: const Offset(0, 4),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _editingId != null
-                                              ? "Edit Question"
-                                              : "New Question",
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                          ),
+                        Center(
+                          child: AnimatedContainer(
+                            duration: _animationDuration,
+                            curve: Curves.easeInOut,
+                            width: 600,
+                            child: _isFormVisible
+                                ? Container(
+                                    padding: const EdgeInsets.all(24),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(color: Colors.white),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 4),
                                         ),
-                                        const SizedBox(height: 24),
-                                        TextFormField(
-                                          controller: _questionController,
-                                          maxLines: 3,
-                                          decoration: InputDecoration(
-                                            labelText: 'Question',
-                                            labelStyle: TextStyle(
-                                                color: Colors.black54),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
+                                      ],
+                                    ),
+                                    child: Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 24),
+                                          TextFormField(
+                                            controller: _questionController,
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                              labelText: 'Question',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.grey[600]),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1.5),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 14),
+                                              prefixIcon: Icon(
+                                                  Icons.question_answer,
                                                   color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
+                                                      Colors.deepPurpleAccent),
                                             ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: const BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1.5),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                            prefixIcon: Icon(
-                                                Icons.question_answer,
-                                                color: Colors.deepPurpleAccent),
+                                            style: const TextStyle(
+                                                color: Colors.black87),
+                                            validator: (value) =>
+                                                value == null || value.isEmpty
+                                                    ? "Please enter a question"
+                                                    : null,
                                           ),
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                          validator: (value) =>
-                                              value == null || value.isEmpty
-                                                  ? "Please enter a question"
-                                                  : null,
-                                        ),
-                                        const SizedBox(height: 16),
-                                        TextFormField(
-                                          controller: _subquestionController,
-                                          maxLines: 3,
-                                          decoration: InputDecoration(
-                                            labelText: 'Sub Question',
-                                            labelStyle: TextStyle(
-                                                color: Colors.black54),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
+                                          const SizedBox(height: 16),
+                                          TextFormField(
+                                            controller: _subquestionController,
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                              labelText: 'Sub Question',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.grey[600]),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1.5),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 14),
+                                              prefixIcon: Icon(
+                                                  Icons
+                                                      .question_answer_outlined,
                                                   color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
+                                                      Colors.deepPurpleAccent),
                                             ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: const BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1.5),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                            prefixIcon: Icon(Icons.subtitles,
-                                                color: Colors.deepPurpleAccent),
+                                            style: const TextStyle(
+                                                color: Colors.black87),
                                           ),
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                        ),
-                                        const SizedBox(height: 16),
-                                        DropdownButtonFormField<String>(
-                                          value: _selectedSubject,
-                                          hint: const Text("Select Subject",
-                                              style: TextStyle(
-                                                  color: Colors.black54)),
-                                          decoration: InputDecoration(
-                                            labelText: 'Subject',
-                                            labelStyle: TextStyle(
-                                                color: Colors.black54),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
+                                          const SizedBox(height: 16),
+                                          DropdownButtonFormField<String>(
+                                            value: _selectedSubject,
+                                            hint: const Text("Select Subject"),
+                                            decoration: InputDecoration(
+                                              labelText: 'Subject',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.grey[600]),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1.5),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 14),
+                                              prefixIcon: Icon(Icons.subject,
                                                   color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
+                                                      Colors.deepPurpleAccent),
                                             ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: const BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1.5),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                            prefixIcon: Icon(Icons.book,
-                                                color: Colors.deepPurpleAccent),
+                                            items: _subjectList.map((subject) {
+                                              return DropdownMenuItem<String>(
+                                                value: subject['id'].toString(),
+                                                child: Text(
+                                                    subject['subject_name'] ??
+                                                        'N/A',
+                                                    style: const TextStyle(
+                                                        color: Colors.black87)),
+                                              );
+                                            }).toList(),
+                                            onChanged: (value) => setState(
+                                                () => _selectedSubject = value),
+                                            validator: (value) => value == null
+                                                ? "Please select a subject"
+                                                : null,
                                           ),
-                                          items: _subjectList.map((subject) {
-                                            return DropdownMenuItem<String>(
-                                              value: subject['id'].toString(),
-                                              child: Text(
-                                                  subject['subject_name'] ??
-                                                      'N/A',
-                                                  style: const TextStyle(
-                                                      color: Colors.black)),
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) => setState(
-                                              () => _selectedSubject = value),
-                                          validator: (value) => value == null
-                                              ? "Please select a subject"
-                                              : null,
-                                          dropdownColor: Colors.white,
-                                        ),
-                                        const SizedBox(height: 16),
-                                        DropdownButtonFormField<String>(
-                                          value: _selectedLevel,
-                                          hint: const Text("Select Level",
-                                              style: TextStyle(
-                                                  color: Colors.black54)),
-                                          decoration: InputDecoration(
-                                            labelText: 'Level',
-                                            labelStyle: TextStyle(
-                                                color: Colors.black54),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
+                                          const SizedBox(height: 16),
+                                          DropdownButtonFormField<String>(
+                                            value: _selectedLevel,
+                                            hint: const Text("Select Level"),
+                                            decoration: InputDecoration(
+                                              labelText: 'Level',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.grey[600]),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1.5),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 14),
+                                              prefixIcon: Icon(Icons.stairs,
                                                   color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
+                                                      Colors.deepPurpleAccent),
                                             ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: const BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1.5),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                            prefixIcon: Icon(Icons.stairs,
-                                                color: Colors.deepPurpleAccent),
+                                            items: _levelList.map((level) {
+                                              return DropdownMenuItem<String>(
+                                                value: level['id'].toString(),
+                                                child: Text(
+                                                    level['level_name'] ??
+                                                        'N/A',
+                                                    style: const TextStyle(
+                                                        color: Colors.black87)),
+                                              );
+                                            }).toList(),
+                                            onChanged: (value) => setState(
+                                                () => _selectedLevel = value),
+                                            validator: (value) => value == null
+                                                ? "Please select a level"
+                                                : null,
                                           ),
-                                          items: _levelList.map((level) {
-                                            return DropdownMenuItem<String>(
-                                              value: level['id'].toString(),
-                                              child: Text(
-                                                  level['level_name'] ?? 'N/A',
-                                                  style: const TextStyle(
-                                                      color: Colors.black)),
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) => setState(
-                                              () => _selectedLevel = value),
-                                          validator: (value) => value == null
-                                              ? "Please select a level"
-                                              : null,
-                                          dropdownColor: Colors.white,
-                                        ),
-                                        const SizedBox(height: 16),
-                                        DropdownButtonFormField<int>(
-                                          value: _selectedNumber,
-                                          hint: const Text(
-                                              "Select Question Level",
-                                              style: TextStyle(
-                                                  color: Colors.black54)),
-                                          decoration: InputDecoration(
-                                            labelText: 'Question Level',
-                                            labelStyle: TextStyle(
-                                                color: Colors.black54),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
+                                          const SizedBox(height: 16),
+                                          DropdownButtonFormField<int>(
+                                            value: _selectedNumber,
+                                            hint: const Text(
+                                                "Select Question Level"),
+                                            decoration: InputDecoration(
+                                              labelText: 'Question Level',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.grey[600]),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color:
+                                                        Colors.deepPurpleAccent,
+                                                    width: 1.5),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 14),
+                                              prefixIcon: Icon(Icons.numbers,
                                                   color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
+                                                      Colors.deepPurpleAccent),
                                             ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: const BorderSide(
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                  width: 1.5),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                            prefixIcon: Icon(Icons.trending_up,
-                                                color: Colors.deepPurpleAccent),
+                                            items: List.generate(4, (index) {
+                                              return DropdownMenuItem<int>(
+                                                value: index + 1,
+                                                child: Text(
+                                                    (index + 1).toString(),
+                                                    style: const TextStyle(
+                                                        color: Colors.black87)),
+                                              );
+                                            }),
+                                            onChanged: (value) => setState(
+                                                () => _selectedNumber = value),
+                                            validator: (value) => value == null
+                                                ? "Please select a question level"
+                                                : null,
                                           ),
-                                          items: List.generate(4, (index) {
-                                            return DropdownMenuItem<int>(
-                                              value: index + 1,
-                                              child: Text(
-                                                  (index + 1).toString(),
-                                                  style: const TextStyle(
-                                                      color: Colors.black)),
-                                            );
-                                          }),
-                                          onChanged: (value) => setState(
-                                              () => _selectedNumber = value),
-                                          validator: (value) => value == null
-                                              ? "Please select a question level"
-                                              : null,
-                                          dropdownColor: Colors.white,
-                                        ),
-                                        const SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: _pickImage,
+                                          const SizedBox(height: 16),
+                                          Row(
+                                            children: [
+                                              ElevatedButton(
+                                                onPressed: _pickImage,
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.deepPurpleAccent,
+                                                  foregroundColor: Colors.white,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 12),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                ),
+                                                child: const Text("Pick Image"),
+                                              ),
+                                              const SizedBox(width: 16),
+                                              _pickedImage != null
+                                                  ? SizedBox(
+                                                      width: 80,
+                                                      height: 80,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: _pickedImage!
+                                                                    .bytes !=
+                                                                null
+                                                            ? Image.memory(
+                                                                Uint8List.fromList(
+                                                                    _pickedImage!
+                                                                        .bytes!),
+                                                                fit: BoxFit
+                                                                    .cover)
+                                                            : Image.file(
+                                                                File(
+                                                                    _pickedImage!
+                                                                        .path!),
+                                                                fit: BoxFit
+                                                                    .cover),
+                                                      ),
+                                                    )
+                                                  : const Text(
+                                                      "No image selected",
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.black54)),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 24),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: ElevatedButton(
+                                              onPressed: insert,
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor:
                                                     Colors.deepPurpleAccent,
                                                 foregroundColor: Colors.white,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 20,
-                                                        vertical: 12),
+                                                        horizontal: 32,
+                                                        vertical: 14),
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8)),
+                                                elevation: 2,
                                               ),
-                                              child: const Text("Pick Image"),
+                                              child: Text(
+                                                  _editingId != null
+                                                      ? "Update Question"
+                                                      : "Add Question",
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600)),
                                             ),
-                                            const SizedBox(width: 16),
-                                            _pickedImage != null
-                                                ? SizedBox(
-                                                    width: 80,
-                                                    height: 80,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      child: _pickedImage!
-                                                                  .bytes !=
-                                                              null
-                                                          ? Image.memory(
-                                                              Uint8List.fromList(
-                                                                  _pickedImage!
-                                                                      .bytes!),
-                                                              fit: BoxFit.cover)
-                                                          : Image.file(
-                                                              File(_pickedImage!
-                                                                  .path!),
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                    ),
-                                                  )
-                                                : const Text(
-                                                    "No image selected",
-                                                    style: TextStyle(
-                                                        color: Colors.black54)),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 20),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: ElevatedButton(
-                                            onPressed: insert,
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Colors.deepPurpleAccent,
-                                              foregroundColor: Colors.white,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 32,
-                                                      vertical: 14),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8)),
-                                              elevation: 2,
-                                            ),
-                                            child: Text(
-                                                _editingId != null
-                                                    ? "Update Question"
-                                                    : "Add Question",
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w600)),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                        ),
-                        const SizedBox(height: 32),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                color: Colors.deepPurpleAccent, width: 1),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.deepPurple.withOpacity(0.2),
-                                blurRadius: 12,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: _questionList.isEmpty
-                                ? Container(
-                                    padding: const EdgeInsets.all(32),
-                                    child: Center(
-                                      child: Text(
-                                        "No questions yet",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        ],
                                       ),
                                     ),
                                   )
-                                : SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: DataTable(
-                                      columnSpacing:
-                                          16, // Reduced for tighter, professional spacing
-                                      dataRowHeight:
-                                          72, // Slightly increased for better readability
-                                      headingRowHeight: 56,
-                                      headingRowColor: WidgetStateProperty.all(
-                                        Colors.deepPurpleAccent
-                                            .withOpacity(0.05),
+                                : Container(),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        Center(
+                          child: Container(
+                            width: 1138,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border:
+                                  Border.all(color: Colors.deepPurpleAccent),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: _questionList.isEmpty
+                                  ? Container(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Center(
+                                        child: Text(
+                                          "No questions yet",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[600],
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       ),
-                                      dataRowColor:
-                                          WidgetStateProperty.resolveWith(
-                                              (states) {
-                                        if (states
-                                            .contains(WidgetState.hovered)) {
-                                          return Colors.deepPurpleAccent
-                                              .withOpacity(0.05);
-                                        }
-                                        return Colors.white;
-                                      }),
-                                      border: TableBorder(
-                                        horizontalInside: BorderSide(
-                                          color: Colors.grey.shade200,
-                                          width: 1,
+                                    )
+                                  : SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: DataTable(
+                                        columnSpacing: 16,
+                                        dataRowHeight: 56,
+                                        headingRowHeight: 48,
+                                        headingRowColor:
+                                            WidgetStateProperty.all(
+                                                Colors.grey[100]),
+                                        border: TableBorder(
+                                          horizontalInside: BorderSide(
+                                              color: Colors.deepPurpleAccent,
+                                              width: 1),
+                                          top: BorderSide(
+                                              color: Colors.deepPurpleAccent,
+                                              width: 1),
+                                          bottom: BorderSide(
+                                              color: Colors.deepPurpleAccent,
+                                              width: 1),
                                         ),
-                                        verticalInside: BorderSide(
-                                          color: Colors.grey.shade200,
-                                          width: 1,
-                                        ),
-                                        top: BorderSide(
-                                            color: Colors.deepPurpleAccent,
-                                            width: 1),
-                                        bottom: BorderSide(
-                                            color: Colors.deepPurpleAccent,
-                                            width: 1),
-                                        left: BorderSide(
-                                            color: Colors.deepPurpleAccent,
-                                            width: 1),
-                                        right: BorderSide(
-                                            color: Colors.deepPurpleAccent,
-                                            width: 1),
-                                      ),
-                                      columns: [
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width:
-                                                60, // Adjusted for better alignment
-                                            child: Center(
-                                              child: Text(
-                                                "No.",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width:
-                                                250, // Slightly wider for better text fit
-                                            child: Center(
-                                              child: Text(
-                                                "Question",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width: 250,
-                                            child: Center(
-                                              child: Text(
-                                                "Sub Question",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width: 160,
-                                            child: Center(
-                                              child: Text(
-                                                "Subject",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width: 160,
-                                            child: Center(
-                                              child: Text(
-                                                "Level",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width: 100,
-                                            child: Center(
-                                              child: Text(
-                                                "Q. Level",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width: 100,
-                                            child: Center(
-                                              child: Text(
-                                                "Image",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width: 160,
-                                            child: Center(
-                                              child: Text(
-                                                "Choices",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataColumn(
-                                          label: SizedBox(
-                                            width: 160,
-                                            child: Center(
-                                              child: Text(
-                                                "Actions",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                      rows: _questionList
-                                          .asMap()
-                                          .entries
-                                          .map((entry) {
-                                        final int index = entry.key;
-                                        final Map<String, dynamic> question =
-                                            entry.value;
-                                        final level =
-                                            question['tbl_level'] ?? {};
-                                        final subject =
-                                            question['tbl_subject'] ?? {};
-                                        final int id = question['id'];
-                                        return DataRow(
-                                          cells: [
-                                            DataCell(
-                                              SizedBox(
-                                                width: 60,
-                                                child: Center(
-                                                  child: Text(
-                                                    (index + 1).toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black87,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                        columns: [
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  "No.",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 250,
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 8),
-                                                  child: Text(
-                                                    question['question'] ??
-                                                        'N/A',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black87,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 200,
+                                              child: Center(
+                                                child: Text(
+                                                  "Question",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 250,
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 8),
-                                                  child: Text(
-                                                    question['sub_question'] ??
-                                                        'N/A',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black87,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 200,
+                                              child: Center(
+                                                child: Text(
+                                                  "Sub Question",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 160,
-                                                child: Center(
-                                                  child: Text(
-                                                    subject['subject_name'] ??
-                                                        'N/A',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black87,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Subject",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 160,
-                                                child: Center(
-                                                  child: Text(
-                                                    level['level_name'] ??
-                                                        'N/A',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black87,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Level",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 100,
-                                                child: Center(
-                                                  child: Text(
-                                                    question['question_level']
-                                                            ?.toString() ??
-                                                        'N/A',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black87,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 60,
+                                              child: Center(
+                                                child: Text(
+                                                  "Q. Level",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 100,
-                                                child: Center(
-                                                  child: question['image'] !=
-                                                              null &&
-                                                          question['image']
-                                                              .isNotEmpty
-                                                      ? GestureDetector(
-                                                          onTap: () {
-                                                            showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) =>
-                                                                      Dialog(
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .white,
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 60,
+                                              child: Center(
+                                                child: Text(
+                                                  "Image",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Choices",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: SizedBox(
+                                              width: 80,
+                                              child: Center(
+                                                child: Text(
+                                                  "Actions",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black87,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        rows: _questionList
+                                            .asMap()
+                                            .entries
+                                            .map((entry) {
+                                          final int index = entry.key;
+                                          final Map<String, dynamic> question =
+                                              entry.value;
+                                          final level =
+                                              question['tbl_level'] ?? {};
+                                          final subject =
+                                              question['tbl_subject'] ?? {};
+                                          final int id = question['id'];
+                                          return DataRow(
+                                            cells: [
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 40,
+                                                  child: Center(
+                                                    child: Text(
+                                                      (index + 1).toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color:
+                                                              Colors.black87),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Center(
+                                                    child: Text(
+                                                      question['question'] ??
+                                                          'N/A',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color:
+                                                              Colors.black87),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Center(
+                                                    child: Text(
+                                                      question[
+                                                              'sub_question'] ??
+                                                          'N/A',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color:
+                                                              Colors.black87),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      subject['subject_name'] ??
+                                                          'N/A',
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color:
+                                                              Colors.black87),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      level['level_name'] ??
+                                                          'N/A',
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color:
+                                                              Colors.black87),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 60,
+                                                  child: Center(
+                                                    child: Text(
+                                                      question['question_level']
+                                                              ?.toString() ??
+                                                          'N/A',
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color:
+                                                              Colors.black87),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 70,
+                                                  child: Center(
+                                                    child:
+                                                        question['image'] !=
+                                                                null
+                                                            ? GestureDetector(
+                                                                onTap: () {
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) =>
+                                                                            Dialog(
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      child:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                        child: Image
+                                                                            .network(
+                                                                          question[
+                                                                              'image'],
+                                                                          fit: BoxFit
+                                                                              .contain,
+                                                                          errorBuilder: (context, error, stackTrace) =>
+                                                                              const Text(
+                                                                            "Failed to load image",
+                                                                            style:
+                                                                                TextStyle(color: Colors.black),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
                                                                 child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              12),
-                                                                  child: Image
-                                                                      .network(
-                                                                    question[
-                                                                        'image'],
-                                                                    fit: BoxFit
-                                                                        .contain,
-                                                                    errorBuilder: (context,
-                                                                            error,
-                                                                            stackTrace) =>
-                                                                        const Text(
-                                                                      "Failed to load image",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Colors.black87),
+                                                                    Container(
+                                                                  width: 40,
+                                                                  height: 40,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(8),
+                                                                    border:
+                                                                        Border
+                                                                            .all(
+                                                                      color: Colors
+                                                                          .deepPurpleAccent,
+                                                                      width: 1,
+                                                                    ),
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      image: NetworkImage(
+                                                                          question[
+                                                                              'image']),
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                      onError: (exception,
+                                                                              stackTrace) =>
+                                                                          const Icon(
+                                                                        Icons
+                                                                            .error,
+                                                                        color: Colors
+                                                                            .redAccent,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
+                                                              )
+                                                            : Text(
+                                                                "No Image",
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black54),
                                                               ),
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                            width: 48,
-                                                            height: 48,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              border:
-                                                                  Border.all(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300,
-                                                                width: 1,
-                                                              ),
-                                                              image:
-                                                                  DecorationImage(
-                                                                image: NetworkImage(
-                                                                    question[
-                                                                        'image']),
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                onError: (exception,
-                                                                        stackTrace) =>
-                                                                    const Icon(
-                                                                  Icons.error,
-                                                                  color: Colors
-                                                                      .redAccent,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : Text(
-                                                          "No Image",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color:
-                                                                Colors.black54,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                        ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 160,
-                                                child: Center(
-                                                  child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor: Colors
-                                                          .deepPurpleAccent,
-                                                      foregroundColor:
-                                                          Colors.white,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 8,
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 110,
+                                                  child: Center(
+                                                    child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor: Colors
+                                                            .deepPurpleAccent,
+                                                        foregroundColor:
+                                                            Colors.white,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          horizontal: 12,
+                                                          vertical: 8,
+                                                        ),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
                                                       ),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      elevation: 0,
-                                                      textStyle:
-                                                          const TextStyle(
-                                                        fontSize: 13,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    AddChoice(
+                                                                        id: id),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: const Text(
+                                                          "Add Choices"),
                                                     ),
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              AddChoice(id: id),
+                                                  ),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                SizedBox(
+                                                  width: 80,
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        IconButton(
+                                                          icon: const Icon(
+                                                              Icons.edit,
+                                                              size: 20,
+                                                              color: Colors
+                                                                  .greenAccent),
+                                                          onPressed: () =>
+                                                              editQuestion(
+                                                                  question),
+                                                          hoverColor: Colors
+                                                              .greenAccent
+                                                              .withOpacity(0.1),
                                                         ),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                        "Add Choices"),
+                                                        IconButton(
+                                                          icon: const Icon(
+                                                              Icons.delete,
+                                                              size: 20,
+                                                              color: Colors
+                                                                  .redAccent),
+                                                          onPressed: () =>
+                                                              delete(id),
+                                                          hoverColor: Colors
+                                                              .redAccent
+                                                              .withOpacity(0.1),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            DataCell(
-                                              SizedBox(
-                                                width: 160,
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                            Icons.edit,
-                                                            color: Colors
-                                                                .greenAccent,
-                                                            size: 20),
-                                                        onPressed: () =>
-                                                            editQuestion(
-                                                                question),
-                                                        hoverColor: Colors
-                                                            .greenAccent
-                                                            .withOpacity(0.1),
-                                                        splashRadius: 20,
-                                                      ),
-                                                      const SizedBox(width: 8),
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors
-                                                                .redAccent,
-                                                            size: 20),
-                                                        onPressed: () =>
-                                                            delete(id),
-                                                        hoverColor: Colors
-                                                            .redAccent
-                                                            .withOpacity(0.1),
-                                                        splashRadius: 20,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }).toList(),
+                                            ],
+                                          );
+                                        }).toList(),
+                                      ),
                                     ),
-                                  ),
+                            ),
                           ),
                         ),
                       ],
