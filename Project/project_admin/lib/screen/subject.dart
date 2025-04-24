@@ -154,11 +154,11 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Subjects',
+                    '.',
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                      color: Colors.white,
                       letterSpacing: 0.2,
                     ),
                   ),
@@ -181,7 +181,7 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+              // const SizedBox(height: 32),
               Center(
                 child: AnimatedContainer(
                   duration: _animationDuration,
@@ -236,7 +236,7 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 14),
-                                    prefixIcon: Icon(Icons.book_rounded,
+                                    prefixIcon: Icon(Icons.menu_book,
                                         color: Colors.deepPurpleAccent),
                                   ),
                                   style: const TextStyle(color: Colors.black87),

@@ -146,8 +146,8 @@ class _AdminLoginState extends State<AdminLogin> {
                     const SizedBox(height: 20),
                     Image.asset(
                       'assets/logo.png',
-                      height: 180,
-                      width: 180,
+                      height: 150,
+                      width: 150,
                       alignment: Alignment.center,
                     ),
                     const SizedBox(height: 20),

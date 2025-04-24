@@ -379,11 +379,11 @@ class _AddQuestionState extends State<AddQuestion>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'MCQ Questions',
+                              '.',
                               style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black87,
+                                color: Colors.white,
                                 letterSpacing: 0.2,
                               ),
                             ),
@@ -418,7 +418,6 @@ class _AddQuestionState extends State<AddQuestion>
                             ),
                           ],
                         ),
-                        const SizedBox(height: 32),
                         Center(
                           child: AnimatedContainer(
                             duration: _animationDuration,
@@ -448,7 +447,7 @@ class _AddQuestionState extends State<AddQuestion>
                                           const SizedBox(height: 24),
                                           TextFormField(
                                             controller: _questionController,
-                                            maxLines: 3,
+                                            maxLines: 2,
                                             decoration: InputDecoration(
                                               labelText: 'Question',
                                               labelStyle: TextStyle(
@@ -481,10 +480,6 @@ class _AddQuestionState extends State<AddQuestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              prefixIcon: Icon(
-                                                  Icons.question_answer,
-                                                  color:
-                                                      Colors.deepPurpleAccent),
                                             ),
                                             style: const TextStyle(
                                                 color: Colors.black87),
@@ -496,7 +491,7 @@ class _AddQuestionState extends State<AddQuestion>
                                           const SizedBox(height: 16),
                                           TextFormField(
                                             controller: _subquestionController,
-                                            maxLines: 3,
+                                            maxLines: 2,
                                             decoration: InputDecoration(
                                               labelText: 'Sub Question',
                                               labelStyle: TextStyle(
@@ -529,11 +524,6 @@ class _AddQuestionState extends State<AddQuestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              prefixIcon: Icon(
-                                                  Icons
-                                                      .question_answer_outlined,
-                                                  color:
-                                                      Colors.deepPurpleAccent),
                                             ),
                                             style: const TextStyle(
                                                 color: Colors.black87),
@@ -574,9 +564,6 @@ class _AddQuestionState extends State<AddQuestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              prefixIcon: Icon(Icons.subject,
-                                                  color:
-                                                      Colors.deepPurpleAccent),
                                             ),
                                             items: _subjectList.map((subject) {
                                               return DropdownMenuItem<String>(
@@ -630,9 +617,6 @@ class _AddQuestionState extends State<AddQuestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              prefixIcon: Icon(Icons.stairs,
-                                                  color:
-                                                      Colors.deepPurpleAccent),
                                             ),
                                             items: _levelList.map((level) {
                                               return DropdownMenuItem<String>(
@@ -687,9 +671,6 @@ class _AddQuestionState extends State<AddQuestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              prefixIcon: Icon(Icons.numbers,
-                                                  color:
-                                                      Colors.deepPurpleAccent),
                                             ),
                                             items: List.generate(4, (index) {
                                               return DropdownMenuItem<int>(
@@ -706,35 +687,27 @@ class _AddQuestionState extends State<AddQuestion>
                                                 ? "Please select a question level"
                                                 : null,
                                           ),
-                                          const SizedBox(height: 16),
-                                          Row(
-                                            children: [
-                                              ElevatedButton(
-                                                onPressed: _pickImage,
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.deepPurpleAccent,
-                                                  foregroundColor: Colors.white,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 12),
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                ),
-                                                child: const Text("Pick Image"),
-                                              ),
-                                              const SizedBox(width: 16),
-                                              _pickedImage != null
-                                                  ? SizedBox(
-                                                      width: 80,
-                                                      height: 80,
+                                          const SizedBox(height: 24),
+                                          Center(
+                                            child: SizedBox(
+                                              height: 120,
+                                              width: 120,
+                                              child: _pickedImage == null
+                                                  ? GestureDetector(
+                                                      onTap: _pickImage,
+                                                      child: const Icon(
+                                                        Icons.add_a_photo,
+                                                        color: Colors
+                                                            .deepPurpleAccent,
+                                                        size: 60,
+                                                      ),
+                                                    )
+                                                  : GestureDetector(
+                                                      onTap: _pickImage,
                                                       child: ClipRRect(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(8),
+                                                                .circular(100),
                                                         child: _pickedImage!
                                                                     .bytes !=
                                                                 null
@@ -743,21 +716,18 @@ class _AddQuestionState extends State<AddQuestion>
                                                                     _pickedImage!
                                                                         .bytes!),
                                                                 fit: BoxFit
-                                                                    .cover)
+                                                                    .cover,
+                                                              )
                                                             : Image.file(
                                                                 File(
                                                                     _pickedImage!
                                                                         .path!),
                                                                 fit: BoxFit
-                                                                    .cover),
+                                                                    .cover,
+                                                              ),
                                                       ),
-                                                    )
-                                                  : const Text(
-                                                      "No image selected",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.black54)),
-                                            ],
+                                                    ),
+                                            ),
                                           ),
                                           const SizedBox(height: 24),
                                           Align(
