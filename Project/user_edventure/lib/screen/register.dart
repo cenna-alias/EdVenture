@@ -40,49 +40,43 @@ class _RegisterState extends State<Register> {
         await showDialog(
           context: context,
           barrierDismissible: false,
+          barrierColor: Colors.black,
           builder: (BuildContext context) {
             return WillPopScope(
               onWillPop: () async => false,
-              child: Scaffold(
+              child: Dialog(
                 backgroundColor: Colors.black,
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Lottie.asset(
-                          'assets/popper.json',
-                          width: 200,
-                          height: 200,
-                          repeat: false,
-                          fit: BoxFit.contain,
-                          onLoaded: (composition) async {
-                            await Future.delayed(composition.duration);
-                            if (mounted) {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                        ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      'assets/popper.json',
+                      width: 200,
+                      height: 200,
+                      repeat: false,
+                      fit: BoxFit.contain,
+                      onLoaded: (composition) async {
+                        await Future.delayed(composition.duration);
+                        if (mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    ),
+                    const Text(
+                      "Done!",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const SizedBox(height: 20),
-                      const Center(
-                        child: Text(
-                          "DONE!",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
           },
         );
-
         if (mounted) {
           Navigator.pushReplacement(
             context,
@@ -353,8 +347,8 @@ class _RegisterState extends State<Register> {
                       (now.month == dob.month && now.day < dob.day)
                   ? 1
                   : 0);
-          if (age < 13) {
-            return "You must be at least 13 years old";
+          if (age < 7) {
+            return "You must be at least 7 years old";
           }
         } catch (e) {
           return "Invalid date format (use YYYY-MM-DD)";

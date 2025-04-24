@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 35),
               RichText(
                 text: TextSpan(
                   children: [
@@ -161,7 +161,7 @@ class _LoginState extends State<Login> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 152),
+                  padding: const EdgeInsets.only(bottom: 71),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

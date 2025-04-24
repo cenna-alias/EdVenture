@@ -88,11 +88,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.face_retouching_natural,
-                size: 60,
-                color: Colors.white,
-              ),
+              const Icon(Icons.person, size: 60, color: Colors.white),
               const SizedBox(height: 10),
               Text(
                 userData['user_name'] ?? "Unknown User",
@@ -164,24 +160,12 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'EdVenture',
-          style: TextStyle(
-            fontFamily: 'ComicSans',
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
+        leading: Icon(Icons.home, size: 35, color: Colors.white),
         backgroundColor: Colors.purple[800],
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.face_retouching_natural,
-              size: 35,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.person, size: 35, color: Colors.white),
             onPressed: _showUserProfile,
           ),
         ],
