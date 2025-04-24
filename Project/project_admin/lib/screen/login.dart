@@ -87,21 +87,17 @@ class _AdminLoginState extends State<AdminLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Changed background to black
+      backgroundColor: Colors.black,
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(width: 10),
-
-            // Image container
             Container(
               width: 550,
               padding: const EdgeInsets.all(32.0),
               decoration: BoxDecoration(
-                // color: Colors.lightBlue[300],
                 borderRadius: BorderRadius.circular(16.0),
-                // border: Border.all(color: Colors.white.withOpacity(0.2)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.3),
@@ -126,9 +122,8 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
             ),
             const SizedBox(width: 10),
-            // Form container
             Container(
-              width: 450,
+              width: 400,
               padding: const EdgeInsets.all(32.0),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
@@ -148,14 +143,14 @@ class _AdminLoginState extends State<AdminLogin> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20), // Adjusted spacing
+                    const SizedBox(height: 20),
                     Image.asset(
                       'assets/logo.png',
-                      height: 200,
-                      width: 200,
+                      height: 180,
+                      width: 180,
                       alignment: Alignment.center,
                     ),
-                    const SizedBox(height: 40), // Adjusted spacing
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
@@ -176,8 +171,6 @@ class _AdminLoginState extends State<AdminLogin> {
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(color: Colors.black),
                         ),
-                        // filled: true,
-                        // fillColor: Colors.black.withOpacity(0.3),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -191,7 +184,7 @@ class _AdminLoginState extends State<AdminLogin> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 24), // Adjusted spacing
+                    const SizedBox(height: 24),
                     TextFormField(
                       controller: _passwordController,
                       obscureText: !_isPasswordVisible,
@@ -225,8 +218,6 @@ class _AdminLoginState extends State<AdminLogin> {
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(color: Colors.black),
                         ),
-                        // filled: true,
-                        // fillColor: Colors.black.withOpacity(0.3),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -238,7 +229,7 @@ class _AdminLoginState extends State<AdminLogin> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 50), // Adjusted spacing
+                    const SizedBox(height: 50),
                     SizedBox(
                       width: 100,
                       child: ElevatedButton(
@@ -260,13 +251,12 @@ class _AdminLoginState extends State<AdminLogin> {
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.white,
-                            // fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20), // Adjusted spacing
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

@@ -178,28 +178,53 @@ class _AddChoiceState extends State<AddChoice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.indigo[900],
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: const Text(
+          'Manage Choices',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
+            letterSpacing: 0.5,
+          ),
+        ),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.indigo[900]!, Colors.indigo[700]!],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
         ),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo[700]!),
+                strokeWidth: 5,
+              ),
+            )
           : _errorMessage != null
               ? Center(
                   child: Container(
-                    padding: const EdgeInsets.all(24),
+                    width: 300,
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          blurRadius: 12,
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 8,
                           offset: const Offset(0, 4),
                         ),
                       ],
@@ -207,27 +232,30 @@ class _AddChoiceState extends State<AddChoice> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.error_outline,
-                            color: Colors.red, size: 40),
-                        const SizedBox(height: 10),
+                        Icon(Icons.error_outline,
+                            color: Colors.red[600], size: 40),
+                        const SizedBox(height: 12),
                         Text(
                           _errorMessage!,
-                          style:
-                              const TextStyle(color: Colors.red, fontSize: 16),
+                          style: TextStyle(
+                              color: Colors.red[600],
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: _loadInitialData,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black87,
+                            backgroundColor: Colors.indigo[700],
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 12),
+                                horizontal: 20, vertical: 10),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
                           ),
-                          child: const Text("Retry"),
+                          child: const Text("Retry",
+                              style: TextStyle(fontWeight: FontWeight.w600)),
                         ),
                       ],
                     ),
@@ -235,284 +263,325 @@ class _AddChoiceState extends State<AddChoice> {
                 )
               : SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 20.0),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 400),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(Icons.list_alt,
-                                    color: Colors.black87, size: 28),
-                                const SizedBox(width: 12),
-                                Text(
-                                  'Manage Choices',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                    letterSpacing: 0.5,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.list_alt,
+                                        color: Colors.indigo[700], size: 24),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Manage Choices',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.indigo[800],
+                                        letterSpacing: 0.3,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.indigo[700],
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    elevation: 0,
                                   ),
+                                  onPressed: () => setState(
+                                      () => _isFormVisible = !_isFormVisible),
+                                  icon: Icon(
+                                      _isFormVisible ? Icons.close : Icons.add,
+                                      size: 18),
+                                  label: Text(_isFormVisible ? "Close" : "Add",
+                                      style: const TextStyle(fontSize: 14)),
                                 ),
                               ],
                             ),
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black87,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                elevation: 0,
-                              ),
-                              onPressed: () => setState(
-                                  () => _isFormVisible = !_isFormVisible),
-                              icon: Icon(
-                                  _isFormVisible ? Icons.close : Icons.add,
-                                  size: 20),
-                              label: Text(_isFormVisible ? "Close" : "Add New"),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 24),
-                        AnimatedContainer(
-                          duration: _animationDuration,
-                          curve: Curves.easeInOut,
-                          child: _isFormVisible
-                              ? Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        blurRadius: 12,
-                                        offset: const Offset(0, 4),
+                            const SizedBox(height: 20),
+                            AnimatedContainer(
+                              duration: _animationDuration,
+                              curve: Curves.easeInOut,
+                              child: _isFormVisible
+                                  ? Container(
+                                      width: 300,
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(16),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 4),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  child: Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "New Choice",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 20),
-                                        TextFormField(
-                                          controller: _answerController,
-                                          maxLines: 3,
-                                          decoration: InputDecoration(
-                                            labelText: 'Answer Choice',
-                                            filled: true,
-                                            fillColor: Colors.grey[100],
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                            prefixIcon: Icon(
-                                                Icons.question_answer,
-                                                color: Colors.black54),
-                                          ),
-                                          validator: (value) =>
-                                              value == null || value.isEmpty
-                                                  ? "Answer is required"
-                                                  : null,
-                                        ),
-                                        const SizedBox(height: 20),
-                                        Text(
-                                          "Is Correct:",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
+                                      child: Form(
+                                        key: _formKey,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(
-                                              child: RadioListTile<bool>(
-                                                title: const Text('True',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                value: true,
-                                                groupValue: isCorrect,
-                                                onChanged: (value) => setState(
-                                                    () => isCorrect = value),
-                                                activeColor: Colors.black87,
+                                            Text(
+                                              "New Choice",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.indigo[800],
                                               ),
                                             ),
-                                            Expanded(
-                                              child: RadioListTile<bool>(
-                                                title: const Text('False',
+                                            const SizedBox(height: 16),
+                                            TextFormField(
+                                              controller: _answerController,
+                                              maxLines: 2,
+                                              decoration: InputDecoration(
+                                                labelText: 'Answer Choice',
+                                                filled: true,
+                                                fillColor: Colors.grey[100],
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  borderSide: BorderSide.none,
+                                                ),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 12),
+                                                prefixIcon: Icon(
+                                                    Icons.question_answer,
+                                                    color: Colors.indigo[600]),
+                                              ),
+                                              validator: (value) =>
+                                                  value == null || value.isEmpty
+                                                      ? "Answer is required"
+                                                      : null,
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Text(
+                                              "Is Correct:",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.indigo[800],
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: RadioListTile<bool>(
+                                                    title: const Text('True',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500)),
+                                                    value: true,
+                                                    groupValue: isCorrect,
+                                                    onChanged: (value) =>
+                                                        setState(() =>
+                                                            isCorrect = value),
+                                                    activeColor:
+                                                        Colors.indigo[700],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: RadioListTile<bool>(
+                                                    title: const Text('False',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500)),
+                                                    value: false,
+                                                    groupValue: isCorrect,
+                                                    onChanged: (value) =>
+                                                        setState(() =>
+                                                            isCorrect = value),
+                                                    activeColor:
+                                                        Colors.indigo[700],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: ElevatedButton(
+                                                onPressed: submit,
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.indigo[700],
+                                                  foregroundColor: Colors.white,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12)),
+                                                  elevation: 0,
+                                                ),
+                                                child: const Text("Add Choice",
                                                     style: TextStyle(
                                                         fontWeight:
-                                                            FontWeight.bold)),
-                                                value: false,
-                                                groupValue: isCorrect,
-                                                onChanged: (value) => setState(
-                                                    () => isCorrect = value),
-                                                activeColor: Colors.black87,
+                                                            FontWeight.w600)),
                                               ),
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 20),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: ElevatedButton(
-                                            onPressed: submit,
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.black87,
-                                              foregroundColor: Colors.white,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 24,
-                                                      vertical: 12),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              elevation: 0,
-                                            ),
-                                            child: const Text("Add Choice",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              width: 300,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: _answerList.isEmpty
+                                  ? Container(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Center(
+                                        child: Text(
+                                          "No choices yet",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                            fontWeight: FontWeight.w500,
                                           ),
+                                        ),
+                                      ),
+                                    )
+                                  : DataTable(
+                                      columnSpacing: 8,
+                                      dataRowHeight: 48,
+                                      headingRowHeight: 48,
+                                      horizontalMargin: 8,
+                                      headingRowColor: WidgetStateProperty.all(
+                                          Colors.indigo[50]),
+                                      columns: [
+                                        DataColumn(
+                                          label: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 8),
+                                            child: Text("No.",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.indigo[800])),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Text("Answer",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.indigo[800])),
+                                        ),
+                                        DataColumn(
+                                          label: Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 8),
+                                            child: Text("Correct",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.indigo[800])),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Text("Delete",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.indigo[800])),
                                         ),
                                       ],
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                        ),
-                        const SizedBox(height: 24),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: _answerList.isEmpty
-                              ? Container(
-                                  padding: const EdgeInsets.all(20),
-                                  child: const Center(
-                                    child: Text(
-                                      "No choices yet",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : DataTable(
-                                  columnSpacing: 12,
-                                  dataRowHeight: 48,
-                                  headingRowHeight: 48,
-                                  horizontalMargin: 12,
-                                  headingRowColor:
-                                      WidgetStateProperty.all(Colors.grey[100]),
-                                  columns: [
-                                    DataColumn(
-                                        label: Padding(
-                                      padding: const EdgeInsets.only(left: 12),
-                                      child: Text("No.",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87)),
-                                    )),
-                                    DataColumn(
-                                        label: Text("Answer",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black87))),
-                                    DataColumn(
-                                        label: Padding(
-                                      padding: const EdgeInsets.only(right: 12),
-                                      child: Text("Correct",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87)),
-                                    )),
-                                    DataColumn(
-                                        label: Text("Delete",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black87))),
-                                  ],
-                                  rows:
-                                      _answerList.asMap().entries.map((entry) {
-                                    final int index = entry.key;
-                                    final Map<String, dynamic> answer =
-                                        entry.value;
-                                    return DataRow(cells: [
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 12),
-                                        child: Text((index + 1).toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black87)),
-                                      )),
-                                      DataCell(Text(
-                                        answer['answer'] ?? 'N/A',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87),
-                                      )),
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 12),
-                                        child: Text(
-                                          answer['is_correct'] == true
-                                              ? "✓"
-                                              : "✗",
-                                          style: TextStyle(
-                                            color: answer['is_correct'] == true
-                                                ? Colors.green
-                                                : Colors.red,
-                                            fontWeight: FontWeight.bold,
+                                      rows: _answerList
+                                          .asMap()
+                                          .entries
+                                          .map((entry) {
+                                        final int index = entry.key;
+                                        final Map<String, dynamic> answer =
+                                            entry.value;
+                                        return DataRow(cells: [
+                                          DataCell(
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8),
+                                              child: Text(
+                                                  (index + 1).toString(),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          Colors.indigo[800])),
+                                            ),
                                           ),
-                                        ),
-                                      )),
-                                      DataCell(IconButton(
-                                        icon: Icon(Icons.delete,
-                                            color: Colors.red[600]),
-                                        onPressed: () => delete(answer['id']),
-                                        hoverColor: Colors.red[50],
-                                      )),
-                                    ]);
-                                  }).toList(),
-                                ),
+                                          DataCell(
+                                            Text(
+                                              answer['answer'] ?? 'N/A',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.indigo[800]),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          DataCell(
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8),
+                                              child: Text(
+                                                answer['is_correct'] == true
+                                                    ? "✓"
+                                                    : "✗",
+                                                style: TextStyle(
+                                                  color: answer['is_correct'] ==
+                                                          true
+                                                      ? Colors.green
+                                                      : Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            IconButton(
+                                              icon: Icon(Icons.delete,
+                                                  color: Colors.red[600],
+                                                  size: 20),
+                                              onPressed: () =>
+                                                  delete(answer['id']),
+                                              hoverColor: Colors.red[50],
+                                            ),
+                                          ),
+                                        ]);
+                                      }).toList(),
+                                    ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

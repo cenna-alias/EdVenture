@@ -109,55 +109,81 @@ class _ViewscoreState extends State<Viewscore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Text(
-          'User Scores',
+          'Total Scores',
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
+            fontSize: 22,
             color: Colors.white,
+            letterSpacing: 0.5,
           ),
         ),
-        backgroundColor: Colors.black87,
-        elevation: 4,
-        shadowColor: Colors.purpleAccent.withOpacity(0.5),
+        backgroundColor: Colors.indigo[900],
+        elevation: 0,
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.indigo[900]!, Colors.indigo[700]!],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.black87, Colors.grey[900]!],
-          ),
+          color: Colors.grey[100],
         ),
         child: isLoading
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(color: Colors.purpleAccent),
-                    const SizedBox(height: 16),
+                    CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.indigo[700]!),
+                      strokeWidth: 5,
+                    ),
+                    const SizedBox(height: 20),
                     Text(
                       'Loading Scores...',
                       style: TextStyle(
-                        color: Colors.purpleAccent,
-                        fontSize: 16,
+                        color: Colors.indigo[700],
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
               )
             : Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ListView(
-                  children: [
-                    _buildScoreCard('Overall', overallData, Colors.purple),
-                    const SizedBox(height: 16),
-                    _buildScoreCard('Multiple Choice', mcqData, Colors.purple),
-                    const SizedBox(height: 16),
-                    _buildScoreCard('True/False', tfData, Colors.purple),
-                    const SizedBox(height: 16),
-                    _buildScoreCard(
-                        'Fill in the Blanks', fillData, Colors.purple),
-                  ],
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 20.0),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 400),
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        _buildScoreCard('Overall', overallData, Colors.indigo),
+                        const SizedBox(height: 20),
+                        _buildScoreCard(
+                            'Multiple Choice', mcqData, Colors.indigo),
+                        const SizedBox(height: 20),
+                        _buildScoreCard('True/False', tfData, Colors.indigo),
+                        const SizedBox(height: 20),
+                        _buildScoreCard(
+                            'Fill in the Blanks', fillData, Colors.indigo),
+                      ],
+                    ),
+                  ),
                 ),
               ),
       ),
@@ -167,13 +193,13 @@ class _ViewscoreState extends State<Viewscore> {
   Widget _buildScoreCard(
       String title, List<dynamic> data, MaterialColor color) {
     return Card(
-      elevation: 6,
-      color: Colors.grey[850],
+      elevation: 4,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Colors.purpleAccent.withOpacity(0.3)),
+        borderRadius: BorderRadius.circular(16),
       ),
-      child: Padding(
+      child: Container(
+        width: 300,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,17 +207,18 @@ class _ViewscoreState extends State<Viewscore> {
             Row(
               children: [
                 Icon(
-                  Icons.bar_chart,
-                  color: color[400],
-                  size: 28,
+                  Icons.bar_chart_rounded,
+                  color: color[600],
+                  size: 24,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 10),
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: color[300],
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: color[800],
+                    letterSpacing: 0.3,
                   ),
                 ),
               ],
@@ -206,16 +233,18 @@ class _ViewscoreState extends State<Viewscore> {
                     Text(
                       'Total Score',
                       style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 14,
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
+                    const SizedBox(height: 4),
                     Text(
                       data.isNotEmpty ? '${data.first['total_score']}' : 'N/A',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: color[900],
                       ),
                     ),
                   ],
@@ -227,22 +256,43 @@ class _ViewscoreState extends State<Viewscore> {
                       Text(
                         'Questions',
                         style: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 14,
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
+                      const SizedBox(height: 4),
                       Text(
                         '${data.first['total_questions']}',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: color[900],
                         ),
                       ),
                     ],
                   ),
               ],
             ),
+            if (data.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: color[50],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${data.first['username']} | ${data.first['level_name']} | ${data.first['subject_name']}',
+                  style: TextStyle(
+                    color: color[700],
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),

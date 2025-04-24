@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:user_edventure/screen/login.dart';
-import 'package:user_edventure/screen/homepg.dart'; // Import HomePage
+import 'package:user_edventure/screen/homepg.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash', // Start with a splash route to check auth
+      initialRoute: '/splash',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         primaryColor: Colors.deepPurple[600],
@@ -78,13 +78,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkAuthAndNavigate() async {
-    await Future.delayed(Duration(seconds: 1)); // Optional: Simulate loading
+    await Future.delayed(Duration(seconds: 1));
     final session = supabase.auth.currentSession;
     if (session != null) {
-      // User is logged in, go to HomePage
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
     } else {
-      // User is not logged in, go to IntroScreen
       Navigator.pushNamedAndRemoveUntil(context, '/intro', (route) => false);
     }
   }

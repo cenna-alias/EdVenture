@@ -369,7 +369,6 @@ class _RegisterState extends State<Register> {
           lastDate: DateTime.now(),
         );
         if (pickedDate != null) {
-          // Format the date as YYYY-MM-DD with leading zeros
           String formattedDate =
               "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
           _dobController.text = formattedDate;

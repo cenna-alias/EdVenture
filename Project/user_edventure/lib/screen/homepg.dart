@@ -161,7 +161,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double cardSize = screenWidth * 0.3;
-    // double welcomeBoxWidth = screenWidth * 0.9; // Adjusted for image width
 
     return Scaffold(
       appBar: AppBar(
@@ -205,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                 Center(
                   child: Container(
                     width: 300,
-                    height: 180, // Fixed height for the image container
+                    height: 180,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
@@ -222,7 +221,7 @@ class _HomePageState extends State<HomePage> {
                       child: Stack(
                         children: [
                           Image.asset(
-                            'assets/njn.png', // Replace with your image path
+                            'assets/njn.png',
                             width: 300,
                             height: 180,
                             fit: BoxFit.cover,
@@ -263,13 +262,6 @@ class _HomePageState extends State<HomePage> {
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                         fontFamily: 'ComicSans',
-                                        // shadows: [
-                                        //   Shadow(
-                                        //     color: Colors.black,
-                                        //     blurRadius: 10,
-                                        //     offset: Offset(0, 2),
-                                        //   ),
-                                        // ],
                                       ),
                                     ),
                                     const SizedBox(height: 8),
