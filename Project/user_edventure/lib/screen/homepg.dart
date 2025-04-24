@@ -222,7 +222,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          Center(
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
                             child: FutureBuilder<Map<String, dynamic>?>(
                               future: _userDataFuture,
                               builder: (context, snapshot) {
@@ -238,6 +239,7 @@ class _HomePageState extends State<HomePage> {
                                     snapshot.data?['user_name'] ?? 'User';
                                 return Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "Hey $userName!",
@@ -273,15 +275,10 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        CategoryCard(
-                          image: "assets/test.jpg",
-                          size: cardSize,
-                          page: 'MCQ',
-                        ),
+                        CategoryCard(image: "assets/test.jpg", size: cardSize),
                         CategoryCard(
                           image: "assets/english.jpg",
                           size: cardSize,
-                          page: 'TF',
                         ),
                       ],
                     ),
@@ -292,13 +289,8 @@ class _HomePageState extends State<HomePage> {
                         CategoryCard(
                           image: "assets/maths.avif",
                           size: cardSize,
-                          page: 'FILL',
                         ),
-                        CategoryCard(
-                          image: "assets/test.jpg",
-                          size: cardSize,
-                          page: 'MCQ',
-                        ),
+                        CategoryCard(image: "assets/test.jpg", size: cardSize),
                       ],
                     ),
                     const SizedBox(height: 15),
@@ -308,12 +300,10 @@ class _HomePageState extends State<HomePage> {
                         CategoryCard(
                           image: "assets/english.jpg",
                           size: cardSize,
-                          page: 'TF',
                         ),
                         CategoryCard(
                           image: "assets/maths.avif",
                           size: cardSize,
-                          page: 'FILL',
                         ),
                       ],
                     ),
@@ -357,23 +347,85 @@ class _HomePageState extends State<HomePage> {
 class CategoryCard extends StatelessWidget {
   final String image;
   final double size;
-  final String page;
-  const CategoryCard({
-    super.key,
-    required this.image,
-    required this.size,
-    required this.page,
-  });
+
+  const CategoryCard({super.key, required this.image, required this.size});
+
+  void _showQuestionTypeDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.purple[900]!, Colors.black87],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Choose Question Type",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purpleAccent,
+                  fontFamily: 'ComicSans',
+                ),
+              ),
+              const SizedBox(height: 20),
+              _buildQuestionTypeButton(context, "True/False", "TF"),
+              const SizedBox(height: 10),
+              _buildQuestionTypeButton(context, "Multiple Choice (MCQ)", "MCQ"),
+              const SizedBox(height: 10),
+              _buildQuestionTypeButton(context, "Fill in the Blanks", "FILL"),
+              const SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildQuestionTypeButton(
+    BuildContext context,
+    String label,
+    String type,
+  ) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pop(context); // Close the bottom sheet
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SubjectPage(type: type)),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.purple[700],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontFamily: 'ComicSans',
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SubjectPage(type: page)),
-        );
-      },
+      onTap: () => _showQuestionTypeDialog(context),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 8,

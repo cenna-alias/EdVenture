@@ -71,7 +71,7 @@ class _LoginState extends State<Login> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
-                    'assets/login.avif',
+                    'assets/hihi.png',
                     width: MediaQuery.of(context).size.width * 0.85,
                     height: MediaQuery.of(context).size.height * 0.25,
                     fit: BoxFit.cover,
@@ -152,7 +152,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              const SizedBox(height: 31),
+              const SizedBox(height: 38),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -161,7 +161,7 @@ class _LoginState extends State<Login> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 71),
+                  padding: const EdgeInsets.only(bottom: 64),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

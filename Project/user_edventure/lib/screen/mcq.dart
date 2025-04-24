@@ -187,21 +187,36 @@ class _MCQState extends State<MCQ> {
 
   Future<void> saveGameResults() async {
     try {
-      await supabase.from('tbl_game').insert({
+      final user = supabase.auth.currentUser;
+      print("Current user: ${user?.id ?? 'Not authenticated'}");
+      if (user == null) {
+        throw Exception(
+          'User not authenticated. Please log in to save game results.',
+        );
+      }
+      print(
+        "Attempting to save game results - qstn_level: $currentQuestionLevel, game_score: $totalScore, qstn_count: $totalQuestionsAttended, level_id: ${widget.level}, subject_id: ${widget.subject}, game_type: MCQ, user_id: ${user.id}",
+      );
+      final response = await supabase.from('tbl_game').insert({
         'qstn_level': currentQuestionLevel,
         'game_score': totalScore,
         'qstn_count': totalQuestionsAttended,
         'level_id': widget.level,
         'subject_id': widget.subject,
         'game_type': 'MCQ',
+        'user_id': user.id,
       });
+      print("Supabase insert response: $response");
+      if (response == null || response.isEmpty) {
+        throw Exception('No response from Supabase insert operation');
+      }
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
         (route) => false,
       );
-    } catch (e) {
-      print("Error saving game results: $e");
+    } catch (e, stackTrace) {
+      print("Error saving game results: $e\nStackTrace: $stackTrace");
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Error saving game results: $e')));
@@ -372,6 +387,7 @@ class _MCQState extends State<MCQ> {
             actions: [
               TextButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   saveGameResults();
                 },
                 child: const Text('Cancel'),
@@ -379,6 +395,15 @@ class _MCQState extends State<MCQ> {
               TextButton(
                 onPressed: () async {
                   try {
+                    await supabase.from('tbl_game').insert({
+                      'qstn_level': currentQuestionLevel,
+                      'game_score': totalScore,
+                      'qstn_count': totalQuestionsAttended,
+                      'level_id': widget.level,
+                      'subject_id': widget.subject,
+                      'game_type': 'MCQ',
+                    });
+
                     await supabase.from('tbl_review').insert({
                       'review_rating': rating.toString(),
                       'review_content': feedbackController.text,

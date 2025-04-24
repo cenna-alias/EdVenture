@@ -205,10 +205,6 @@ class _TrueFalseState extends State<TrueFalse> {
       setState(() {
         questions = selectedQuestions;
       });
-
-      if (questions.isNotEmpty && !_isMuted) {
-        speak(questions[currentQuestionIndex]['question_text']);
-      }
     } catch (e) {
       print("Error fetching questions: $e");
       ScaffoldMessenger.of(context).showSnackBar(
