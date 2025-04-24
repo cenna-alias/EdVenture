@@ -13,15 +13,20 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
   bool _isFormVisible = false;
   final Duration _animationDuration = const Duration(milliseconds: 300);
   final TextEditingController _subjectnameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>(); // Added for form validation
   PlatformFile? pickedImage;
   List<Map<String, dynamic>> _subjectList = [];
   int? _editingId;
 
   Future<void> submit() async {
+    if (!_formKey.currentState!.validate()) {
+      return; // Stop if validation fails
+    }
+
     try {
       if (_editingId != null) {
         await supabase.from("tbl_subject").update({
-          "subject_name": _subjectnameController.text,
+          "subject_name": _subjectnameController.text.trim(),
         }).eq('id', _editingId!);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -37,7 +42,7 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
         _editingId = null;
       } else {
         await supabase.from("tbl_subject").insert({
-          "subject_name": _subjectnameController.text,
+          "subject_name": _subjectnameController.text.trim(),
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -197,66 +202,79 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
                               ),
                             ],
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 24),
-                              TextFormField(
-                                controller: _subjectnameController,
-                                decoration: InputDecoration(
-                                  labelText: 'Subject Name',
-                                  labelStyle:
-                                      TextStyle(color: Colors.grey[600]),
-                                  // filled: true,
-                                  // fillColor: Colors.grey[100],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 24),
+                                TextFormField(
+                                  controller: _subjectnameController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Subject Name',
+                                    labelStyle:
+                                        TextStyle(color: Colors.grey[600]),
+                                    // filled: true,
+                                    // fillColor: Colors.grey[100],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1.5),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 14),
+                                    prefixIcon: Icon(Icons.book_rounded,
+                                        color: Colors.deepPurpleAccent),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1.5),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 14),
-                                  prefixIcon: Icon(Icons.book_rounded,
-                                      color: Colors.deepPurpleAccent),
+                                  style: const TextStyle(color: Colors.black87),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Please enter a subject name';
+                                    }
+                                    if (value.trim().length > 50) {
+                                      return 'Subject name must be 50 characters or less';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                style: const TextStyle(color: Colors.black87),
-                              ),
-                              const SizedBox(height: 24),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: ElevatedButton(
-                                  onPressed: submit,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.deepPurpleAccent,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 32, vertical: 14),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    elevation: 2,
+                                const SizedBox(height: 24),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ElevatedButton(
+                                    onPressed: submit,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.deepPurpleAccent,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 32, vertical: 14),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      elevation: 2,
+                                    ),
+                                    child: Text(
+                                        _editingId != null
+                                            ? "Update Subject"
+                                            : "Add Subject",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600)),
                                   ),
-                                  child: Text(
-                                      _editingId != null
-                                          ? "Update Subject"
-                                          : "Add Subject",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600)),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         )
                       : Container(),

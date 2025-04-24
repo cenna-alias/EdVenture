@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      ).showSnackBar(const SnackBar(content: Text('Invalid login')));
     }
   }
 
@@ -213,7 +213,18 @@ class _LoginState extends State<Login> {
         ),
         labelStyle: TextStyle(color: Colors.purple[300]),
       ),
-      validator: (value) => value!.isEmpty ? "$label cannot be empty" : null,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return "$label cannot be empty";
+        }
+        if (label == "Email") {
+          final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+          if (!emailRegex.hasMatch(value.trim())) {
+            return "Please enter a valid email address";
+          }
+        }
+        return null;
+      },
     );
   }
 
@@ -248,11 +259,20 @@ class _LoginState extends State<Login> {
         ),
         labelStyle: TextStyle(color: Colors.purple[300]),
       ),
-      validator:
-          (value) =>
-              value!.length < 6
-                  ? "Password must be at least 6 characters"
-                  : null,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return "Password cannot be empty";
+        }
+        if (value.length < 8) {
+          return "Password must be at least 8 characters";
+        }
+        if (!RegExp(
+          r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$',
+        ).hasMatch(value)) {
+          return "Password must contain letters and numbers";
+        }
+        return null;
+      },
     );
   }
 }

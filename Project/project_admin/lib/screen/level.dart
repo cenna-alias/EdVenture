@@ -14,16 +14,21 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
   final Duration _animationDuration = const Duration(milliseconds: 300);
   final TextEditingController _levelnameController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+  final _formKey = GlobalKey<FormState>(); // Added for form validation
   PlatformFile? pickedImage;
   List<Map<String, dynamic>> _levelList = [];
   int? _editingId;
 
   Future<void> submit() async {
+    if (!_formKey.currentState!.validate()) {
+      return; // Stop if validation fails
+    }
+
     try {
       if (_editingId != null) {
         await supabase.from("tbl_level").update({
-          "level_name": _levelnameController.text,
-          "level_time": int.tryParse(_timeController.text) ?? 0,
+          "level_name": _levelnameController.text.trim(),
+          "level_time": int.parse(_timeController.text),
         }).eq('id', _editingId!);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -39,8 +44,8 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
         _editingId = null;
       } else {
         await supabase.from("tbl_level").insert({
-          "level_name": _levelnameController.text,
-          "level_time": int.tryParse(_timeController.text) ?? 0,
+          "level_name": _levelnameController.text.trim(),
+          "level_time": int.parse(_timeController.text),
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -202,101 +207,126 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                               ),
                             ],
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 24),
-                              TextFormField(
-                                controller: _levelnameController,
-                                decoration: InputDecoration(
-                                  labelText: 'Level Name',
-                                  labelStyle:
-                                      TextStyle(color: Colors.grey[600]),
-                                  // filled: true,
-                                  // fillColor: Colors.grey[100],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 24),
+                                TextFormField(
+                                  controller: _levelnameController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Level Name',
+                                    labelStyle:
+                                        TextStyle(color: Colors.grey[600]),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1.5),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 14),
+                                    prefixIcon: Icon(Icons.stairs,
+                                        color: Colors.deepPurpleAccent),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1.5),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 14),
-                                  prefixIcon: Icon(Icons.stairs,
-                                      color: Colors.deepPurpleAccent),
+                                  style: const TextStyle(color: Colors.black87),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Please enter a level name';
+                                    }
+                                    if (value.trim().length > 50) {
+                                      return 'Level name must be 50 characters or less';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                style: const TextStyle(color: Colors.black87),
-                              ),
-                              const SizedBox(height: 16),
-                              TextFormField(
-                                controller: _timeController,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: 'Time (in seconds)',
-                                  labelStyle:
-                                      TextStyle(color: Colors.grey[600]),
-                                  // filled: true,
-                                  // fillColor: Colors.grey[100],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1),
+                                const SizedBox(height: 16),
+                                TextFormField(
+                                  controller: _timeController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    labelText: 'Time (in seconds)',
+                                    labelStyle:
+                                        TextStyle(color: Colors.grey[600]),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                          color: Colors.deepPurpleAccent,
+                                          width: 1.5),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 14),
+                                    prefixIcon: Icon(Icons.timer,
+                                        color: Colors.deepPurpleAccent),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                        color: Colors.deepPurpleAccent,
-                                        width: 1.5),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 14),
-                                  prefixIcon: Icon(Icons.timer,
-                                      color: Colors.deepPurpleAccent),
+                                  style: const TextStyle(color: Colors.black87),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Please enter time';
+                                    }
+                                    final time = int.tryParse(value);
+                                    if (time == null) {
+                                      return 'Please enter a valid number';
+                                    }
+                                    if (time <= 0) {
+                                      return 'Time must be greater than 0';
+                                    }
+                                    if (time > 3600) {
+                                      return 'Time must be less than 3600 seconds';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                style: const TextStyle(color: Colors.black87),
-                              ),
-                              const SizedBox(height: 24),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: ElevatedButton(
-                                  onPressed: submit,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.deepPurpleAccent,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 32, vertical: 14),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    elevation: 2,
+                                const SizedBox(height: 24),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ElevatedButton(
+                                    onPressed: submit,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.deepPurpleAccent,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 32, vertical: 14),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      elevation: 2,
+                                    ),
+                                    child: Text(
+                                        _editingId != null
+                                            ? "Update Level"
+                                            : "Add Level",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600)),
                                   ),
-                                  child: Text(
-                                      _editingId != null
-                                          ? "Update Level"
-                                          : "Add Level",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600)),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         )
                       : Container(),

@@ -248,7 +248,26 @@ class _RegisterState extends State<Register> {
         ),
         labelStyle: TextStyle(color: Colors.purple[300]),
       ),
-      validator: (value) => value!.isEmpty ? "$label cannot be empty" : null,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return "$label cannot be empty";
+        }
+        if (label == "User name" || label == "Parent name") {
+          if (value.trim().length < 3) {
+            return "$label must be at least 3 characters";
+          }
+          if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value.trim())) {
+            return "$label can only contain letters and spaces";
+          }
+        }
+        if (label == "Email") {
+          final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+          if (!emailRegex.hasMatch(value.trim())) {
+            return "Please enter a valid email address";
+          }
+        }
+        return null;
+      },
     );
   }
 
@@ -283,11 +302,20 @@ class _RegisterState extends State<Register> {
         ),
         labelStyle: TextStyle(color: Colors.purple[300]),
       ),
-      validator:
-          (value) =>
-              value!.length < 6
-                  ? "Password must be at least 6 characters"
-                  : null,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return "Password cannot be empty";
+        }
+        if (value.length < 8) {
+          return "Password must be at least 8 characters";
+        }
+        if (!RegExp(
+          r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$',
+        ).hasMatch(value)) {
+          return "Password must contain letters and numbers";
+        }
+        return null;
+      },
     );
   }
 
@@ -311,6 +339,28 @@ class _RegisterState extends State<Register> {
         ),
         labelStyle: TextStyle(color: Colors.purple[300]),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return "Date of Birth cannot be empty";
+        }
+        try {
+          final dob = DateTime.parse(value);
+          final now = DateTime.now();
+          final age =
+              now.year -
+              dob.year -
+              (now.month < dob.month ||
+                      (now.month == dob.month && now.day < dob.day)
+                  ? 1
+                  : 0);
+          if (age < 13) {
+            return "You must be at least 13 years old";
+          }
+        } catch (e) {
+          return "Invalid date format (use YYYY-MM-DD)";
+        }
+        return null;
+      },
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
           context: context,
@@ -319,8 +369,10 @@ class _RegisterState extends State<Register> {
           lastDate: DateTime.now(),
         );
         if (pickedDate != null) {
-          _dobController.text =
-              "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+          // Format the date as YYYY-MM-DD with leading zeros
+          String formattedDate =
+              "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+          _dobController.text = formattedDate;
         }
       },
     );

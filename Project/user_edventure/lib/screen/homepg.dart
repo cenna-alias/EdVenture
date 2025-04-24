@@ -161,8 +161,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double cardSize = screenWidth * 0.3;
-    double welcomeBoxWidth =
-        (cardSize * 2) + 40; // Two cards + estimated spacing
+    // double welcomeBoxWidth = screenWidth * 0.9; // Adjusted for image width
 
     return Scaffold(
       appBar: AppBar(
@@ -205,19 +204,10 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 30),
                 Center(
                   child: Container(
-                    width: welcomeBoxWidth,
-                    padding: const EdgeInsets.all(16), // Reduced padding
+                    width: 300,
+                    height: 180, // Fixed height for the image container
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.purple[800]!, Colors.black87],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
                       borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: Colors.purpleAccent.withOpacity(0.7),
-                        width: 2,
-                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.purple[900]!.withOpacity(0.5),
@@ -227,67 +217,88 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    child: FutureBuilder<Map<String, dynamic>?>(
-                      future: _userDataFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.purpleAccent,
-                            ),
-                          );
-                        }
-                        final userName = snapshot.data?['user_name'] ?? 'User';
-                        return Column(
-                          children: [
-                            const Icon(
-                              Icons.gamepad_rounded,
-                              size: 40, // Reduced icon size
-                              color: Colors.purpleAccent,
-                            ),
-                            const SizedBox(height: 8), // Reduced spacing
-                            Text(
-                              "WELCOME, $userName!",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 24, // Slightly smaller font
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontFamily: 'ComicSans',
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.purpleAccent,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 2),
-                                  ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Stack(
+                        children: [
+                          Image.asset(
+                            'assets/njn.png', // Replace with your image path
+                            width: 300,
+                            height: 180,
+                            fit: BoxFit.cover,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.7),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 4), // Reduced spacing
-                            Text(
-                              "Ready for Your Next Quest?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14, // Slightly smaller font
-                                color: Colors.purple[200],
-                                fontFamily: 'ComicSans',
-                              ),
+                          ),
+                          Center(
+                            child: FutureBuilder<Map<String, dynamic>?>(
+                              future: _userDataFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.purpleAccent,
+                                    ),
+                                  );
+                                }
+                                final userName =
+                                    snapshot.data?['user_name'] ?? 'User';
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Hai $userName!",
+                                      style: const TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontFamily: 'ComicSans',
+                                        // shadows: [
+                                        //   Shadow(
+                                        //     color: Colors.black,
+                                        //     blurRadius: 10,
+                                        //     offset: Offset(0, 2),
+                                        //   ),
+                                        // ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      "Ready for Your Next Quest?",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.purple[200],
+                                        fontFamily: 'ComicSans',
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
-                          ],
-                        );
-                      },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         CategoryCard(
-                          image: "assets/img2.jpeg",
+                          image: "assets/test.jpg",
                           size: cardSize,
                           page: 'MCQ',
                         ),
@@ -308,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                           page: 'FILL',
                         ),
                         CategoryCard(
-                          image: "assets/img2.jpeg",
+                          image: "assets/test.jpg",
                           size: cardSize,
                           page: 'MCQ',
                         ),
