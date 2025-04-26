@@ -597,14 +597,14 @@ class _FILLState extends State<FILL> {
                                       color: Colors.black87,
                                     ),
                                   ),
-                                  const TextSpan(
-                                    text: ' _____ ',
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.teal,
-                                    ),
-                                  ),
+                                  // const TextSpan(
+                                  //   text: ' _____ ',
+                                  //   style: TextStyle(
+                                  //     fontSize: 22,
+                                  //     fontWeight: FontWeight.bold,
+                                  //     color: Colors.teal,
+                                  //   ),
+                                  // ),
                                   TextSpan(
                                     text: currentQuestion['qstn_text2'] ?? '',
                                     style: const TextStyle(
@@ -620,7 +620,7 @@ class _FILLState extends State<FILL> {
                           IconButton(
                             onPressed: () {
                               speak(
-                                "${currentQuestion['qstn_text1'] ?? ''} fill in the blank ${currentQuestion['qstn_text2'] ?? ''}",
+                                "${currentQuestion['qstn_text1'] ?? ''} dash ${currentQuestion['qstn_text2'] ?? ''}",
                               );
                             },
                             icon: const Icon(Icons.mic, color: Colors.teal),

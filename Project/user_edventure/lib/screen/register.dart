@@ -16,6 +16,8 @@ class _RegisterState extends State<Register> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+
   bool _isPasswordVisible = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final SupabaseClient supabase = Supabase.instance.client;
@@ -36,6 +38,7 @@ class _RegisterState extends State<Register> {
           'user_dob': _dobController.text.trim(),
           'user_email': _emailController.text,
           'user_password': _passwordController.text,
+          'user_age': _ageController.text,
         });
         await showDialog(
           context: context,
@@ -158,6 +161,8 @@ class _RegisterState extends State<Register> {
                           _buildPasswordField(),
                           const SizedBox(height: 15),
                           _buildDatePicker(),
+                          const SizedBox(height: 15),
+                          _buildShowAge(),
                           const SizedBox(height: 25),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -350,6 +355,7 @@ class _RegisterState extends State<Register> {
           if (age < 7) {
             return "You must be at least 7 years old";
           }
+          _ageController.text = age.toString(); // Update age field
         } catch (e) {
           return "Invalid date format (use YYYY-MM-DD)";
         }
@@ -365,8 +371,51 @@ class _RegisterState extends State<Register> {
         if (pickedDate != null) {
           String formattedDate =
               "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-          _dobController.text = formattedDate;
+          setState(() {
+            _dobController.text = formattedDate;
+            // Calculate age
+            final now = DateTime.now();
+            int age = now.year - pickedDate.year;
+            if (now.month < pickedDate.month ||
+                (now.month == pickedDate.month && now.day < pickedDate.day)) {
+              age--;
+            }
+            _ageController.text = age.toString();
+          });
         }
+      },
+    );
+  }
+
+  Widget _buildShowAge() {
+    return TextFormField(
+      controller: _ageController,
+      readOnly: true, // Make age field read-only
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: 'Age',
+        prefixIcon: Icon(Icons.person, color: Colors.purple[400]),
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.1),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.purple[400]!, width: 2),
+        ),
+        labelStyle: TextStyle(color: Colors.purple[300]),
+      ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return "Age cannot be empty";
+        }
+        final age = int.tryParse(value);
+        if (age == null || age < 7) {
+          return "You must be at least 7 years old";
+        }
+        return null;
       },
     );
   }

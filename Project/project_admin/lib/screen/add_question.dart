@@ -985,37 +985,32 @@ class _AddQuestionState extends State<AddQuestion>
                                               DataCell(
                                                 SizedBox(
                                                   width: 200,
-                                                  child: Center(
-                                                    child: Text(
-                                                      question['question'] ??
-                                                          'N/A',
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 2,
-                                                      style: const TextStyle(
-                                                          fontSize: 14,
-                                                          color:
-                                                              Colors.black87),
-                                                    ),
+                                                  child: Text(
+                                                    question['question'] ??
+                                                        'N/A',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black87),
                                                   ),
                                                 ),
                                               ),
                                               DataCell(
                                                 SizedBox(
                                                   width: 200,
-                                                  child: Center(
-                                                    child: Text(
-                                                      question[
-                                                              'sub_question'] ??
-                                                          'N/A',
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 2,
-                                                      style: const TextStyle(
-                                                          fontSize: 14,
-                                                          color:
-                                                              Colors.black87),
-                                                    ),
+                                                  child: Text(
+                                                    question[
+                                                            'sub_question'] ??
+                                                        'N/A',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color:
+                                                            Colors.black87),
                                                   ),
                                                 ),
                                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_admin/main.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddChoice extends StatefulWidget {
   final int id;
@@ -178,28 +179,28 @@ class _AddChoiceState extends State<AddChoice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        backgroundColor: Colors.indigo[900],
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text(
+        title: Text(
           'Manage Choices',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
+          style: GoogleFonts.roboto(
+            fontWeight: FontWeight.w700,
+            fontSize: 22,
             color: Colors.white,
             letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.indigo[900]!, Colors.indigo[700]!],
+              colors: [Color(0xFF6A1B9A), Color(0xFFAB47BC)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -209,23 +210,24 @@ class _AddChoiceState extends State<AddChoice> {
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo[700]!),
-                strokeWidth: 5,
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6A1B9A)),
+                strokeWidth: 6,
+                backgroundColor: Colors.grey[200],
               ),
             )
           : _errorMessage != null
               ? Center(
                   child: Container(
-                    width: 300,
-                    padding: const EdgeInsets.all(16),
+                    width: 340,
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
+                          color: Colors.grey.withOpacity(0.15),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
                         ),
                       ],
                     ),
@@ -233,29 +235,34 @@ class _AddChoiceState extends State<AddChoice> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.error_outline,
-                            color: Colors.red[600], size: 40),
-                        const SizedBox(height: 12),
+                            color: Colors.red[600], size: 48),
+                        const SizedBox(height: 16),
                         Text(
                           _errorMessage!,
-                          style: TextStyle(
-                              color: Colors.red[600],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
+                          style: GoogleFonts.roboto(
+                            color: Colors.red[600],
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: _loadInitialData,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.indigo[700],
+                            backgroundColor: Color(0xFF6A1B9A),
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
+                                horizontal: 24, vertical: 12),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
+                            elevation: 2,
                           ),
-                          child: const Text("Retry",
-                              style: TextStyle(fontWeight: FontWeight.w600)),
+                          child: Text(
+                            "Retry",
+                            style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
                         ),
                       ],
                     ),
@@ -264,70 +271,58 @@ class _AddChoiceState extends State<AddChoice> {
               : SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 20.0),
+                        horizontal: 16.0, vertical: 24.0),
                     child: Center(
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 400),
+                        constraints: const BoxConstraints(maxWidth: 500),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.list_alt,
-                                        color: Colors.indigo[700], size: 24),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Manage Choices',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.indigo[800],
-                                        letterSpacing: 0.3,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                                 ElevatedButton.icon(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.indigo[700],
+                                    backgroundColor: Color(0xFF6A1B9A),
                                     foregroundColor: Colors.white,
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 8),
+                                        horizontal: 16, vertical: 10),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(12)),
-                                    elevation: 0,
+                                    elevation: 2,
                                   ),
                                   onPressed: () => setState(
                                       () => _isFormVisible = !_isFormVisible),
                                   icon: Icon(
                                       _isFormVisible ? Icons.close : Icons.add,
-                                      size: 18),
-                                  label: Text(_isFormVisible ? "Close" : "Add",
-                                      style: const TextStyle(fontSize: 14)),
+                                      size: 20),
+                                  label: Text(
+                                    _isFormVisible ? "Close" : "Add",
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 24),
                             AnimatedContainer(
                               duration: _animationDuration,
                               curve: Curves.easeInOut,
                               child: _isFormVisible
                                   ? Container(
-                                      width: 300,
-                                      padding: const EdgeInsets.all(16),
+                                      width: 450,
+                                      padding: const EdgeInsets.all(20),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(16),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 4),
+                                            color:
+                                                Colors.grey.withOpacity(0.15),
+                                            blurRadius: 12,
+                                            offset: const Offset(0, 6),
                                           ),
                                         ],
                                       ),
@@ -339,10 +334,10 @@ class _AddChoiceState extends State<AddChoice> {
                                           children: [
                                             Text(
                                               "New Choice",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.indigo[800],
+                                              style: GoogleFonts.roboto(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF6A1B9A),
                                               ),
                                             ),
                                             const SizedBox(height: 16),
@@ -351,6 +346,8 @@ class _AddChoiceState extends State<AddChoice> {
                                               maxLines: 2,
                                               decoration: InputDecoration(
                                                 labelText: 'Answer Choice',
+                                                labelStyle: GoogleFonts.roboto(
+                                                    color: Colors.grey[600]),
                                                 filled: true,
                                                 fillColor: Colors.grey[100],
                                                 border: OutlineInputBorder(
@@ -358,14 +355,24 @@ class _AddChoiceState extends State<AddChoice> {
                                                       BorderRadius.circular(12),
                                                   borderSide: BorderSide.none,
                                                 ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xFF6A1B9A),
+                                                      width: 2),
+                                                ),
                                                 contentPadding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 12),
+                                                        horizontal: 16,
+                                                        vertical: 14),
                                                 prefixIcon: Icon(
                                                     Icons.question_answer,
-                                                    color: Colors.indigo[600]),
+                                                    color: Color(0xFF6A1B9A)),
                                               ),
+                                              style: GoogleFonts.roboto(
+                                                  fontSize: 16),
                                               validator: (value) =>
                                                   value == null || value.isEmpty
                                                       ? "Answer is required"
@@ -374,10 +381,10 @@ class _AddChoiceState extends State<AddChoice> {
                                             const SizedBox(height: 16),
                                             Text(
                                               "Is Correct:",
-                                              style: TextStyle(
-                                                fontSize: 14,
+                                              style: GoogleFonts.roboto(
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w600,
-                                                color: Colors.indigo[800],
+                                                color: Color(0xFF6A1B9A),
                                               ),
                                             ),
                                             const SizedBox(height: 8),
@@ -385,34 +392,40 @@ class _AddChoiceState extends State<AddChoice> {
                                               children: [
                                                 Expanded(
                                                   child: RadioListTile<bool>(
-                                                    title: const Text('True',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500)),
+                                                    title: Text(
+                                                      'True',
+                                                      style: GoogleFonts.roboto(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 15),
+                                                    ),
                                                     value: true,
                                                     groupValue: isCorrect,
                                                     onChanged: (value) =>
                                                         setState(() =>
                                                             isCorrect = value),
                                                     activeColor:
-                                                        Colors.indigo[700],
+                                                        Color(0xFF6A1B9A),
+                                                    dense: true,
                                                   ),
                                                 ),
                                                 Expanded(
                                                   child: RadioListTile<bool>(
-                                                    title: const Text('False',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500)),
+                                                    title: Text(
+                                                      'False',
+                                                      style: GoogleFonts.roboto(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 15),
+                                                    ),
                                                     value: false,
                                                     groupValue: isCorrect,
                                                     onChanged: (value) =>
                                                         setState(() =>
                                                             isCorrect = value),
                                                     activeColor:
-                                                        Colors.indigo[700],
+                                                        Color(0xFF6A1B9A),
+                                                    dense: true,
                                                   ),
                                                 ),
                                               ],
@@ -424,22 +437,25 @@ class _AddChoiceState extends State<AddChoice> {
                                                 onPressed: submit,
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
-                                                      Colors.indigo[700],
+                                                      Color(0xFF6A1B9A),
                                                   foregroundColor: Colors.white,
                                                   padding: const EdgeInsets
                                                       .symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 10),
+                                                      horizontal: 24,
+                                                      vertical: 12),
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               12)),
-                                                  elevation: 0,
+                                                  elevation: 2,
                                                 ),
-                                                child: const Text("Add Choice",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w600)),
+                                                child: Text(
+                                                  "Add Choice",
+                                                  style: GoogleFonts.roboto(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16),
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -448,28 +464,28 @@ class _AddChoiceState extends State<AddChoice> {
                                     )
                                   : Container(),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 24),
                             Container(
-                              width: 300,
+                              width: 500,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
+                                    color: Colors.grey.withOpacity(0.15),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 6),
                                   ),
                                 ],
                               ),
                               child: _answerList.isEmpty
                                   ? Container(
-                                      padding: const EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(20),
                                       child: Center(
                                         child: Text(
                                           "No choices yet",
-                                          style: TextStyle(
-                                            fontSize: 14,
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 16,
                                             color: Colors.grey[600],
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -477,44 +493,68 @@ class _AddChoiceState extends State<AddChoice> {
                                       ),
                                     )
                                   : DataTable(
-                                      columnSpacing: 8,
-                                      dataRowHeight: 48,
-                                      headingRowHeight: 48,
-                                      horizontalMargin: 8,
+                                      columnSpacing: 20,
+                                      dataRowHeight: 56,
+                                      headingRowHeight: 56,
+                                      horizontalMargin: 16,
                                       headingRowColor: WidgetStateProperty.all(
-                                          Colors.indigo[50]),
+                                          Colors.grey[100]),
                                       columns: [
                                         DataColumn(
                                           label: Padding(
                                             padding:
-                                                const EdgeInsets.only(left: 8),
-                                            child: Text("No.",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.indigo[800])),
+                                                const EdgeInsets.only(left: 16),
+                                            child: Text(
+                                              "No.",
+                                              style: GoogleFonts.roboto(
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF6A1B9A),
+                                                fontSize: 15,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        DataColumn(
-                                          label: Text("Answer",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.indigo[800])),
                                         ),
                                         DataColumn(
                                           label: Padding(
                                             padding:
-                                                const EdgeInsets.only(right: 8),
-                                            child: Text("Correct",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.indigo[800])),
+                                                const EdgeInsets.only(left: 8),
+                                            child: Text(
+                                              "Answer",
+                                              style: GoogleFonts.roboto(
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF6A1B9A),
+                                                fontSize: 15,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                         DataColumn(
-                                          label: Text("Delete",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.indigo[800])),
+                                          label: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 16),
+                                            child: Text(
+                                              "Correct",
+                                              style: GoogleFonts.roboto(
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF6A1B9A),
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 16),
+                                            child: Text(
+                                              "Delete",
+                                              style: GoogleFonts.roboto(
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF6A1B9A),
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ],
                                       rows: _answerList
@@ -528,29 +568,36 @@ class _AddChoiceState extends State<AddChoice> {
                                           DataCell(
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 8),
+                                                  left: 16),
                                               child: Text(
-                                                  (index + 1).toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          Colors.indigo[800])),
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              answer['answer'] ?? 'N/A',
-                                              style: TextStyle(
+                                                (index + 1).toString(),
+                                                style: GoogleFonts.roboto(
                                                   fontWeight: FontWeight.w500,
-                                                  color: Colors.indigo[800]),
-                                              overflow: TextOverflow.ellipsis,
+                                                  color: Color(0xFF6A1B9A),
+                                                  fontSize: 14,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           DataCell(
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 8),
+                                                  left: 8),
+                                              child: Text(
+                                                answer['answer'] ?? 'N/A',
+                                                style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xFF6A1B9A),
+                                                  fontSize: 14,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 16),
                                               child: Text(
                                                 answer['is_correct'] == true
                                                     ? "✓"
@@ -558,21 +605,27 @@ class _AddChoiceState extends State<AddChoice> {
                                                 style: TextStyle(
                                                   color: answer['is_correct'] ==
                                                           true
-                                                      ? Colors.green
-                                                      : Colors.red,
+                                                      ? Colors.green[600]
+                                                      : Colors.red[600],
                                                   fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                             ),
                                           ),
                                           DataCell(
-                                            IconButton(
-                                              icon: Icon(Icons.delete,
-                                                  color: Colors.red[600],
-                                                  size: 20),
-                                              onPressed: () =>
-                                                  delete(answer['id']),
-                                              hoverColor: Colors.red[50],
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 16),
+                                              child: IconButton(
+                                                icon: Icon(Icons.delete,
+                                                    color: Colors.red[600],
+                                                    size: 22),
+                                                onPressed: () =>
+                                                    delete(answer['id']),
+                                                hoverColor: Colors.red[50],
+                                                splashRadius: 20,
+                                              ),
                                             ),
                                           ),
                                         ]);

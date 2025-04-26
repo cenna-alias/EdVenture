@@ -1134,19 +1134,17 @@ class _FillquestionState extends State<Fillquestion>
                                               DataCell(
                                                 SizedBox(
                                                   width: 370,
-                                                  child: Center(
-                                                    child: Text(
-                                                      fillquestion[
-                                                              'qstn_text1'] ??
-                                                          'N/A',
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 2,
-                                                      style: const TextStyle(
-                                                          fontSize: 14,
-                                                          color:
-                                                              Colors.black87),
-                                                    ),
+                                                  child: Text(
+                                                    fillquestion[
+                                                            'qstn_text1'] ??
+                                                        'N/A',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color:
+                                                            Colors.black87),
                                                   ),
                                                 ),
                                               ),
