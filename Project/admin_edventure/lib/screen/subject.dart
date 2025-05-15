@@ -13,14 +13,14 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
   bool _isFormVisible = false;
   final Duration _animationDuration = const Duration(milliseconds: 300);
   final TextEditingController _subjectnameController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Added for form validation
+  final _formKey = GlobalKey<FormState>(); 
   PlatformFile? pickedImage;
   List<Map<String, dynamic>> _subjectList = [];
   int? _editingId;
 
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
-      return; // Stop if validation fails
+      return; 
     }
 
     try {
@@ -181,7 +181,6 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
                   ),
                 ],
               ),
-              // const SizedBox(height: 32),
               Center(
                 child: AnimatedContainer(
                   duration: _animationDuration,
@@ -214,8 +213,6 @@ class _SubjectState extends State<Subject> with SingleTickerProviderStateMixin {
                                     labelText: 'Subject Name',
                                     labelStyle:
                                         TextStyle(color: Colors.grey[600]),
-                                    // filled: true,
-                                    // fillColor: Colors.grey[100],
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide(

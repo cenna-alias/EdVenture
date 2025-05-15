@@ -335,7 +335,6 @@ class _TfquestionState extends State<Tfquestion>
                             ),
                           ],
                         ),
-                        // const SizedBox(height: 32),
                         Center(
                           child: AnimatedContainer(
                             duration: _animationDuration,
@@ -398,10 +397,6 @@ class _TfquestionState extends State<Tfquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(
-                                              //     Icons.question_answer,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             style: const TextStyle(
                                                 color: Colors.black87),
@@ -446,9 +441,6 @@ class _TfquestionState extends State<Tfquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(Icons.subject,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             items: _subjectList.map((subject) {
                                               return DropdownMenuItem<String>(
@@ -502,9 +494,6 @@ class _TfquestionState extends State<Tfquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(Icons.stairs,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             items: _levelList.map((level) {
                                               return DropdownMenuItem<String>(
@@ -559,9 +548,6 @@ class _TfquestionState extends State<Tfquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(Icons.numbers,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             items: List.generate(4, (index) {
                                               return DropdownMenuItem<int>(

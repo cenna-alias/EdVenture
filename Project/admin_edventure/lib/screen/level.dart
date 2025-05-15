@@ -14,14 +14,14 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
   final Duration _animationDuration = const Duration(milliseconds: 300);
   final TextEditingController _levelnameController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Added for form validation
+  final _formKey = GlobalKey<FormState>(); 
   PlatformFile? pickedImage;
   List<Map<String, dynamic>> _levelList = [];
   int? _editingId;
 
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
-      return; // Stop if validation fails
+      return; 
     }
 
     try {
@@ -186,7 +186,6 @@ class _LevelState extends State<Level> with SingleTickerProviderStateMixin {
                   ),
                 ],
               ),
-              // const SizedBox(height: 32),
               Center(
                 child: AnimatedContainer(
                   duration: _animationDuration,

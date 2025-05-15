@@ -17,21 +17,21 @@ class Appbar1 extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.transparent, // Transparent for custom styling
+          backgroundColor: Colors.transparent, 
           shape: RoundedRectangleBorder(
             borderRadius:
-                BorderRadius.circular(12), // Sharp, professional corners
+                BorderRadius.circular(12), 
           ),
           contentPadding: EdgeInsets.zero,
           content: Container(
-            width: 320, // Slightly wider for a balanced look
+            width: 320, 
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: const Color(0xFF1A1A1A), // Black background
+              color: const Color(0xFF1A1A1A), 
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: const Color(0xFF8A4AF0)
-                    .withOpacity(0.3), // Subtle purple border
+                    .withOpacity(0.3), 
                 width: 1,
               ),
               boxShadow: [
@@ -48,7 +48,7 @@ class Appbar1 extends StatelessWidget {
                 Text(
                   'Confirm Logout',
                   style: TextStyle(
-                    color: const Color(0xFF8A4AF0), // Purple for title
+                    color: const Color(0xFF8A4AF0), 
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
@@ -58,7 +58,7 @@ class Appbar1 extends StatelessWidget {
                 Text(
                   'Are you sure you want to logout?',
                   style: TextStyle(
-                    color: Colors.white70, // Light grayish-white for contrast
+                    color: Colors.white70, 
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
@@ -76,7 +76,7 @@ class Appbar1 extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         backgroundColor:
-                            const Color(0xFF2A2A2A), // Darker black/gray
+                            const Color(0xFF2A2A2A), 
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -84,7 +84,7 @@ class Appbar1 extends StatelessWidget {
                       child: Text(
                         'Cancel',
                         style: TextStyle(
-                          color: Colors.white70, // Light grayish-white
+                          color: Colors.white70, 
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -105,7 +105,7 @@ class Appbar1 extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         backgroundColor:
-                            const Color(0xFF8A4AF0), // Purple accent
+                            const Color(0xFF8A4AF0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -113,7 +113,7 @@ class Appbar1 extends StatelessWidget {
                       child: Text(
                         'Logout',
                         style: TextStyle(
-                          color: const Color(0xFFFFFFFF), // White text
+                          color: const Color(0xFFFFFFFF), 
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -186,14 +186,9 @@ class Appbar1 extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.person,
-                    size: 24, // Adjust size as needed
-                    color: Colors.yellow[700], // Adjust color as needed
+                    size: 24, 
+                    color: Colors.yellow[700], 
                   ),
-                  // CircleAvatar(
-                  //   radius: 12, // Adjust size as needed
-                  //   backgroundImage: AssetImage(
-                  //       'assets/icon.jpg'), // Replace with your image path
-                  // ),
                   SizedBox(width: 10),
                   Text(
                     "Admin",

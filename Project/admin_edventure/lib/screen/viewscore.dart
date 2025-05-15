@@ -124,16 +124,10 @@ class _ViewscoreState extends State<Viewscore> {
             letterSpacing: 0.5,
           ),
         ),
-        // backgroundColor: Colors.indigo[900],
         elevation: 0,
         centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-              // gradient: LinearGradient(
-              //   colors: [Colors.indigo[900]!, Colors.indigo[700]!],
-              //   begin: Alignment.topCenter,
-              //   end: Alignment.bottomCenter,
-              // ),
               ),
         ),
       ),

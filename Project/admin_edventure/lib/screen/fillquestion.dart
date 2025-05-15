@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:project_admin/screen/addtfchoice.dart';
 import 'package:project_admin/main.dart';
-import 'dart:io';
-import 'dart:typed_data';
 
 class Fillquestion extends StatefulWidget {
   const Fillquestion({super.key});
@@ -466,7 +464,6 @@ class _FillquestionState extends State<Fillquestion>
                             ),
                           ],
                         ),
-                        // const SizedBox(height: 10),
                         Center(
                           child: AnimatedContainer(
                             duration: _animationDuration,
@@ -530,10 +527,6 @@ class _FillquestionState extends State<Fillquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(
-                                              //     Icons.text_fields,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             style: const TextStyle(
                                                 color: Colors.black87),
@@ -543,98 +536,6 @@ class _FillquestionState extends State<Fillquestion>
                                                 ? "Please enter text before blank"
                                                 : null,
                                           ),
-                                          // const SizedBox(height: 16),
-                                          // TextFormField(
-                                          //   controller:
-                                          //       _text2questionController,
-                                          //   maxLines: 3,
-                                          //   decoration: InputDecoration(
-                                          //     labelText: 'Text After Blank',
-                                          //     labelStyle: TextStyle(
-                                          //         color: Colors.grey[600]),
-                                          //     border: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: BorderSide(
-                                          //           color:
-                                          //               Colors.deepPurpleAccent,
-                                          //           width: 1),
-                                          //     ),
-                                          //     enabledBorder: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: BorderSide(
-                                          //           color:
-                                          //               Colors.deepPurpleAccent,
-                                          //           width: 1),
-                                          //     ),
-                                          //     focusedBorder: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: const BorderSide(
-                                          //           color:
-                                          //               Colors.deepPurpleAccent,
-                                          //           width: 1.5),
-                                          //     ),
-                                          //     contentPadding:
-                                          //         const EdgeInsets.symmetric(
-                                          //             horizontal: 16,
-                                          //             vertical: 14),
-                                          //     prefixIcon: Icon(
-                                          //         Icons.text_fields,
-                                          //         color:
-                                          //             Colors.deepPurpleAccent),
-                                          //   ),
-                                          //   style: const TextStyle(
-                                          //       color: Colors.black87),
-                                          // ),
-                                          // const SizedBox(height: 16),
-                                          // TextFormField(
-                                          //   controller: _answerController,
-                                          //   decoration: InputDecoration(
-                                          //     labelText: 'Correct Answer',
-                                          //     labelStyle: TextStyle(
-                                          //         color: Colors.grey[600]),
-                                          //     border: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: BorderSide(
-                                          //           color:
-                                          //               Colors.deepPurpleAccent,
-                                          //           width: 1),
-                                          //     ),
-                                          //     enabledBorder: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: BorderSide(
-                                          //           color:
-                                          //               Colors.deepPurpleAccent,
-                                          //           width: 1),
-                                          //     ),
-                                          //     focusedBorder: OutlineInputBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8),
-                                          //       borderSide: const BorderSide(
-                                          //           color:
-                                          //               Colors.deepPurpleAccent,
-                                          //           width: 1.5),
-                                          //     ),
-                                          //     contentPadding:
-                                          //         const EdgeInsets.symmetric(
-                                          //             horizontal: 16,
-                                          //             vertical: 14),
-                                          //     prefixIcon: Icon(Icons.check,
-                                          //         color:
-                                          //             Colors.deepPurpleAccent),
-                                          //   ),
-                                          //   style: const TextStyle(
-                                          //       color: Colors.black87),
-                                          //   validator: (value) => value ==
-                                          //               null ||
-                                          //           value.isEmpty
-                                          //       ? "Please enter correct answer"
-                                          //       : null,
-                                          // ),
                                           const SizedBox(height: 16),
                                           DropdownButtonFormField<String>(
                                             value: _selectedSubject,
@@ -671,9 +572,6 @@ class _FillquestionState extends State<Fillquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(Icons.book,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             items: _subjectList.map((subject) {
                                               return DropdownMenuItem<String>(
@@ -728,9 +626,6 @@ class _FillquestionState extends State<Fillquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(Icons.stairs,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             items: _levelList.map((level) {
                                               return DropdownMenuItem<String>(
@@ -786,9 +681,6 @@ class _FillquestionState extends State<Fillquestion>
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 16,
                                                       vertical: 14),
-                                              // prefixIcon: Icon(Icons.numbers,
-                                              //     color:
-                                              //         Colors.deepPurpleAccent),
                                             ),
                                             items: List.generate(4, (index) {
                                               return DropdownMenuItem<int>(
@@ -806,59 +698,6 @@ class _FillquestionState extends State<Fillquestion>
                                                 : null,
                                             dropdownColor: Colors.white,
                                           ),
-                                          // const SizedBox(height: 16),
-                                          // Row(
-                                          //   children: [
-                                          //     ElevatedButton(
-                                          //       onPressed: _pickImage,
-                                          //       style: ElevatedButton.styleFrom(
-                                          //         backgroundColor:
-                                          //             Colors.deepPurpleAccent,
-                                          //         foregroundColor: Colors.white,
-                                          //         padding: const EdgeInsets
-                                          //             .symmetric(
-                                          //             horizontal: 20,
-                                          //             vertical: 12),
-                                          //         shape: RoundedRectangleBorder(
-                                          //             borderRadius:
-                                          //                 BorderRadius.circular(
-                                          //                     8)),
-                                          //       ),
-                                          //       child: const Text("Pick Image"),
-                                          //     ),
-                                          //     const SizedBox(width: 16),
-                                          //     _pickedImage != null
-                                          //         ? SizedBox(
-                                          //             width: 80,
-                                          //             height: 80,
-                                          //             child: ClipRRect(
-                                          //               borderRadius:
-                                          //                   BorderRadius
-                                          //                       .circular(8),
-                                          //               child: _pickedImage!
-                                          //                           .bytes !=
-                                          //                       null
-                                          //                   ? Image.memory(
-                                          //                       Uint8List.fromList(
-                                          //                           _pickedImage!
-                                          //                               .bytes!),
-                                          //                       fit: BoxFit
-                                          //                           .cover)
-                                          //                   : Image.file(
-                                          //                       File(
-                                          //                           _pickedImage!
-                                          //                               .path!),
-                                          //                       fit: BoxFit
-                                          //                           .cover),
-                                          //             ),
-                                          //           )
-                                          //         : const Text(
-                                          //             "No image selected",
-                                          //             style: TextStyle(
-                                          //                 color:
-                                          //                     Colors.black54)),
-                                          //   ],
-                                          // ),
                                           const SizedBox(height: 24),
                                           Align(
                                             alignment: Alignment.centerRight,
@@ -982,36 +821,6 @@ class _FillquestionState extends State<Fillquestion>
                                               ),
                                             ),
                                           ),
-                                          // DataColumn(
-                                          //   label: SizedBox(
-                                          //     width: 200,
-                                          //     child: Center(
-                                          //       child: Text(
-                                          //         "Text After Blank",
-                                          //         style: TextStyle(
-                                          //           fontSize: 14,
-                                          //           fontWeight: FontWeight.w600,
-                                          //           color: Colors.black87,
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          // DataColumn(
-                                          //   label: SizedBox(
-                                          //     width: 100,
-                                          //     child: Center(
-                                          //       child: Text(
-                                          //         "Correct Answer",
-                                          //         style: TextStyle(
-                                          //           fontSize: 14,
-                                          //           fontWeight: FontWeight.w600,
-                                          //           color: Colors.black87,
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                           DataColumn(
                                             label: SizedBox(
                                               width: 100,
@@ -1057,21 +866,6 @@ class _FillquestionState extends State<Fillquestion>
                                               ),
                                             ),
                                           ),
-                                          // DataColumn(
-                                          //   label: SizedBox(
-                                          //     width: 60,
-                                          //     child: Center(
-                                          //       child: Text(
-                                          //         "Image",
-                                          //         style: TextStyle(
-                                          //           fontSize: 14,
-                                          //           fontWeight: FontWeight.w600,
-                                          //           color: Colors.black87,
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                           DataColumn(
                                             label: SizedBox(
                                               width: 100,
@@ -1148,43 +942,6 @@ class _FillquestionState extends State<Fillquestion>
                                                   ),
                                                 ),
                                               ),
-                                              // DataCell(
-                                              //   SizedBox(
-                                              //     width: 200,
-                                              //     child: Center(
-                                              //       child: Text(
-                                              //         fillquestion[
-                                              //                 'qstn_text2'] ??
-                                              //             'N/A',
-                                              //         overflow:
-                                              //             TextOverflow.ellipsis,
-                                              //         maxLines: 2,
-                                              //         style: const TextStyle(
-                                              //             fontSize: 14,
-                                              //             color:
-                                              //                 Colors.black87),
-                                              //       ),
-                                              //     ),
-                                              //   ),
-                                              // ),
-                                              // DataCell(
-                                              //   SizedBox(
-                                              //     width: 100,
-                                              //     child: Center(
-                                              //       child: Text(
-                                              //         fillquestion[
-                                              //                 'qstn_answer'] ??
-                                              //             'N/A',
-                                              //         overflow:
-                                              //             TextOverflow.ellipsis,
-                                              //         style: const TextStyle(
-                                              //             fontSize: 14,
-                                              //             color:
-                                              //                 Colors.black87),
-                                              //       ),
-                                              //     ),
-                                              //   ),
-                                              // ),
                                               DataCell(
                                                 SizedBox(
                                                   width: 100,
@@ -1231,91 +988,6 @@ class _FillquestionState extends State<Fillquestion>
                                                   ),
                                                 ),
                                               ),
-                                              // DataCell(
-                                              //   SizedBox(
-                                              //     width: 70,
-                                              //     child: Center(
-                                              //       child:
-                                              //           fillquestion['image'] !=
-                                              //                   null
-                                              //               ? GestureDetector(
-                                              //                   onTap: () {
-                                              //                     showDialog(
-                                              //                       context:
-                                              //                           context,
-                                              //                       builder:
-                                              //                           (context) =>
-                                              //                               Dialog(
-                                              //                         backgroundColor:
-                                              //                             Colors
-                                              //                                 .white,
-                                              //                         child:
-                                              //                             ClipRRect(
-                                              //                           borderRadius:
-                                              //                               BorderRadius.circular(8),
-                                              //                           child: Image
-                                              //                               .network(
-                                              //                             fillquestion[
-                                              //                                 'image'],
-                                              //                             fit: BoxFit
-                                              //                                 .contain,
-                                              //                             errorBuilder: (context, error, stackTrace) =>
-                                              //                                 const Text(
-                                              //                               "Failed to load image",
-                                              //                               style:
-                                              //                                   TextStyle(color: Colors.black),
-                                              //                             ),
-                                              //                           ),
-                                              //                         ),
-                                              //                       ),
-                                              //                     );
-                                              //                   },
-                                              //                   child:
-                                              //                       Container(
-                                              //                     width: 40,
-                                              //                     height: 40,
-                                              //                     decoration:
-                                              //                         BoxDecoration(
-                                              //                       borderRadius:
-                                              //                           BorderRadius
-                                              //                               .circular(8),
-                                              //                       border:
-                                              //                           Border
-                                              //                               .all(
-                                              //                         color: Colors
-                                              //                             .deepPurpleAccent,
-                                              //                         width: 1,
-                                              //                       ),
-                                              //                       image:
-                                              //                           DecorationImage(
-                                              //                         image: NetworkImage(
-                                              //                             fillquestion[
-                                              //                                 'image']),
-                                              //                         fit: BoxFit
-                                              //                             .cover,
-                                              //                         onError: (exception,
-                                              //                                 stackTrace) =>
-                                              //                             const Icon(
-                                              //                           Icons
-                                              //                               .error,
-                                              //                           color: Colors
-                                              //                               .redAccent,
-                                              //                         ),
-                                              //                       ),
-                                              //                     ),
-                                              //                   ),
-                                              //                 )
-                                              //               : Text(
-                                              //                   "No Image",
-                                              //                   style: const TextStyle(
-                                              //                       fontSize:
-                                              //                           14,
-                                              //                       color: Colors
-                                              //                           .black54),
-                                              //                 ),
-                                              //     ),
-                                              //   ),
-                                              // ),
                                               DataCell(
                                                 SizedBox(
                                                   width: 110,

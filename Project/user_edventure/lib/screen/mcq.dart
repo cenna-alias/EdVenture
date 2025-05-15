@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:user_edventure/screen/homepg.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:audioplayers/audioplayers.dart'; // Added for background music
+import 'package:audioplayers/audioplayers.dart';
 
 class MCQ extends StatefulWidget {
   final int level;
@@ -38,26 +38,22 @@ class _MCQState extends State<MCQ> {
   int currentQuestionLevel = 1;
   final int questionsPerLevel = 5;
 
-  // tts and music strats
   FlutterTts flutterTts = FlutterTts();
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool _isMusicPlaying = false;
-  bool _isMuted = false; // Track mute state
-  double _musicVolume = 0.5; // Default music volume
+  bool _isMuted = false; 
+  double _musicVolume = 0.5; 
 
-  // Initialize TTS and set completion handler
   Future<void> _initTts() async {
     flutterTts.setCompletionHandler(() {
-      // Resume music or restore volume after TTS, unless muted
       if (!_isMuted) {
         _resumeBackgroundMusic();
       }
     });
   }
 
-  // Play background music
   Future<void> _playBackgroundMusic() async {
-    if (_isMuted) return; // Don't play if muted
+    if (_isMuted) return; 
     try {
       await _audioPlayer.play(AssetSource('bgmusic.mp3'), volume: _musicVolume);
       await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -69,7 +65,6 @@ class _MCQState extends State<MCQ> {
     }
   }
 
-  // Pause background music
   Future<void> _pauseBackgroundMusic() async {
     if (_isMusicPlaying && !_isMuted) {
       await _audioPlayer.pause();
@@ -79,7 +74,6 @@ class _MCQState extends State<MCQ> {
     }
   }
 
-  // Resume background music
   Future<void> _resumeBackgroundMusic() async {
     if (!_isMusicPlaying && !_isMuted) {
       await _audioPlayer.resume();
@@ -90,26 +84,22 @@ class _MCQState extends State<MCQ> {
     }
   }
 
-  // Toggle mute state
   void _toggleMute() async {
     setState(() {
       _isMuted = !_isMuted;
     });
     if (_isMuted) {
-      // Mute: Pause or set volume to 0
       await _audioPlayer.pause();
       setState(() {
         _isMusicPlaying = false;
       });
     } else {
-      // Unmute: Resume or restore volume
       await _playBackgroundMusic();
     }
   }
 
   Future speak(String stext) async {
     try {
-      // Pause music before speaking, unless already muted
       if (!_isMuted) {
         await _pauseBackgroundMusic();
       }
@@ -117,14 +107,11 @@ class _MCQState extends State<MCQ> {
       await flutterTts.speak(stext);
     } catch (e) {
       print("Error with TTS: $e");
-      // Resume music if not muted
       if (!_isMuted) {
         _resumeBackgroundMusic();
       }
     }
   }
-
-  // tts and music ends here
 
   Future<void> fetchMCQ() async {
     try {
@@ -279,7 +266,7 @@ class _MCQState extends State<MCQ> {
                       fetchMCQ();
                       startTimer();
                       if (!_isMuted)
-                        _playBackgroundMusic(); // Resume music if not muted
+                        _playBackgroundMusic(); 
                     });
                   },
                   child: const Text('Next Level'),
@@ -300,7 +287,7 @@ class _MCQState extends State<MCQ> {
                     fetchMCQ();
                     startTimer();
                     if (!_isMuted)
-                      _playBackgroundMusic(); // Resume music if not muted
+                      _playBackgroundMusic(); 
                   });
                 },
                 child: const Text('Restart'),
@@ -439,7 +426,6 @@ class _MCQState extends State<MCQ> {
   @override
   void dispose() {
     _timer.cancel();
-    // tts and music
     flutterTts.stop();
     _audioPlayer.stop();
     _audioPlayer.dispose();
@@ -517,7 +503,6 @@ class _MCQState extends State<MCQ> {
         centerTitle: true,
         elevation: 0,
         actions: [
-          // Mute button
           IconButton(
             icon: Icon(
               _isMuted ? Icons.volume_off : Icons.volume_up,

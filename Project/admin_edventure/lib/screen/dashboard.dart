@@ -9,7 +9,7 @@ import 'package:project_admin/screen/subject.dart';
 import 'package:project_admin/screen/tfquestion.dart';
 import 'package:project_admin/screen/user.dart';
 import 'package:project_admin/screen/review.dart';
-import 'package:project_admin/screen/leaderboard.dart'; // Import LeaderboardPage
+import 'package:project_admin/screen/leaderboard.dart'; 
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -23,7 +23,7 @@ class _AdminHomeState extends State<AdminHome> {
   bool _isSidebarVisible = true;
 
   final List<Widget> _pages = [
-    const LeaderboardPage(), // Replaced Stack with LeaderboardPage
+    const LeaderboardPage(), 
     const Level(),
     const Subject(),
     const AddQuestion(),

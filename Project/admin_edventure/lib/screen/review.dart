@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Review extends StatefulWidget {
-  const Review({Key? key}) : super(key: key);
+  const Review({super.key});
 
   @override
   State<Review> createState() => _ReviewState();
