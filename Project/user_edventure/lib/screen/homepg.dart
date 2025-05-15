@@ -400,7 +400,7 @@ class CategoryCard extends StatelessWidget {
   ) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pop(context); 
+        Navigator.pop(context);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SubjectPage(type: type)),

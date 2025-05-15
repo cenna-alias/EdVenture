@@ -15,7 +15,7 @@ class _EditProfileState extends State<EditProfile> {
   final _usernameController = TextEditingController();
   final _parentNameController = TextEditingController();
   final _dobController = TextEditingController();
-  bool _isLoading = false; 
+  bool _isLoading = false;
   Map<String, dynamic>? userData;
 
   @override

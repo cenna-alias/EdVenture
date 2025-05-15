@@ -33,7 +33,6 @@ class MainApp extends StatelessWidget {
         ).copyWith(
           secondary: Colors.deepPurple[200],
           onPrimary: Colors.white,
-          onBackground: Colors.white,
           onSurface: Colors.white70,
         ),
         textTheme: TextTheme(
@@ -66,6 +65,8 @@ class MainApp extends StatelessWidget {
 }
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -99,6 +100,8 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 class IntroScreen extends StatefulWidget {
+  const IntroScreen({super.key});
+
   @override
   _IntroScreenState createState() => _IntroScreenState();
 }
@@ -259,7 +262,7 @@ class _IntroScreenState extends State<IntroScreen> {
           Text(
             title,
             style: TextStyle(
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -270,7 +273,7 @@ class _IntroScreenState extends State<IntroScreen> {
             style: TextStyle(
               color: Theme.of(
                 context,
-              ).colorScheme.onBackground.withOpacity(0.7),
+              ).colorScheme.onSurface.withOpacity(0.7),
               fontSize: 16,
             ),
             textAlign: TextAlign.center,

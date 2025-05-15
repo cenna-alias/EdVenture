@@ -42,7 +42,7 @@ class _FILLState extends State<FILL> {
   final AudioPlayer _audioPlayer = AudioPlayer(); 
   bool _isMusicPlaying = false; 
   bool _isMuted = false; 
-  double _musicVolume = 0.5; 
+  final double _musicVolume = 0.5; 
 
   Future<void> _initTts() async {
     flutterTts.setCompletionHandler(() {
@@ -257,8 +257,9 @@ class _FILLState extends State<FILL> {
                       choices.clear();
                       fetchFILL();
                       startTimer();
-                      if (!_isMuted)
-                        _playBackgroundMusic(); 
+                      if (!_isMuted) {
+                        _playBackgroundMusic();
+                      } 
                     });
                   },
                   child: const Text('Next Level'),
@@ -278,8 +279,9 @@ class _FILLState extends State<FILL> {
                     choices.clear();
                     fetchFILL();
                     startTimer();
-                    if (!_isMuted)
-                      _playBackgroundMusic(); 
+                    if (!_isMuted) {
+                      _playBackgroundMusic();
+                    } 
                   });
                 },
                 child: const Text('Restart'),
@@ -688,7 +690,7 @@ class _FILLState extends State<FILL> {
                     ),
                   ),
                 );
-              }).toList(),
+              }),
               const SizedBox(height: 20),
               Center(
                 child: Container(

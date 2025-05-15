@@ -355,7 +355,7 @@ class _RegisterState extends State<Register> {
           if (age < 7) {
             return "You must be at least 7 years old";
           }
-          _ageController.text = age.toString(); 
+          _ageController.text = age.toString();
         } catch (e) {
           return "Invalid date format (use YYYY-MM-DD)";
         }
@@ -389,7 +389,7 @@ class _RegisterState extends State<Register> {
   Widget _buildShowAge() {
     return TextFormField(
       controller: _ageController,
-      readOnly: true, 
+      readOnly: true,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         labelText: 'Age',

@@ -86,14 +86,14 @@ class _ChangePasswordState extends State<ChangePassword> {
       );
     }
     setState(() {
-      isLoading = false; 
+      isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, 
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.purple[900],
         elevation: 4,

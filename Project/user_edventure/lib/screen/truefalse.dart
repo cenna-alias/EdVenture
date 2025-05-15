@@ -45,7 +45,7 @@ class _TrueFalseState extends State<TrueFalse> {
   final AudioPlayer _audioPlayer = AudioPlayer(); 
   bool _isMusicPlaying = false; 
   bool _isMuted = false; 
-  double _musicVolume = 0.5; 
+  final double _musicVolume = 0.5; 
 
   Future<void> _initTts() async {
     flutterTts.setCompletionHandler(() {
