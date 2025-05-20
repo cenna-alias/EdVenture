@@ -74,14 +74,6 @@ class _TfquestionState extends State<Tfquestion>
         );
         _editingId = null;
       } else {
-        final response = await supabase.from("tbl_tfquestion").insert({
-          "question_text": _tfquestionController.text,
-          "level": _selectedLevel,
-          "subject": _selectedSubject,
-          "question_iscorrect": isCorrect,
-          "question_level": _selectedNumber,
-        }).select();
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text("Question added successfully"),
@@ -139,8 +131,7 @@ class _TfquestionState extends State<Tfquestion>
   Future<void> fetchLevel() async {
     try {
       final response = await supabase.from('tbl_level').select();
-      setState(
-          () => _levelList = List<Map<String, dynamic>>.from(response ?? []));
+      setState(() => _levelList = List<Map<String, dynamic>>.from(response));
     } catch (e) {
       print("Error fetching level: $e");
       setState(() => _errorMessage = "Error fetching levels: $e");
@@ -150,8 +141,7 @@ class _TfquestionState extends State<Tfquestion>
   Future<void> fetchSubject() async {
     try {
       final response = await supabase.from('tbl_subject').select();
-      setState(
-          () => _subjectList = List<Map<String, dynamic>>.from(response ?? []));
+      setState(() => _subjectList = List<Map<String, dynamic>>.from(response));
     } catch (e) {
       print("Error fetching subject: $e");
       setState(() => _errorMessage = "Error fetching subjects: $e");
@@ -164,7 +154,7 @@ class _TfquestionState extends State<Tfquestion>
           .from('tbl_tfquestion')
           .select("*, tbl_level(*), tbl_subject(*)");
       setState(() {
-        _tfquestionList = List<Map<String, dynamic>>.from(response ?? []);
+        _tfquestionList = List<Map<String, dynamic>>.from(response);
         _tfquestionList.sort((a, b) => a['id'].compareTo(b['id']));
       });
     } catch (e) {

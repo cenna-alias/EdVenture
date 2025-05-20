@@ -216,7 +216,7 @@ class _AddQuestionState extends State<AddQuestion>
     try {
       final response = await supabase.from('tbl_level').select();
       setState(
-          () => _levelList = List<Map<String, dynamic>>.from(response ?? []));
+          () => _levelList = List<Map<String, dynamic>>.from(response));
     } catch (e) {
       print("Error fetching level: $e");
       setState(() => _errorMessage = "Error fetching levels: $e");
@@ -227,7 +227,7 @@ class _AddQuestionState extends State<AddQuestion>
     try {
       final response = await supabase.from('tbl_subject').select();
       setState(
-          () => _subjectList = List<Map<String, dynamic>>.from(response ?? []));
+          () => _subjectList = List<Map<String, dynamic>>.from(response));
     } catch (e) {
       print("Error fetching subject: $e");
       setState(() => _errorMessage = "Error fetching subjects: $e");
@@ -240,7 +240,7 @@ class _AddQuestionState extends State<AddQuestion>
           .from('tbl_question')
           .select("*,tbl_level(*),tbl_subject(*)");
       setState(() {
-        _questionList = List<Map<String, dynamic>>.from(response ?? []);
+        _questionList = List<Map<String, dynamic>>.from(response);
         _questionList.sort((a, b) => a['id'].compareTo(b['id']));
       });
     } catch (e) {

@@ -41,32 +41,6 @@ class _FillquestionState extends State<Fillquestion>
     _loadInitialData();
   }
 
-  Future<void> _pickImage() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: false,
-        type: FileType.image,
-      );
-      if (result != null) {
-        setState(() {
-          _pickedImage = result.files.first;
-        });
-      }
-    } catch (e) {
-      print("Error picking image: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Failed to pick image: $e"),
-          backgroundColor: Colors.red[600],
-          behavior: SnackBarBehavior.floating,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          margin: const EdgeInsets.all(16),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
-  }
 
   Future<String?> _uploadImage(PlatformFile image, int id, String text1) async {
     try {
@@ -240,7 +214,7 @@ class _FillquestionState extends State<Fillquestion>
     try {
       final response = await supabase.from('tbl_level').select();
       setState(
-          () => _levelList = List<Map<String, dynamic>>.from(response ?? []));
+          () => _levelList = List<Map<String, dynamic>>.from(response));
     } catch (e) {
       print("Error fetching level: $e");
       setState(() => _errorMessage = "Error fetching levels: $e");
@@ -251,7 +225,7 @@ class _FillquestionState extends State<Fillquestion>
     try {
       final response = await supabase.from('tbl_subject').select();
       setState(
-          () => _subjectList = List<Map<String, dynamic>>.from(response ?? []));
+          () => _subjectList = List<Map<String, dynamic>>.from(response));
     } catch (e) {
       print("Error fetching subject: $e");
       setState(() => _errorMessage = "Error fetching subjects: $e");
@@ -264,7 +238,7 @@ class _FillquestionState extends State<Fillquestion>
           .from('tbl_fillquestion')
           .select("*, tbl_level(*), tbl_subject(*)");
       setState(() {
-        _fillquestionList = List<Map<String, dynamic>>.from(response ?? []);
+        _fillquestionList = List<Map<String, dynamic>>.from(response);
         _fillquestionList.sort((a, b) => a['id'].compareTo(b['id']));
       });
     } catch (e) {

@@ -116,7 +116,7 @@ class _AddChoiceState extends State<AddChoice> {
           .select()
           .eq('question_id', widget.id);
       setState(() {
-        _answerList = List<Map<String, dynamic>>.from(response ?? []);
+        _answerList = List<Map<String, dynamic>>.from(response);
       });
     } catch (e) {
       print("ERROR FETCHING DATA: $e");
@@ -174,6 +174,12 @@ class _AddChoiceState extends State<AddChoice> {
     } finally {
       setState(() => _isLoading = false);
     }
+  }
+
+  @override
+  void dispose() {
+    _answerController.dispose();
+    super.dispose();
   }
 
   @override
